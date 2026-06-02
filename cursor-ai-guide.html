@@ -1,0 +1,1779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Developer Tools — Cursor, Skills, MCPs, Subagents & Commands</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --slate-100: #22333B;
+      --slate-80:  #4f5c63;
+      --slate-60:  #7A858A;
+      --slate-40:  #A6ADB0;
+      --slate-20:  #D4D6D9;
+      --slate-10:  #E8EBEB;
+      --teal:      #64c8bd;
+      --teal-dark: #00847C;
+      --teal-80:   #83D3CA;
+      --teal-60:   #A2DED7;
+      --teal-40:   #C1E9E5;
+      --teal-20:   #E0F4F2;
+      --white:     #FFFFFF;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      font-family: 'Barlow', sans-serif;
+      background: #000;
+    }
+
+    /* ── DECK SHELL ── */
+    #deck {
+      width: 100vw; height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── SLIDE ── */
+    .slide {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+      transition: opacity 0.4s ease;
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 1;
+    }
+
+    /* ── SLIDE VARIANTS ── */
+
+    /* COVER */
+    .slide-cover {
+      background: var(--slate-100);
+      justify-content: flex-end;
+    }
+    .slide-cover .bg-circle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .slide-cover .bg-circle.c1 {
+      width: 55vw; height: 55vw;
+      top: -18vw; right: -12vw;
+      background: radial-gradient(circle, var(--teal-dark) 0%, transparent 70%);
+      opacity: 0.35;
+    }
+    .slide-cover .bg-circle.c2 {
+      width: 40vw; height: 40vw;
+      bottom: -12vw; left: -8vw;
+      background: radial-gradient(circle, var(--teal) 0%, transparent 70%);
+      opacity: 0.18;
+    }
+    .slide-cover .content {
+      position: relative;
+      z-index: 1;
+      padding: 0 8% 7%;
+    }
+    .slide-cover .eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(11px, 1.1vw, 15px);
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 2%;
+    }
+    .slide-cover h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(36px, 6.5vw, 88px);
+      font-weight: 800;
+      line-height: 1.0;
+      color: var(--white);
+      margin-bottom: 3%;
+    }
+    .slide-cover h1 span { color: var(--teal); }
+    .slide-cover .subtitle {
+      font-size: clamp(13px, 1.4vw, 20px);
+      font-weight: 300;
+      color: var(--slate-40);
+      max-width: 52%;
+      line-height: 1.65;
+    }
+    .slide-cover .tagline {
+      position: absolute;
+      top: 7%;
+      right: 8%;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(11px, 1.1vw, 15px);
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--slate-60);
+      text-transform: uppercase;
+    }
+    .slide-cover .footer-line {
+      position: absolute;
+      bottom: 3%;
+      right: 8%;
+      font-size: clamp(10px, 0.85vw, 12px);
+      color: var(--slate-60);
+    }
+
+    /* DIVIDER / SECTION TITLE */
+    .slide-divider {
+      background: var(--teal-dark);
+      align-items: center;
+      justify-content: center;
+    }
+    .slide-divider .bg-arrow {
+      position: absolute;
+      right: 6%;
+      font-size: 30vw;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      color: var(--teal);
+      opacity: 0.12;
+      user-select: none;
+      line-height: 1;
+    }
+    .slide-divider .content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 10%;
+    }
+    .slide-divider .step {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(11px, 1.1vw, 15px);
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--slate-100);
+      opacity: 0.75;
+      margin-bottom: 2.5%;
+    }
+    .slide-divider h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(42px, 8vw, 110px);
+      font-weight: 800;
+      color: var(--slate-100);
+      line-height: 0.95;
+    }
+    .slide-divider .tagline-div {
+      position: absolute;
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(11px, 1.1vw, 14px);
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--slate-100);
+      opacity: 0.55;
+    }
+
+    /* CONTENT SLIDE — light */
+    .slide-content {
+      background: var(--white);
+    }
+    /* CONTENT SLIDE — dark */
+    .slide-content-dark {
+      background: var(--slate-100);
+    }
+
+    /* SHARED CONTENT LAYOUT */
+    .slide-content, .slide-content-dark {
+      display: flex;
+      flex-direction: column;
+    }
+    .slide-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2.5% 8% 0;
+      flex-shrink: 0;
+    }
+    .slide-section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(13px, 1.3vw, 17px);
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+    .slide-content-dark .slide-section-label { color: var(--teal); }
+    .slide-page-num {
+      font-size: clamp(10px, 0.9vw, 12px);
+      color: var(--slate-40);
+    }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2% 8% 5%;
+    }
+    .slide-body.row { flex-direction: row; align-items: center; gap: 6%; }
+
+    .slide-h {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(28px, 4.5vw, 60px);
+      font-weight: 800;
+      color: var(--slate-100);
+      line-height: 1.05;
+      margin-bottom: 2.5%;
+    }
+    .slide-content-dark .slide-h { color: var(--white); }
+
+    .slide-lead {
+      font-size: clamp(13px, 1.3vw, 18px);
+      font-weight: 400;
+      color: var(--slate-80);
+      line-height: 1.65;
+      max-width: 700px;
+      margin-bottom: 5%;
+    }
+    .slide-content-dark .slide-lead { color: var(--slate-40); }
+
+    /* CARDS GRID */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.8%;
+      flex: 1;
+    }
+    .cards.two   { grid-template-columns: repeat(2, 1fr); }
+    .cards.three { grid-template-columns: repeat(3, 1fr); }
+    .card {
+      background: var(--slate-10);
+      border-radius: clamp(10px, 1.2vw, 16px);
+      padding: clamp(16px, 2vw, 28px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .slide-content-dark .card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .card-icon {
+      font-size: clamp(20px, 2.5vw, 32px);
+      margin-bottom: 8%;
+    }
+    .card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(15px, 1.8vw, 24px);
+      font-weight: 700;
+      color: var(--slate-100);
+      margin-bottom: 5%;
+      line-height: 1.1;
+    }
+    .slide-content-dark .card h3 { color: var(--white); }
+    .card p {
+      font-size: clamp(11px, 1.1vw, 15px);
+      color: var(--slate-80);
+      line-height: 1.55;
+      flex: 1;
+    }
+    .slide-content-dark .card p { color: var(--slate-40); }
+    .card-tag {
+      display: inline-block;
+      margin-top: auto;
+      padding-top: 12px;
+      font-size: clamp(9px, 0.8vw, 11px);
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--teal-dark);
+      background: var(--teal-20);
+      padding: 3px 10px;
+      border-radius: 100px;
+      align-self: flex-start;
+    }
+    .slide-content-dark .card-tag {
+      color: var(--slate-100);
+      background: var(--teal);
+    }
+
+    /* SLIDE 12 — MCP CARDS: 40% larger text */
+    [data-index="11"] .card-icon { font-size: clamp(28px, 3.5vw, 45px); }
+    [data-index="11"] .card h3   { font-size: clamp(21px, 2.52vw, 34px); }
+    [data-index="11"] .card p    { font-size: clamp(15px, 1.54vw, 21px); }
+    [data-index="11"] .card-tag  { font-size: clamp(13px, 1.12vw, 15px); }
+
+    /* SLIDE 13 — MCP BY THE NUMBERS: 30% larger text */
+    [data-index="12"] .slide-h   { font-size: clamp(36px, 5.85vw, 78px); }
+    [data-index="12"] .slide-lead{ font-size: clamp(17px, 1.69vw, 23px); max-width: 900px; }
+    [data-index="12"] .stat-n    { font-size: clamp(36px, 5.2vw, 68px); }
+    [data-index="12"] .stat-l    { font-size: clamp(13px, 1.17vw, 17px); }
+
+    /* TWO-COLUMN BODY */
+    .col { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(8px, 1.2vw, 16px);
+    }
+    .bullet-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: clamp(8px, 0.9vw, 14px);
+      font-size: clamp(12px, 1.25vw, 17px);
+      color: var(--slate-80);
+      line-height: 1.55;
+    }
+    .slide-content-dark .bullet-list li { color: var(--slate-40); }
+    .bullet-list li::before {
+      content: '';
+      width: clamp(6px, 0.6vw, 8px);
+      height: clamp(6px, 0.6vw, 8px);
+      border-radius: 50%;
+      background: var(--teal);
+      margin-top: 0.5em;
+      flex-shrink: 0;
+    }
+    .bullet-list li strong { color: var(--slate-100); font-weight: 600; }
+    .slide-content-dark .bullet-list li strong { color: var(--white); }
+
+    /* CODE BLOCK */
+    .code-block {
+      background: var(--slate-100);
+      border-radius: clamp(10px, 1.2vw, 16px);
+      padding: clamp(18px, 2.5vw, 36px);
+      font-family: 'Barlow', monospace;
+      font-size: clamp(10px, 1.05vw, 14px);
+      line-height: 1.7;
+      color: var(--slate-40);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .slide-content-dark .code-block {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .kw  { color: var(--teal); font-weight: 600; }
+    .str { color: #a2deb9; }
+    .cmt { color: var(--slate-60); font-style: italic; }
+    .fn  { color: #c3a6ff; }
+    .num { color: #f9c784; }
+
+    /* COMMAND TABLE */
+    .cmd-table-wrap {
+      flex: 1;
+      overflow: hidden;
+      border-radius: clamp(8px, 1vw, 14px);
+      border: 1px solid var(--slate-20);
+    }
+    .cmd-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: clamp(10px, 1.05vw, 14px);
+    }
+    .cmd-table thead th {
+      background: var(--slate-100);
+      color: var(--white);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(9px, 0.9vw, 12px);
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: clamp(8px, 1vw, 14px) clamp(10px, 1.5vw, 20px);
+      text-align: left;
+    }
+    .cmd-table tbody tr { border-bottom: 1px solid var(--slate-20); }
+    .cmd-table tbody tr:last-child { border-bottom: none; }
+    .cmd-table tbody tr:nth-child(even) { background: var(--slate-10); }
+    .cmd-table td {
+      padding: clamp(7px, 0.85vw, 12px) clamp(10px, 1.5vw, 20px);
+      vertical-align: middle;
+    }
+    .cmd-table td:first-child {
+      font-weight: 700;
+      color: var(--teal-dark);
+      white-space: nowrap;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(11px, 1.15vw, 15px);
+    }
+    .cmd-table td:nth-child(2) { font-weight: 500; color: var(--slate-100); }
+    .cmd-table td:nth-child(3) { color: var(--slate-80); }
+
+    /* FLOW ROW (MCP) */
+    .flow-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 5%;
+    }
+    .flow-node {
+      background: var(--slate-100);
+      color: var(--white);
+      border-radius: clamp(8px, 1vw, 12px);
+      padding: clamp(10px, 1.5vw, 20px) clamp(14px, 2vw, 28px);
+      font-size: clamp(11px, 1.15vw, 15px);
+      font-weight: 600;
+      text-align: center;
+    }
+    .flow-node .node-sub {
+      font-size: clamp(9px, 0.85vw, 11px);
+      font-weight: 400;
+      opacity: 0.6;
+      margin-top: 4px;
+    }
+    .flow-node.teal { background: var(--teal); color: var(--slate-100); }
+    .flow-node.light { background: var(--slate-10); color: var(--slate-100); border: 1px solid var(--slate-20); }
+    .flow-arrow { font-size: clamp(16px, 2vw, 26px); color: var(--slate-40); padding: 0 clamp(8px, 1vw, 16px); }
+
+    /* STAT ROW */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2%;
+      margin-top: 4%;
+    }
+    .stat {
+      background: var(--slate-10);
+      border-radius: clamp(8px, 1vw, 14px);
+      padding: clamp(14px, 2vw, 24px);
+      text-align: center;
+    }
+    .stat-n {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 800;
+      color: var(--teal-dark);
+      line-height: 1;
+    }
+    .stat-l {
+      font-size: clamp(10px, 0.9vw, 13px);
+      color: var(--slate-60);
+      margin-top: 6px;
+    }
+
+    /* TEAL ACCENT BAR */
+    .accent-bar {
+      width: clamp(32px, 3.5vw, 52px);
+      height: clamp(3px, 0.35vw, 5px);
+      background: var(--teal);
+      border-radius: 100px;
+      margin-bottom: 4%;
+    }
+
+    /* FOOTER BRAND */
+    .slide-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8% 2.5%;
+      flex-shrink: 0;
+    }
+    .slide-footer .brand {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(9px, 0.85vw, 11px);
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--slate-40);
+    }
+    .slide-content-dark .slide-footer .brand { color: var(--slate-60); }
+    .slide-footer .copyright {
+      font-size: clamp(9px, 0.8vw, 11px);
+      color: var(--slate-40);
+    }
+    .slide-content-dark .slide-footer .copyright { color: var(--slate-60); }
+
+    /* BRAND LOGO WATERMARK */
+    .brand-logo {
+      height: clamp(10px, 1vw, 15px);
+      width: auto;
+      opacity: 0.45;
+      display: block;
+    }
+    .slide-content .brand-logo { filter: invert(1) brightness(0.35); }
+    .slide-content-dark .brand-logo { opacity: 0.55; }
+
+    /* ── PROGRESS BAR ── */
+    #progress {
+      position: fixed;
+      bottom: 0; left: 0;
+      height: 3px;
+      background: var(--teal);
+      transition: width 0.35s ease;
+      z-index: 200;
+    }
+
+    /* ── NAV BUTTONS ── */
+    .nav-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 200;
+      background: rgba(34,51,59,0.55);
+      border: none;
+      color: var(--white);
+      width: clamp(36px, 3.5vw, 52px);
+      height: clamp(36px, 3.5vw, 52px);
+      border-radius: 50%;
+      font-size: clamp(16px, 1.8vw, 24px);
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: background 0.2s, opacity 0.2s;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0.6;
+    }
+    .nav-btn:hover { background: var(--teal-dark); opacity: 1; }
+    .nav-btn:disabled { opacity: 0.15; cursor: default; }
+    #btn-prev { left: 1.5%; }
+    #btn-next { right: 1.5%; }
+
+    /* ── SLIDE COUNTER ── */
+    #counter {
+      position: fixed;
+      bottom: 14px; right: 24px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(10px, 0.9vw, 13px);
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.45);
+      z-index: 200;
+    }
+
+    /* ── THUMBNAIL TRAY (hidden, toggle with T) ── */
+    #tray {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 120px;
+      background: rgba(34,51,59,0.92);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      overflow-x: auto;
+      z-index: 300;
+    }
+    #tray.open { display: flex; }
+    .tray-thumb {
+      flex-shrink: 0;
+      width: 160px;
+      height: 90px;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      overflow: hidden;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: border-color 0.15s;
+    }
+    .tray-thumb:hover, .tray-thumb.active { border-color: var(--teal); }
+    .tray-thumb span { padding: 8px; color: var(--white); }
+  </style>
+</head>
+<body>
+
+<div id="deck">
+
+  <!-- ══ SLIDE 1 — COVER ══ -->
+  <div class="slide slide-cover active" data-index="0">
+    <div class="bg-circle c1"></div>
+    <div class="bg-circle c2"></div>
+    <div class="tagline">Sitetracker Engineering</div>
+    <div class="content">
+      <div class="eyebrow">AI-Powered Development · 2026</div>
+      <h1>Build Smarter with<br /><span>Cursor, Skills,</span><br /><span>MCPs, Subagents</span><br /><span>&amp; Commands</span></h1>
+      <p class="subtitle">A practical guide to the modern AI developer toolkit — what each piece does, how they connect, and how to put them to work.</p>
+    </div>
+    <!-- Co-brand logos — right half -->
+    <div style="position:absolute;right:5%;top:0;bottom:0;width:38%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(20px,2.8vw,40px);z-index:1;">
+      <img src="resources/cursor-lockup-light.svg" alt="Cursor" style="width:100%;max-width:420px;filter:drop-shadow(0 4px 24px rgba(0,0,0,0.4));">
+      <div style="width:55%;height:1px;background:rgba(255,255,255,0.18);"></div>
+      <img src="resources/sitetracker-logo-white.svg" alt="Sitetracker" style="width:100%;max-width:460px;filter:drop-shadow(0 4px 24px rgba(0,0,0,0.4));">
+    </div>
+    <div class="footer-line">© 2026 Sitetracker, Inc. All rights reserved.</div>
+  </div>
+
+  <!-- ══ SLIDE 2 — AGENDA ══ -->
+  <div class="slide slide-content" data-index="1">
+    <div class="slide-top-bar">
+      <span class="slide-section-label" style="display:inline-flex;align-items:center;gap:7px;">
+        <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;flex-shrink:0;">
+          <rect x="1" y="2" width="14" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="5"  y1="0.5" x2="5"  y2="4"  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="11" y1="0.5" x2="11" y2="4"  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="1"  y1="6"   x2="15" y2="6"  stroke="currentColor" stroke-width="1.2"/>
+          <rect x="3.5" y="8.5" width="2" height="2" rx="0.4" fill="currentColor"/>
+          <rect x="7"   y="8.5" width="2" height="2" rx="0.4" fill="currentColor"/>
+          <rect x="10.5" y="8.5" width="2" height="2" rx="0.4" fill="currentColor"/>
+        </svg>
+        Agenda
+      </span>
+      <span class="slide-page-num">2 / 19</span>
+    </div>
+    <div class="slide-body" style="padding:2% 5% 3%; justify-content:center; gap:2%;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+        <div>
+          <div class="accent-bar" style="margin-bottom:1%;"></div>
+          <h2 class="slide-h" style="margin-bottom:0;">What we'll cover</h2>
+        </div>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(12px,1vw,14px);font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--slate-40);">5 topics · 17 slides</span>
+      </div>
+
+      <div class="cards" style="grid-template-columns:repeat(5,1fr); flex:1; gap:1.2%;">
+
+        <!-- Cursor -->
+        <div class="card" style="padding:0;overflow:hidden;justify-content:flex-start;">
+          <div style="background:var(--slate-100);padding:16px 20px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <svg viewBox="0 0 466.73 532.09" xmlns="http://www.w3.org/2000/svg" style="width:clamp(24px,2.4vw,32px);height:auto;flex-shrink:0;">
+                <path fill="#64c8bd" d="M457.43,125.94L244.42,2.96c-6.84-3.95-15.28-3.95-22.12,0L9.3,125.94c-5.75,3.32-9.3,9.46-9.3,16.11v247.99c0,6.65,3.55,12.79,9.3,16.11l213.01,122.98c6.84,3.95,15.28,3.95,22.12,0l213.01-122.98c5.75-3.32,9.3-9.46,9.3-16.11v-247.99c0-6.65-3.55-12.79-9.3-16.11h-.01ZM444.05,151.99l-205.63,356.16c-1.39,2.4-5.06,1.42-5.06-1.36v-233.21c0-4.66-2.49-8.97-6.53-11.31L24.87,145.67c-2.4-1.39-1.42-5.06,1.36-5.06h411.26c5.84,0,9.49,6.33,6.57,11.39h-.01Z"/>
+              </svg>
+              <span style="font-size:clamp(40px,4vw,54px);font-weight:800;font-family:'Barlow Condensed',sans-serif;color:var(--teal);line-height:1;">01</span>
+            </div>
+            <span style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal-80);font-family:'Barlow Condensed',sans-serif;padding:4px 10px;border-radius:100px;background:rgba(100,200,189,0.15);">Editor</span>
+          </div>
+          <div style="padding:18px 20px 20px;display:flex;flex-direction:column;flex:1;">
+            <h3 style="font-size:clamp(22px,2.4vw,30px);font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--slate-100);line-height:1.1;margin-bottom:10px;">Cursor</h3>
+            <p style="font-size:clamp(14px,1.4vw,18px);line-height:1.5;color:var(--slate-80);flex:0;flex-shrink:0;">AI-native code editor — full VS Code fork with codebase-aware AI built in.</p>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:18px;">
+              <li style="display:flex;align-items:flex-start;gap:9px;font-size:clamp(13px,1.3vw,16px);color:var(--slate-80);line-height:1.4;"><span style="width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px;"></span>⌘K inline edits &amp; ⌘L chat</li>
+              <li style="display:flex;align-items:flex-start;gap:9px;font-size:clamp(13px,1.3vw,16px);color:var(--slate-80);line-height:1.4;"><span style="width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px;"></span>Agent mode: plans, edits, runs</li>
+              <li style="display:flex;align-items:flex-start;gap:9px;font-size:clamp(13px,1.3vw,16px);color:var(--slate-80);line-height:1.4;"><span style="width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px;"></span>Semantic codebase indexing</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="card" style="padding:0;overflow:hidden;justify-content:flex-start;">
+          <div style="background:var(--slate-100);padding:16px 20px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <!-- Skills: stacked playbooks + play badge -->
+              <svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" style="width:clamp(22px,2.2vw,30px);height:auto;flex-shrink:0;">
+                <rect x="7" y="5" width="19" height="22" rx="2.5" fill="#64c8bd" opacity="0.2"/>
+                <rect x="4" y="3" width="19" height="22" rx="2.5" fill="#64c8bd" opacity="0.4"/>
+                <rect x="1" y="1" width="19" height="22" rx="2.5" fill="#64c8bd"/>
+                <rect x="4" y="6" width="12" height="2" rx="1" fill="#22333B"/>
+                <rect x="4" y="10" width="13" height="2" rx="1" fill="#22333B"/>
+                <rect x="4" y="14" width="8" height="2" rx="1" fill="#22333B"/>
+                <circle cx="24.5" cy="24.5" r="5.5" fill="#64c8bd"/>
+                <polygon points="22.5,22 22.5,27 28,24.5" fill="#22333B"/>
+              </svg>
+              <span style="font-size:clamp(40px,4vw,54px);font-weight:800;font-family:'Barlow Condensed',sans-serif;color:var(--teal);line-height:1;">02</span>
+            </div>
+            <span style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal-80);font-family:'Barlow Condensed',sans-serif;padding:4px 10px;border-radius:100px;background:rgba(100,200,189,0.15);">Automation</span>
+          </div>
+          <div style="padding:18px 20px 20px;display:flex;flex-direction:column;flex:1;">
+            <h3 style="font-size:clamp(22px,2.4vw,30px);font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--slate-100);line-height:1.1;margin-bottom:10px;">Skills</h3>
+            <p style="font-size:clamp(14px,1.4vw,18px);line-height:1.5;color:var(--slate-80);flex:0;flex-shrink:0;">Prompt playbooks that encode best practices — versioned in your repo.</p>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:18px;">
+              <li style="display:flex;align-items:flex-start;gap:9px;font-size:clamp(13px,1.3vw,16px);color:var(--slate-80);line-height:1.4;"><span style="width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px;"></span>Markdown files, code-reviewed</li>
+              <li style="display:flex;align-items:flex-start;gap:9px;font-size:clamp(13px,1.3vw,16px);color:var(--slate-80);line-height:1.4;"><span style="width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px;"></span>Triggered by /slash-command</li>
+              <li style="display:flex;align-items:flex-start;gap:9px;font-size:clamp(13px,1.3vw,16px);color:var(--slate-80);line-height:1.4;"><span style="width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px;"></span>Composable &amp; parameterized</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- MCPs -->
+        <div class="card" style="padding:0;overflow:hidden;justify-content:flex-start;">
+          <div style="background:var(--slate-100);padding:16px 20px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <!-- MCPs: hub/spoke network -->
+              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="width:clamp(22px,2.2vw,30px);height:auto;flex-shrink:0;">
+                <circle cx="16" cy="16" r="5.5" fill="#64c8bd"/>
+                <circle cx="16" cy="3.5" r="3.5" fill="#64c8bd" opacity="0.65"/>
+                <circle cx="16" cy="28.5" r="3.5" fill="#64c8bd" opacity="0.65"/>
+                <circle cx="3.5" cy="16" r="3.5" fill="#64c8bd" opacity="0.65"/>
+                <circle cx="28.5" cy="16" r="3.5" fill="#64c8bd" opacity="0.65"/>
+                <line x1="16" y1="7" x2="16" y2="10.5" stroke="#64c8bd" stroke-width="1.8" stroke-linecap="round"/>
+                <line x1="16" y1="21.5" x2="16" y2="25" stroke="#64c8bd" stroke-width="1.8" stroke-linecap="round"/>
+                <line x1="7" y1="16" x2="10.5" y2="16" stroke="#64c8bd" stroke-width="1.8" stroke-linecap="round"/>
+                <line x1="21.5" y1="16" x2="25" y2="16" stroke="#64c8bd" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+              <span style="font-size:clamp(40px,4vw,54px);font-weight:800;font-family:'Barlow Condensed',sans-serif;color:var(--teal);line-height:1;">03</span>
+            </div>
+            <span style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal-80);font-family:'Barlow Condensed',sans-serif;padding:4px 10px;border-radius:100px;background:rgba(100,200,189,0.15);">Protocol</span>
+          </div>
+          <div style="padding:18px 20px 20px;display:flex;flex-direction:column;flex:1;">
+            <h3 style="font-size:clamp(22px,2.4vw,30px);font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--slate-100);line-height:1.1;margin-bottom:10px;">MCPs</h3>
+            <p style="font-size:clamp(14px,1.4vw,18px);line-height:1.5;color:var(--slate-80);flex:0;flex-shrink:0;">Open protocol connecting AI to live tools, databases, and APIs.</p>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:18px;">
+              <li style="display:flex;align-items:flex-start;gap:9px;font-size:clamp(13px,1.3vw,16px);color:var(--slate-80);line-height:1.4;"><span style="width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px;"></span>Resources, Tools &amp; Prompts</li>
+              <li style="display:flex;align-items:flex-start;gap:9px;font-size:clamp(13px,1.3vw,16px);color:var(--slate-80);line-height:1.4;"><span style="width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px;"></span>1000+ community servers</li>
+              <li style="display:flex;align-items:flex-start;gap:9px;font-size:clamp(13px,1.3vw,16px);color:var(--slate-80);line-height:1.4;"><span style="width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px;"></span>Apache 2.0, local or remote</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Subagents -->
+        <div class="card" style="padding:0;overflow:hidden;justify-content:flex-start;">
+          <div style="background:var(--slate-100);padding:16px 20px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <!-- Subagents: branching tree (1 → 3) -->
+              <svg viewBox="0 0 36 28" xmlns="http://www.w3.org/2000/svg" style="width:clamp(24px,2.4vw,32px);height:auto;flex-shrink:0;">
+                <rect x="12" y="0" width="12" height="9" rx="2.5" fill="#64c8bd"/>
+                <line x1="18" y1="9" x2="5" y2="17" stroke="#64c8bd" stroke-width="2" stroke-linecap="round"/>
+                <line x1="18" y1="9" x2="18" y2="17" stroke="#64c8bd" stroke-width="2" stroke-linecap="round"/>
+                <line x1="18" y1="9" x2="31" y2="17" stroke="#64c8bd" stroke-width="2" stroke-linecap="round"/>
+                <rect x="0"  y="17" width="10" height="9" rx="2.5" fill="#64c8bd" opacity="0.6"/>
+                <rect x="13" y="17" width="10" height="9" rx="2.5" fill="#64c8bd" opacity="0.6"/>
+                <rect x="26" y="17" width="10" height="9" rx="2.5" fill="#64c8bd" opacity="0.6"/>
+              </svg>
+              <span style="font-size:clamp(40px,4vw,54px);font-weight:800;font-family:'Barlow Condensed',sans-serif;color:var(--teal);line-height:1;">04</span>
+            </div>
+            <span style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal-80);font-family:'Barlow Condensed',sans-serif;padding:4px 10px;border-radius:100px;background:rgba(100,200,189,0.15);">Orchestration</span>
+          </div>
+          <div style="padding:18px 20px 20px;display:flex;flex-direction:column;flex:1;">
+            <h3 style="font-size:clamp(22px,2.4vw,30px);font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--slate-100);line-height:1.1;margin-bottom:10px;">Subagents</h3>
+            <p style="font-size:clamp(14px,1.4vw,18px);line-height:1.5;color:var(--slate-80);flex:0;flex-shrink:0;">Parallel child agents for complex workflows beyond one context window.</p>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:18px;">
+              <li style="display:flex;align-items:flex-start;gap:9px;font-size:clamp(13px,1.3vw,16px);color:var(--slate-80);line-height:1.4;"><span style="width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px;"></span>Parallel — dramatically faster</li>
+              <li style="display:flex;align-items:flex-start;gap:9px;font-size:clamp(13px,1.3vw,16px);color:var(--slate-80);line-height:1.4;"><span style="width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px;"></span>Isolated context per agent</li>
+              <li style="display:flex;align-items:flex-start;gap:9px;font-size:clamp(13px,1.3vw,16px);color:var(--slate-80);line-height:1.4;"><span style="width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px;"></span>Adversarial cross-verification</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Commands -->
+        <div class="card" style="padding:0;overflow:hidden;justify-content:flex-start;">
+          <div style="background:var(--slate-100);padding:16px 20px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <!-- Commands: terminal window with > prompt -->
+              <svg viewBox="0 0 32 28" xmlns="http://www.w3.org/2000/svg" style="width:clamp(22px,2.2vw,30px);height:auto;flex-shrink:0;">
+                <rect x="0" y="0" width="32" height="28" rx="4" fill="#64c8bd" opacity="0.18"/>
+                <rect x="0" y="0" width="32" height="8" rx="4" fill="#64c8bd" opacity="0.45"/>
+                <circle cx="5.5"  cy="4" r="1.6" fill="#64c8bd"/>
+                <circle cx="10.5" cy="4" r="1.6" fill="#64c8bd" opacity="0.55"/>
+                <circle cx="15.5" cy="4" r="1.6" fill="#64c8bd" opacity="0.25"/>
+                <path d="M5 14.5l6 5-6 5" stroke="#64c8bd" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <line x1="15" y1="23.5" x2="26" y2="23.5" stroke="#64c8bd" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <span style="font-size:clamp(40px,4vw,54px);font-weight:800;font-family:'Barlow Condensed',sans-serif;color:var(--teal);line-height:1;">05</span>
+            </div>
+            <span style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal-80);font-family:'Barlow Condensed',sans-serif;padding:4px 10px;border-radius:100px;background:rgba(100,200,189,0.15);">Interface</span>
+          </div>
+          <div style="padding:18px 20px 20px;display:flex;flex-direction:column;flex:1;">
+            <h3 style="font-size:clamp(22px,2.4vw,30px);font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--slate-100);line-height:1.1;margin-bottom:10px;">Commands</h3>
+            <p style="font-size:clamp(14px,1.4vw,18px);line-height:1.5;color:var(--slate-80);flex:0;flex-shrink:0;">Slash commands that instantly invoke skills, workflows, or agent behaviors.</p>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:18px;">
+              <li style="display:flex;align-items:flex-start;gap:9px;font-size:clamp(13px,1.3vw,16px);color:var(--slate-80);line-height:1.4;"><span style="width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px;"></span>/review, /deep-research…</li>
+              <li style="display:flex;align-items:flex-start;gap:9px;font-size:clamp(13px,1.3vw,16px);color:var(--slate-80);line-height:1.4;"><span style="width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px;"></span>Custom in .claude/skills/</li>
+              <li style="display:flex;align-items:flex-start;gap:9px;font-size:clamp(13px,1.3vw,16px);color:var(--slate-80);line-height:1.4;"><span style="width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px;"></span>Parameterized at call time</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="slide-footer">
+      <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
+      <span class="copyright">© 2026 Sitetracker, Inc.</span>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 3 — CURSOR DIVIDER ══ -->
+  <div class="slide slide-divider" data-index="2">
+    <div class="bg-arrow">01</div>
+    <div class="content">
+      <div class="step">Section 01 — Editor</div>
+      <!-- Cursor official horizontal lockup (light, for dark background) -->
+      <svg viewBox="0 0 2238.7 532.09" xmlns="http://www.w3.org/2000/svg" style="height:clamp(48px,9vh,96px);width:auto;display:block;margin-top:8px;">
+        <!-- cube -->
+        <path fill="#edecec" d="M457.43,125.94L244.42,2.96c-6.84-3.95-15.28-3.95-22.12,0L9.3,125.94c-5.75,3.32-9.3,9.46-9.3,16.11v247.99c0,6.64,3.55,12.79,9.3,16.11l213.01,122.98c6.84,3.95,15.28,3.95,22.12,0l213.01-122.98c5.75-3.32,9.3-9.46,9.3-16.11v-247.99c0-6.64-3.55-12.79-9.3-16.11h-.01ZM444.05,151.99l-205.63,356.16c-1.39,2.4-5.06,1.42-5.06-1.36v-233.21c0-4.66-2.49-8.97-6.53-11.31L24.87,145.67c-2.4-1.39-1.42-5.06,1.36-5.06h411.26c5.84,0,9.49,6.33,6.57,11.39h-.01Z"/>
+        <!-- wordmark: C U R S O R -->
+        <path fill="#edecec" d="M722.44,138.08h90.64v49.93h-87.57c-47.24,0-84.11,27.27-84.11,84.88s36.87,84.88,84.11,84.88h87.57v49.93h-94.48c-79.12,0-135.19-46.47-135.19-134.8s59.91-134.8,139.03-134.8v-.02Z"/>
+        <path fill="#edecec" d="M859.17,138.08h56.07v164.76c0,41.09,18.82,60.3,62.99,60.3s62.99-19.2,62.99-60.3v-164.76h56.07v176.28c0,59.91-38.02,97.94-119.06,97.94s-119.06-38.41-119.06-98.32v-175.9h0Z"/>
+        <path fill="#edecec" d="M1390.32,214.5c0,29.96-17.28,53-40.33,62.99v.77c24.2,3.46,36.49,20.74,36.87,44.17l1.15,85.26h-56.07l-1.15-76.04c-.38-16.9-10.37-27.27-30.34-27.27h-93.33v103.31h-56.07V138.08h154.78c50.7,0,84.49,25.73,84.49,76.43h0ZM1333.86,222.19c0-23.04-12.29-35.72-35.33-35.72h-91.41v71.43h92.17c21.12,0,34.57-12.67,34.57-35.72h0Z"/>
+        <path fill="#edecec" d="M1602.31,328.95c0-19.2-12.29-27.27-30.72-28.8l-62.22-5.76c-53.77-4.99-81.81-26.12-81.81-77.2s34.57-79.12,84.11-79.12h137.49v48.39h-133.65c-19.2,0-31.49,9.99-31.49,29.19s12.67,28.42,31.88,29.96l63.37,5.38c48.01,4.22,79.5,26.12,79.5,77.58s-33.41,79.12-80.65,79.12h-143.64v-48.39h138.26c18.05,0,29.57-12.29,29.57-30.34h0Z"/>
+        <path fill="#edecec" d="M1822.77,133.47c84.49,0,137.88,54.15,137.88,139.03s-55.69,139.8-140.18,139.8-137.88-54.92-137.88-139.8,55.69-139.03,140.18-139.03ZM1902.65,272.88c0-56.84-33.03-90.25-81.04-90.25s-81.04,33.41-81.04,90.25,33.03,90.25,81.04,90.25,81.04-33.41,81.04-90.25Z"/>
+        <path fill="#edecec" d="M2238.7,214.5c0,29.96-17.28,53-40.33,62.99v.77c24.2,3.46,36.49,20.74,36.87,44.17l1.15,85.26h-56.07l-1.15-76.04c-.38-16.9-10.37-27.27-30.34-27.27h-93.33v103.31h-56.07V138.08h154.78c50.7,0,84.49,25.73,84.49,76.43h0ZM2182.24,222.19c0-23.04-12.29-35.72-35.33-35.72h-91.41v71.43h92.17c21.12,0,34.57-12.67,34.57-35.72h0Z"/>
+      </svg>
+    </div>
+    <div class="tagline-div">Manage What's Critical</div>
+  </div>
+
+  <!-- ══ SLIDE 4 — CURSOR OVERVIEW ══ -->
+  <div class="slide slide-content" data-index="3">
+    <div class="slide-top-bar">
+      <span class="slide-section-label">01 · Cursor</span>
+      <span class="slide-page-num">4 / 19</span>
+    </div>
+    <div class="slide-body row">
+      <div class="col" style="flex:1.1;">
+        <div class="accent-bar"></div>
+        <h2 class="slide-h">The AI-native<br />code editor</h2>
+        <p class="slide-lead">Cursor brings an LLM directly into the edit loop — not as a sidebar chatbot, but as a first-class collaborator that reads your entire codebase and edits files alongside you.</p>
+        <ul class="bullet-list">
+          <li><strong>⌘K / Ctrl+K</strong> — inline edit: describe what you want, Cursor diffs the result</li>
+          <li><strong>⌘L / Ctrl+L</strong> — multi-turn chat with full codebase context</li>
+          <li><strong>Agent Mode</strong> — give it a task; it plans, edits files, runs terminals, iterates</li>
+          <li><strong>Tab Completion</strong> — multi-line completions that respect your code style</li>
+          <li><strong>.cursorrules</strong> — project-level instructions applied to every AI interaction</li>
+          <li><strong>macOS · Windows · Linux</strong> — native installers for all three platforms; same feature set everywhere</li>
+        </ul>
+      </div>
+      <div class="col" style="flex:0.9;">
+        <div style="display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
+          <img src="data:image/png;base64,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" alt="Cursor" style="width:clamp(64px,8vw,100px);height:auto;border-radius:22%;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.18));"/>
+        </div>
+        <div class="code-block">
+<pre><span class="cmt">// ⌘K → "make this async + add error handling"</span>
+
+<span class="kw">async function</span> <span class="fn">fetchUserData</span>(<span class="num">userId</span>) {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> fetch(
+      <span class="str">`/api/users/${userId}`</span>
+    );
+    <span class="kw">if</span> (!res.ok) {
+      <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="str">`HTTP ${res.status}`</span>);
+    }
+    <span class="kw">return await</span> res.<span class="fn">json</span>();
+  } <span class="kw">catch</span> (err) {
+    console.<span class="fn">error</span>(<span class="str">'fetchUser failed'</span>, err);
+    <span class="kw">throw</span> err;
+  }
+}</pre>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
+      <span class="copyright">© 2026 Sitetracker, Inc.</span>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 5 — CURSOR TECHNICAL DEEP DIVE ══ -->
+  <div class="slide slide-content-dark" data-index="4">
+    <div class="slide-top-bar">
+      <span class="slide-section-label">01 · Cursor — Under the Hood</span>
+      <span class="slide-page-num">5 / 19</span>
+    </div>
+    <div class="slide-body" style="gap:3%;">
+      <div class="accent-bar"></div>
+      <h2 class="slide-h" style="margin-bottom:2.5%;">How Cursor works technically</h2>
+      <div class="cards" style="grid-template-columns:repeat(3,1fr); gap:2%;">
+
+        <!-- VS Code extensions -->
+        <div class="card" style="gap:0;justify-content:flex-start;position:relative;overflow:hidden;">
+          <img src="resources/VS Code Extension Support.png" alt="" aria-hidden="true" style="position:absolute;bottom:0;left:0;width:100%;height:55%;object-fit:cover;object-position:center top;opacity:0.12;pointer-events:none;mix-blend-mode:screen;">
+          <div style="position:relative;z-index:1;display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <!-- Official VS Code SVG, IDs prefixed to avoid conflicts -->
+            <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;overflow:visible;">
+              <mask id="vsc-m" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M70.9119 99.3171C72.4869 99.9307 74.2828 99.8914 75.8725 99.1264L96.4608 89.2197C98.6242 88.1787 100 85.9892 100 83.5872V16.4133C100 14.0113 98.6243 11.8218 96.4609 10.7808L75.8725 0.873756C73.7862 -0.130129 71.3446 0.11576 69.5135 1.44695C69.252 1.63711 69.0028 1.84943 68.769 2.08341L29.3551 38.0415L12.1872 25.0096C10.589 23.7965 8.35363 23.8959 6.86933 25.2461L1.36303 30.2549C-0.452552 31.9064 -0.454633 34.7627 1.35853 36.417L16.2471 50.0001L1.35853 63.5832C-0.454633 65.2374 -0.452552 68.0938 1.36303 69.7453L6.86933 74.7541C8.35363 76.1043 10.589 76.2037 12.1872 74.9905L29.3551 61.9587L68.769 97.9167C69.3925 98.5406 70.1246 99.0104 70.9119 99.3171ZM75.0152 27.2989L45.1091 50.0001L75.0152 72.7012V27.2989Z" fill="white"/>
+              </mask>
+              <g mask="url(#vsc-m)">
+                <path d="M96.4614 10.7962L75.8569 0.875542C73.4719 -0.272773 70.6217 0.211611 68.75 2.08333L1.29858 63.5832C-0.515693 65.2373 -0.513607 68.0937 1.30308 69.7452L6.81272 74.754C8.29793 76.1042 10.5347 76.2036 12.1338 74.9905L93.3609 13.3699C96.086 11.3026 100 13.2462 100 16.6667V16.4275C100 14.0265 98.6246 11.8378 96.4614 10.7962Z" fill="#0065A9"/>
+                <g filter="url(#vsc-f0)">
+                  <path d="M96.4614 89.2038L75.8569 99.1245C73.4719 100.273 70.6217 99.7884 68.75 97.9167L1.29858 36.4169C-0.515693 34.7627 -0.513607 31.9063 1.30308 30.2548L6.81272 25.246C8.29793 23.8958 10.5347 23.7964 12.1338 25.0095L93.3609 86.6301C96.086 88.6974 100 86.7538 100 83.3334V83.5726C100 85.9735 98.6246 88.1622 96.4614 89.2038Z" fill="#007ACC"/>
+                </g>
+                <g filter="url(#vsc-f1)">
+                  <path d="M75.8578 99.1263C73.4721 100.274 70.6219 99.7885 68.75 97.9166C71.0564 100.223 75 98.5895 75 95.3278V4.67213C75 1.41039 71.0564 -0.223106 68.75 2.08329C70.6219 0.211402 73.4721 -0.273666 75.8578 0.873633L96.4587 10.7807C98.6234 11.8217 100 14.0112 100 16.4132V83.5871C100 85.9891 98.6234 88.1786 96.4586 89.2196L75.8578 99.1263Z" fill="#1F9CF0"/>
+                </g>
+                <g style="mix-blend-mode:overlay" opacity="0.25">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M70.8511 99.3171C72.4261 99.9306 74.2221 99.8913 75.8117 99.1264L96.4 89.2197C98.5634 88.1787 99.9392 85.9892 99.9392 83.5871V16.4133C99.9392 14.0112 98.5635 11.8217 96.4001 10.7807L75.8117 0.873695C73.7255 -0.13019 71.2838 0.115699 69.4527 1.44688C69.1912 1.63705 68.942 1.84937 68.7082 2.08335L29.2943 38.0414L12.1264 25.0096C10.5283 23.7964 8.29285 23.8959 6.80855 25.246L1.30225 30.2548C-0.513334 31.9064 -0.515415 34.7627 1.29775 36.4169L16.1863 50L1.29775 63.5832C-0.515415 65.2374 -0.513334 68.0937 1.30225 69.7452L6.80855 74.754C8.29285 76.1042 10.5283 76.2036 12.1264 74.9905L29.2943 61.9586L68.7082 97.9167C69.3317 98.5405 70.0638 99.0104 70.8511 99.3171ZM74.9544 27.2989L45.0483 50L74.9544 72.7012V27.2989Z" fill="url(#vsc-g)"/>
+                </g>
+              </g>
+              <defs>
+                <filter id="vsc-f0" x="-8.39411" y="15.8291" width="116.727" height="92.2456" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                  <feFlood flood-opacity="0" result="BackgroundImageFix"/><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/><feOffset/><feGaussianBlur stdDeviation="4.16667"/><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/><feBlend mode="overlay" in2="BackgroundImageFix" result="effect1_dropShadow"/><feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+                </filter>
+                <filter id="vsc-f1" x="60.4167" y="-8.07558" width="47.9167" height="116.151" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                  <feFlood flood-opacity="0" result="BackgroundImageFix"/><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/><feOffset/><feGaussianBlur stdDeviation="4.16667"/><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/><feBlend mode="overlay" in2="BackgroundImageFix" result="effect1_dropShadow"/><feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+                </filter>
+                <linearGradient id="vsc-g" x1="49.9392" y1="0.257812" x2="49.9392" y2="99.7423" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="white"/><stop offset="1" stop-color="white" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <h3 style="font-size:clamp(16px,1.7vw,22px);margin:0;line-height:1.2;">VS Code Extension Support</h3>
+          </div>
+          <p style="font-size:clamp(13px,1.25vw,16px);line-height:1.55;margin-bottom:18px;flex:0;flex-shrink:0;">Cursor is a fork of VS Code — it runs the full VS Code extension API. The vast majority of existing extensions install and work without modification.</p>
+          <ul class="bullet-list" style="gap:10px;font-size:clamp(13px,1.2vw,15px);">
+            <li>Import your existing VS Code profile and extensions in one click</li>
+            <li>Language servers (LSP) run natively — TypeScript, Rust Analyzer, Pylance all work</li>
+            <li>Debugger adapters, linters, formatters, themes — fully compatible</li>
+            <li>Extensions using terminals or the file system work as expected</li>
+            <li>Only exception: extensions that hook into VS Code's AI/Copilot API directly</li>
+          </ul>
+          <button class="card-img-trigger" data-src="resources/VS Code Extension Support.png" title="View diagram" style="position:absolute;bottom:12px;right:12px;z-index:2;background:rgba(100,200,189,0.12);border:1px solid rgba(100,200,189,0.35);border-radius:8px;padding:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s,border-color 0.2s;" onmouseenter="this.style.background='rgba(100,200,189,0.25)';this.style.borderColor='rgba(100,200,189,0.7)'" onmouseleave="this.style.background='rgba(100,200,189,0.12)';this.style.borderColor='rgba(100,200,189,0.35)'">
+            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:16px;height:16px;"><rect x="1.5" y="3.5" width="17" height="13" rx="2" stroke="#64c8bd" stroke-width="1.5"/><circle cx="7" cy="9" r="2" stroke="#64c8bd" stroke-width="1.3"/><path d="M1.5 14l4-4 3 3 3.5-4 6 5" stroke="#64c8bd" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <!-- Indexing -->
+        <div class="card" style="gap:0;justify-content:flex-start;position:relative;overflow:hidden;">
+          <img src="resources/Codebase Indexing.png" alt="" aria-hidden="true" style="position:absolute;bottom:0;left:0;width:100%;height:55%;object-fit:cover;object-position:center top;opacity:0.12;pointer-events:none;mix-blend-mode:screen;">
+          <div style="position:relative;z-index:1;display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <!-- Codebase Indexing: magnifying glass over code lines -->
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:30px;height:30px;flex-shrink:0;">
+              <circle cx="13" cy="13" r="9.5" stroke="#64c8bd" stroke-width="2.5"/>
+              <line x1="19.7" y1="19.7" x2="28" y2="28" stroke="#64c8bd" stroke-width="2.8" stroke-linecap="round"/>
+              <line x1="9"  y1="11" x2="17" y2="11" stroke="#64c8bd" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="9"  y1="14.5" x2="15" y2="14.5" stroke="#64c8bd" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="9"  y1="18" x2="12.5" y2="18" stroke="#64c8bd" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            <h3 style="font-size:clamp(16px,1.7vw,22px);margin:0;line-height:1.2;">Codebase Indexing</h3>
+          </div>
+          <p style="font-size:clamp(13px,1.25vw,16px);line-height:1.55;margin-bottom:10px;flex:0;flex-shrink:0;">When you open a repo, Cursor reads all your code once and builds a searchable map — so the AI always knows where things are.</p>
+          <p style="font-size:clamp(11px,1.1vw,14px);line-height:1.5;margin-bottom:14px;flex:0;flex-shrink:0;color:#64c8bd;font-style:italic;">Like a book's index — instead of scanning every page each time, you jump straight to what's relevant.</p>
+          <table style="width:100%;border-collapse:collapse;font-size:clamp(12px,1.15vw,15px);">
+            <tr style="border-bottom:1px solid rgba(100,200,189,0.2);">
+              <td style="padding:7px 10px 7px 0;white-space:nowrap;color:#64c8bd;font-weight:700;vertical-align:top;width:1%;">Chunking</td>
+              <td style="padding:7px 0 7px 14px;color:rgba(255,255,255,0.8);line-height:1.5;">Breaks code into meaningful pieces (functions, classes) instead of arbitrary blocks</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(100,200,189,0.2);">
+              <td style="padding:7px 10px 7px 0;white-space:nowrap;color:#64c8bd;font-weight:700;vertical-align:top;">Embeddings</td>
+              <td style="padding:7px 0 7px 14px;color:rgba(255,255,255,0.8);line-height:1.5;">Each piece gets a unique fingerprint stored locally — your code never leaves your machine</td>
+            </tr>
+            <tr>
+              <td style="padding:7px 10px 7px 0;white-space:nowrap;color:#64c8bd;font-weight:700;vertical-align:top;">Retrieval</td>
+              <td style="padding:7px 0 7px 14px;color:rgba(255,255,255,0.8);line-height:1.5;">When you ask a question, the most relevant pieces are pulled in automatically</td>
+            </tr>
+          </table>
+          <button class="card-img-trigger" data-src="resources/Codebase Indexing.png" title="View diagram" style="position:absolute;bottom:12px;right:12px;z-index:2;background:rgba(100,200,189,0.12);border:1px solid rgba(100,200,189,0.35);border-radius:8px;padding:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s,border-color 0.2s;" onmouseenter="this.style.background='rgba(100,200,189,0.25)';this.style.borderColor='rgba(100,200,189,0.7)'" onmouseleave="this.style.background='rgba(100,200,189,0.12)';this.style.borderColor='rgba(100,200,189,0.35)'">
+            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:16px;height:16px;"><rect x="1.5" y="3.5" width="17" height="13" rx="2" stroke="#64c8bd" stroke-width="1.5"/><circle cx="7" cy="9" r="2" stroke="#64c8bd" stroke-width="1.3"/><path d="M1.5 14l4-4 3 3 3.5-4 6 5" stroke="#64c8bd" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <!-- Tokenization & context -->
+        <div class="card" style="gap:0;justify-content:flex-start;position:relative;overflow:hidden;">
+          <img src="resources/Tokenization %26 Context Window.png" alt="" aria-hidden="true" style="position:absolute;bottom:0;left:0;width:100%;height:55%;object-fit:cover;object-position:center top;opacity:0.12;pointer-events:none;mix-blend-mode:screen;">
+          <div style="position:relative;z-index:1;display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <!-- Tokenization: token blocks with a sliding context window -->
+            <svg viewBox="0 0 34 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:30px;height:30px;flex-shrink:0;">
+              <!-- Row of background tokens -->
+              <rect x="1"  y="13" width="6" height="6" rx="1.5" fill="#64c8bd" opacity="0.2"/>
+              <rect x="9"  y="13" width="6" height="6" rx="1.5" fill="#64c8bd" opacity="0.2"/>
+              <rect x="17" y="13" width="6" height="6" rx="1.5" fill="#64c8bd" opacity="0.2"/>
+              <rect x="25" y="13" width="6" height="6" rx="1.5" fill="#64c8bd" opacity="0.2"/>
+              <!-- Context window border overlaying the middle tokens -->
+              <rect x="7" y="9" width="18" height="14" rx="3" stroke="#64c8bd" stroke-width="2.2" fill="none"/>
+              <!-- Active tokens inside the window -->
+              <rect x="10" y="13" width="5" height="6" rx="1.5" fill="#64c8bd"/>
+              <rect x="17" y="13" width="5" height="6" rx="1.5" fill="#64c8bd" opacity="0.7"/>
+              <!-- Arrow showing window slides -->
+              <path d="M28 16l4 0M30 14l2 2-2 2" stroke="#64c8bd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Counter label at top -->
+              <rect x="10" y="3" width="12" height="5" rx="1.5" fill="#64c8bd" opacity="0.3"/>
+              <line x1="12" y1="5.5" x2="20" y2="5.5" stroke="#64c8bd" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <h3 style="font-size:clamp(16px,1.7vw,22px);margin:0;line-height:1.2;">Tokenization &amp; Context Window</h3>
+          </div>
+          <p style="font-size:clamp(13px,1.25vw,16px);line-height:1.55;margin-bottom:10px;flex:0;flex-shrink:0;">AI models have a limit on how much they can "see" at once. Cursor decides what fits — always keeping the most useful code in view.</p>
+          <p style="font-size:clamp(11px,1.1vw,14px);line-height:1.5;margin-bottom:14px;flex:0;flex-shrink:0;color:#64c8bd;font-style:italic;">Like a desk with limited space — you keep today's work front and center, and file away the rest within reach.</p>
+          <table style="width:100%;border-collapse:collapse;font-size:clamp(12px,1.15vw,15px);">
+            <tr style="border-bottom:1px solid rgba(100,200,189,0.2);">
+              <td style="padding:7px 10px 7px 0;white-space:nowrap;color:#64c8bd;font-weight:700;vertical-align:top;width:1%;">Tokens</td>
+              <td style="padding:7px 0 7px 14px;color:rgba(255,255,255,0.8);line-height:1.5;">The unit the AI reads in; roughly 3–4 characters each. Every request has a cap on how many fit</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(100,200,189,0.2);">
+              <td style="padding:7px 10px 7px 0;white-space:nowrap;color:#64c8bd;font-weight:700;vertical-align:top;">Context budget</td>
+              <td style="padding:7px 0 7px 14px;color:rgba(255,255,255,0.8);line-height:1.5;">Your current file is always included; the rest of the space is filled with the most relevant code from the index</td>
+            </tr>
+            <tr>
+              <td style="padding:7px 10px 7px 0;white-space:nowrap;color:#64c8bd;font-weight:700;vertical-align:top;">Bigger models</td>
+              <td style="padding:7px 0 7px 14px;color:rgba(255,255,255,0.8);line-height:1.5;">Claude's 200k+ token window means Cursor can fit entire files instead of just snippets</td>
+            </tr>
+          </table>
+          <button class="card-img-trigger" data-src="resources/Tokenization %26 Context Window.png" title="View diagram" style="position:absolute;bottom:12px;right:12px;z-index:2;background:rgba(100,200,189,0.12);border:1px solid rgba(100,200,189,0.35);border-radius:8px;padding:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s,border-color 0.2s;" onmouseenter="this.style.background='rgba(100,200,189,0.25)';this.style.borderColor='rgba(100,200,189,0.7)'" onmouseleave="this.style.background='rgba(100,200,189,0.12)';this.style.borderColor='rgba(100,200,189,0.35)'">
+            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:16px;height:16px;"><rect x="1.5" y="3.5" width="17" height="13" rx="2" stroke="#64c8bd" stroke-width="1.5"/><circle cx="7" cy="9" r="2" stroke="#64c8bd" stroke-width="1.3"/><path d="M1.5 14l4-4 3 3 3.5-4 6 5" stroke="#64c8bd" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+    <div class="slide-footer">
+      <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
+      <span class="copyright">© 2026 Sitetracker, Inc.</span>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 6 — SKILLS DIVIDER ══ -->
+  <div class="slide slide-divider" data-index="5">
+    <div class="bg-arrow">02</div>
+    <div class="content">
+      <div class="step">Section 02 — Automation</div>
+      <h2>Skills</h2>
+    </div>
+    <div class="tagline-div">Manage What's Critical</div>
+  </div>
+
+  <!-- ══ SLIDE 6 — SKILLS OVERVIEW ══ -->
+  <div class="slide slide-content-dark" data-index="6">
+    <div class="slide-top-bar">
+      <span class="slide-section-label">02 · Skills</span>
+      <span class="slide-page-num">7 / 19</span>
+    </div>
+    <div class="slide-body row">
+      <div class="col" style="flex:0.9;">
+        <div class="code-block">
+<pre><span class="cmt"># skill: code-review.md</span>
+<span class="cmt"># Invoked as: /code-review</span>
+
+<span class="kw">description:</span> <span class="str">Review PR diff for bugs & patterns</span>
+
+<span class="kw">steps:</span>
+  <span class="num">1.</span> Read the full diff with context
+  <span class="num">2.</span> Check for correctness bugs
+  <span class="num">3.</span> Identify simplification opportunities
+  <span class="num">4.</span> Note security surface changes
+  <span class="num">5.</span> Return findings by severity
+
+<span class="kw">output:</span>
+  <span class="kw">format:</span> <span class="str">markdown, high → low severity</span>
+  <span class="kw">inline_comments:</span> <span class="num">true</span></pre>
+        </div>
+      </div>
+      <div class="col" style="flex:1.1;">
+        <div class="accent-bar"></div>
+        <h2 class="slide-h">Encode expertise<br />once, apply everywhere</h2>
+        <p class="slide-lead">Skills are structured prompt templates that capture your team's best practice. Write it once, invoke with a slash command, get consistent results every time.</p>
+        <ul class="bullet-list">
+          <li>Defined in Markdown — live in your repo, version-controlled</li>
+          <li>Invoked via <strong>/skill-name</strong> or triggered automatically</li>
+          <li>Parameterized — pass context at call time</li>
+          <li>Composable — skills can chain other skills or MCP tools</li>
+          <li>Auditable — read the file to know exactly what the agent will do</li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
+      <span class="copyright">© 2026 Sitetracker, Inc.</span>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 7 — ST SKILLS PACK ══ -->
+  <div class="slide slide-content" data-index="7">
+    <div class="slide-top-bar">
+      <span class="slide-section-label">02 · Skills</span>
+      <span class="slide-page-num">8 / 19</span>
+    </div>
+    <div class="slide-body" style="flex-direction:column;gap:clamp(14px,1.6vw,22px);">
+      <div>
+        <div class="accent-bar"></div>
+        <h2 class="slide-h" style="color:var(--slate);">The ST Skills Pack <span style="font-size:0.5em;font-weight:400;opacity:0.45;font-family:'Barlow',sans-serif;letter-spacing:0.02em;">v1.3.6</span></h2>
+        <p class="slide-lead" style="color:var(--slate-70);">Four skills covering the full dev lifecycle — each mapped to a specific Cursor mode. Clone once, every engineer works the same way.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1.1vw,16px);flex:1;">
+
+        <!-- Ask -->
+        <div style="background:#fff;border:1px solid rgba(34,51,59,0.1);border-radius:12px;padding:clamp(12px,1.3vw,18px);display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="background:#e8f7f6;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" fill="none" style="width:18px;height:18px;"><circle cx="12" cy="12" r="9.5" stroke="#64c8bd" stroke-width="1.8"/><path d="M12 7.5c-1.7 0-2.8 1-2.8 2.2 0 .6.4 1 1 1s1-.4 1-1c0-.5.4-.8.8-.8.5 0 .8.3.8.8 0 .6-.5 1-1.2 1.5-.5.4-.8.9-.8 1.5v.3h2v-.3c0-.2.1-.4.5-.7.9-.7 1.5-1.5 1.5-2.5 0-1.4-1.1-2-2.8-2z" fill="#64c8bd"/><circle cx="12" cy="16.5" r="1" fill="#64c8bd"/></svg>
+            </div>
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(16px,1.7vw,22px);color:var(--slate);">st-skill-dev-ask</div>
+              <span style="font-size:10px;font-weight:700;letter-spacing:0.06em;background:#e8f7f6;color:#1a7a72;padding:2px 7px;border-radius:20px;">READ-ONLY</span>
+            </div>
+          </div>
+          <p style="font-size:clamp(14px,1.3vw,17px);color:var(--slate-70);margin:0;line-height:1.5;">Q&amp;A and codebase exploration without touching any files — "what does this do?", impact analysis, architecture questions.</p>
+          <p style="font-size:clamp(12px,1.15vw,15px);color:#1a7a72;font-style:italic;margin:0;line-height:1.4;">Like asking a senior engineer a question — they explain, but they don't touch your keyboard.</p>
+        </div>
+
+        <!-- Plan -->
+        <div style="background:#fff;border:1px solid rgba(34,51,59,0.1);border-radius:12px;padding:clamp(12px,1.3vw,18px);display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="background:#f0eefb;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" fill="none" style="width:18px;height:18px;"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#7c6fc7" stroke-width="1.8"/><line x1="8" y1="8" x2="16" y2="8" stroke="#7c6fc7" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="12" x2="16" y2="12" stroke="#7c6fc7" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="16" x2="12" y2="16" stroke="#7c6fc7" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(16px,1.7vw,22px);color:var(--slate);">st-skill-dev-plan</div>
+              <span style="font-size:10px;font-weight:700;letter-spacing:0.06em;background:#f0eefb;color:#5b4fc7;padding:2px 7px;border-radius:20px;">PLAN MODE</span>
+            </div>
+          </div>
+          <p style="font-size:clamp(14px,1.3vw,17px);color:var(--slate-70);margin:0;line-height:1.5;">Requirements, tech specs, and FDE docs. Spins up Tech Lead (+ optional Staff &amp; QA) subagents to review before any code is written.</p>
+          <p style="font-size:clamp(12px,1.15vw,15px);color:#5b4fc7;font-style:italic;margin:0;line-height:1.4;">Like an architect drawing blueprints — everything is reviewed and signed off before construction starts.</p>
+        </div>
+
+        <!-- Act -->
+        <div style="background:#fff;border:1px solid rgba(34,51,59,0.1);border-radius:12px;padding:clamp(12px,1.3vw,18px);display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="background:#fff3e0;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" fill="none" style="width:18px;height:18px;"><polyline points="16,18 22,12 16,6" stroke="#d97706" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><polyline points="8,6 2,12 8,18" stroke="#d97706" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(16px,1.7vw,22px);color:var(--slate);">st-skill-dev-act</div>
+              <span style="font-size:10px;font-weight:700;letter-spacing:0.06em;background:#fff3e0;color:#b36200;padding:2px 7px;border-radius:20px;">AGENT MODE</span>
+            </div>
+          </div>
+          <p style="font-size:clamp(14px,1.3vw,17px);color:var(--slate-70);margin:0;line-height:1.5;">Full implementation — Apex, LWC, JS, commits, docs. Enforces Sitetracker coding standards and file headers on every write.</p>
+          <p style="font-size:clamp(12px,1.15vw,15px);color:#b36200;font-style:italic;margin:0;line-height:1.4;">Like a contractor who builds to spec — follows the blueprint, no shortcuts.</p>
+        </div>
+
+        <!-- Debug -->
+        <div style="background:#fff;border:1px solid rgba(34,51,59,0.1);border-radius:12px;padding:clamp(12px,1.3vw,18px);display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="background:#fef2f2;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" fill="none" style="width:18px;height:18px;"><path d="M8 6L6 4m10 2l2-2M5 10H3m18 0h-2m-7 4v4m-4-4H6m12 0h-2" stroke="#dc2626" stroke-width="1.7" stroke-linecap="round"/><rect x="8" y="8" width="8" height="10" rx="2" stroke="#dc2626" stroke-width="1.7"/></svg>
+            </div>
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(16px,1.7vw,22px);color:var(--slate);">st-skill-dev-debug</div>
+              <span style="font-size:10px;font-weight:700;letter-spacing:0.06em;background:#e8f7f6;color:#1a7a72;padding:2px 7px;border-radius:20px;">READ-ONLY</span>
+            </div>
+          </div>
+          <p style="font-size:clamp(14px,1.3vw,17px);color:var(--slate-70);margin:0;line-height:1.5;">Hypothesis-driven root cause analysis for Production issues. No file writes — diagnoses and hands off to <em>act</em> for the fix.</p>
+          <p style="font-size:clamp(12px,1.15vw,15px);color:#dc2626;font-style:italic;margin:0;line-height:1.4;">Like a doctor diagnosing before prescribing — examines symptoms, names the cause, then the surgeon (<em>act</em>) operates.</p>
+        </div>
+
+      </div>
+
+      <!-- Footer strip -->
+      <div style="display:flex;gap:clamp(8px,1vw,14px);">
+        <div style="flex:1;background:var(--slate);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;">
+          <svg viewBox="0 0 24 24" fill="none" style="width:18px;height:18px;flex-shrink:0;"><circle cx="12" cy="7" r="3" stroke="#64c8bd" stroke-width="1.6"/><circle cx="5" cy="17" r="2.5" stroke="#64c8bd" stroke-width="1.4" opacity="0.75"/><circle cx="19" cy="17" r="2.5" stroke="#64c8bd" stroke-width="1.4" opacity="0.75"/><path d="M12 10v3m0 0-6.5 2m6.5-2 6.5 2" stroke="#64c8bd" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <div><div style="font-size:clamp(10px,0.9vw,12px);font-weight:700;color:#fff;letter-spacing:0.05em;">REVIEW SUBAGENTS</div><div style="font-size:clamp(9px,0.85vw,11px);color:rgba(255,255,255,0.55);">Tech Lead · Staff Engineer · QA Engineer</div></div>
+        </div>
+        <div style="flex:1;background:var(--slate);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;">
+          <svg viewBox="0 0 24 24" fill="none" style="width:18px;height:18px;flex-shrink:0;"><path d="M12 3L3 8l9 5 9-5-9-5z" stroke="#64c8bd" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 16l9 5 9-5M3 12l9 5 9-5" stroke="#64c8bd" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.65"/></svg>
+          <div><div style="font-size:clamp(10px,0.9vw,12px);font-weight:700;color:#fff;letter-spacing:0.05em;">GRAPHIFY</div><div style="font-size:clamp(9px,0.85vw,11px);color:rgba(255,255,255,0.55);">50%+ fewer tokens on architecture queries</div></div>
+        </div>
+        <div style="flex:1;background:var(--slate);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;">
+          <svg viewBox="0 0 24 24" fill="none" style="width:18px;height:18px;flex-shrink:0;"><polyline points="4,17 4,4 20,4" stroke="#64c8bd" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/><path d="M4 17l5-5 4 4 7-8" stroke="#64c8bd" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div><div style="font-size:clamp(10px,0.9vw,12px);font-weight:700;color:#fff;letter-spacing:0.05em;">WORKFLOW HOOKS</div><div style="font-size:clamp(9px,0.85vw,11px);color:rgba(255,255,255,0.55);">Preflight checks enforce the right skill every time</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
+      <span class="copyright">© 2026 Sitetracker, Inc.</span>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 9 — ST-DEV-CORE ══ -->
+  <div class="slide slide-content-dark" data-index="8">
+    <div class="slide-top-bar">
+      <span class="slide-section-label">02 · Skills</span>
+      <span class="slide-page-num">9 / 19</span>
+    </div>
+    <div class="slide-body" style="flex-direction:column;gap:clamp(14px,1.5vw,20px);">
+      <div>
+        <div class="accent-bar"></div>
+        <h2 class="slide-h">st-dev-core — The Shared Backbone</h2>
+        <p class="slide-lead">A single file loaded by every skill. It keeps all four behaviours consistent — same rules, same tools, same standards — regardless of which skill is active.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(10px,1.1vw,16px);flex:1;">
+
+        <!-- Preflight chain -->
+        <div class="card" style="gap:10px;justify-content:flex-start;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+            <div style="background:rgba(100,200,189,0.15);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" fill="none" style="width:16px;height:16px;"><circle cx="12" cy="5" r="2.5" stroke="#64c8bd" stroke-width="1.6"/><circle cx="12" cy="19" r="2.5" stroke="#64c8bd" stroke-width="1.6"/><path d="M12 7.5v9" stroke="#64c8bd" stroke-width="1.6" stroke-linecap="round"/><path d="M8 10l4-2.5 4 2.5M8 14l4 2.5 4-2.5" stroke="#64c8bd" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 style="font-size:clamp(18px,1.82vw,22px);margin:0;line-height:1.2;">Mandatory Preflight Chain</h3>
+          </div>
+          <p style="font-size:clamp(17px,1.54vw,20px);line-height:1.5;margin:0;flex:0;">Before any repo work, every skill runs the same two steps in order:</p>
+          <table style="width:100%;border-collapse:collapse;font-size:clamp(17px,1.68vw,21px);">
+            <tr style="border-bottom:1px solid rgba(100,200,189,0.2);">
+              <td style="padding:8px 10px 8px 0;white-space:nowrap;color:#64c8bd;font-weight:700;vertical-align:top;width:1%;">1. Graphify</td>
+              <td style="padding:8px 0 8px 12px;color:rgba(255,255,255,0.8);line-height:1.45;">Build or refresh the knowledge graph, then query it before reading files</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 10px 8px 0;white-space:nowrap;color:#64c8bd;font-weight:700;vertical-align:top;">2. strk-mcp</td>
+              <td style="padding:8px 0 8px 12px;color:rgba(255,255,255,0.8);line-height:1.45;">Validate assumptions against the Sitetracker managed package structure</td>
+            </tr>
+          </table>
+          <p style="font-size:clamp(18px,1.68vw,21px);color:#64c8bd;font-style:italic;margin:0;">Like checking the map and the site plan before you start work — same order, every time.</p>
+        </div>
+
+        <!-- Coding standards -->
+        <div class="card" style="gap:10px;justify-content:flex-start;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+            <div style="background:rgba(100,200,189,0.15);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" fill="none" style="width:16px;height:16px;"><path d="M9 11l3 3 7-7" stroke="#64c8bd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="3" width="18" height="18" rx="3" stroke="#64c8bd" stroke-width="1.6"/></svg>
+            </div>
+            <h3 style="font-size:clamp(18px,1.82vw,22px);margin:0;line-height:1.2;">Coding Standards Authority</h3>
+          </div>
+          <p style="font-size:clamp(17px,1.54vw,20px);line-height:1.5;margin:0;flex:0;">A clear hierarchy resolves any conflict between rules:</p>
+          <table style="width:100%;border-collapse:collapse;font-size:clamp(17px,1.68vw,21px);">
+            <tr style="border-bottom:1px solid rgba(100,200,189,0.2);">
+              <td style="padding:8px 10px 8px 0;white-space:nowrap;color:#64c8bd;font-weight:700;vertical-align:top;width:1%;">st-fde-coding-standards.md</td>
+              <td style="padding:8px 0 8px 12px;color:rgba(255,255,255,0.8);line-height:1.45;">Highest authority; wins over all other rules on implementation</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(100,200,189,0.2);">
+              <td style="padding:8px 10px 8px 0;white-space:nowrap;color:#64c8bd;font-weight:700;vertical-align:top;">st-general-*.mdc</td>
+              <td style="padding:8px 0 8px 12px;color:rgba(255,255,255,0.8);line-height:1.45;">Apex, LWC, security, file headers, design hygiene</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 10px 8px 0;white-space:nowrap;color:#64c8bd;font-weight:700;vertical-align:top;">Agentforce Vibes</td>
+              <td style="padding:8px 0 8px 12px;color:rgba(255,255,255,0.8);line-height:1.45;">Official Salesforce skills from the extension are used and kept updated alongside our own</td>
+            </tr>
+          </table>
+          <p style="font-size:clamp(18px,1.68vw,21px);color:#64c8bd;font-style:italic;margin:0;">Like a building code — stricter rules always win, no negotiation.</p>
+        </div>
+
+        <!-- MCPs & Rules -->
+        <div class="card" style="gap:10px;justify-content:flex-start;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+            <div style="background:rgba(100,200,189,0.15);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" fill="none" style="width:16px;height:16px;"><circle cx="12" cy="12" r="3" stroke="#64c8bd" stroke-width="1.6"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1" stroke="#64c8bd" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3 style="font-size:clamp(18px,1.82vw,22px);margin:0;line-height:1.2;">Tools Available to All Skills</h3>
+          </div>
+          <table style="width:100%;border-collapse:collapse;font-size:clamp(17px,1.68vw,21px);">
+            <tr style="border-bottom:1px solid rgba(100,200,189,0.2);">
+              <td style="padding:8px 10px 8px 0;white-space:nowrap;color:#64c8bd;font-weight:700;vertical-align:top;width:1%;">strk-mcp</td>
+              <td style="padding:8px 0 8px 12px;color:rgba(255,255,255,0.8);line-height:1.45;">Sitetracker package metadata, based on tags (package version)</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(100,200,189,0.2);">
+              <td style="padding:8px 10px 8px 0;white-space:nowrap;color:#64c8bd;font-weight:700;vertical-align:top;">Salesforce DX MCP</td>
+              <td style="padding:8px 0 8px 12px;color:rgba(255,255,255,0.8);line-height:1.45;">Org fields, records, SOQL. SFDX CLI simplified for the LLM (Salesforce Official)</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(100,200,189,0.2);">
+              <td style="padding:8px 10px 8px 0;white-space:nowrap;color:#64c8bd;font-weight:700;vertical-align:top;">context7</td>
+              <td style="padding:8px 0 8px 12px;color:rgba(255,255,255,0.8);line-height:1.45;">Live docs for any library or framework. Maintained by the community, always updated and voted with Trust level.</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 10px 8px 0;white-space:nowrap;color:#64c8bd;font-weight:700;vertical-align:top;">sequential-thinking</td>
+              <td style="padding:8px 0 8px 12px;color:rgba(255,255,255,0.8);line-height:1.45;">For multi-step architectural design. Helps the model think step by step and avoid getting stuck.</td>
+            </tr>
+          </table>
+          <p style="font-size:clamp(18px,1.68vw,21px);color:#64c8bd;font-style:italic;margin:0;">Like a shared toolbox — every skill can reach for the same tools when the job calls for it.</p>
+        </div>
+
+      </div>
+
+      <!-- Skills that load this file -->
+      <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.05);border-radius:10px;padding:10px 16px;">
+        <span style="font-size:clamp(14px,1.26vw,17px);color:rgba(255,255,255,0.45);font-weight:600;letter-spacing:0.06em;white-space:nowrap;">LOADED BY</span>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:clamp(14px,1.26vw,17px);background:rgba(100,200,189,0.15);color:#64c8bd;padding:3px 10px;border-radius:20px;font-family:'Barlow Condensed',sans-serif;font-weight:700;">st-skill-dev-ask</span>
+          <span style="font-size:clamp(14px,1.26vw,17px);background:rgba(124,111,199,0.2);color:#a89ee0;padding:3px 10px;border-radius:20px;font-family:'Barlow Condensed',sans-serif;font-weight:700;">st-skill-dev-plan</span>
+          <span style="font-size:clamp(14px,1.26vw,17px);background:rgba(217,119,6,0.2);color:#f59e0b;padding:3px 10px;border-radius:20px;font-family:'Barlow Condensed',sans-serif;font-weight:700;">st-skill-dev-act</span>
+          <span style="font-size:clamp(14px,1.26vw,17px);background:rgba(220,38,38,0.15);color:#f87171;padding:3px 10px;border-radius:20px;font-family:'Barlow Condensed',sans-serif;font-weight:700;">st-skill-dev-debug</span>
+        </div>
+        <span style="font-size:clamp(14px,1.26vw,17px);color:rgba(255,255,255,0.35);margin-left:auto;white-space:nowrap;">v1.3.6</span>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
+      <span class="copyright">© 2026 Sitetracker, Inc.</span>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 10 — GRAPHIFY ══ -->
+  <div class="slide slide-content" data-index="9">
+    <div class="slide-top-bar">
+      <span class="slide-section-label">02 · Skills</span>
+      <span class="slide-page-num">10 / 19</span>
+    </div>
+    <div class="slide-body" style="flex-direction:column;gap:clamp(12px,1.4vw,18px);">
+      <div>
+        <div class="accent-bar"></div>
+        <h2 class="slide-h" style="color:var(--slate);">Graphify — Your Codebase as a Knowledge Graph</h2>
+        <p class="slide-lead" style="color:var(--slate-70);">Maps your entire project into a queryable graph so AI skips the file-reading marathon and goes straight to what matters. Built locally — no API calls during extraction.</p>
+        <p style="font-size:clamp(15px,1.47vw,20px);color:#1a7a72;font-style:italic;margin:4px 0 0;">Like Google Maps for your repo — you query the map, not every street.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(10px,1.1vw,16px);flex:1;">
+
+        <div style="background:#f7fffe;border:1px solid rgba(100,200,189,0.25);border-radius:12px;padding:clamp(12px,1.2vw,18px);display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:2px;">
+            <div style="background:#e8f7f6;border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" fill="none" style="width:16px;height:16px;"><circle cx="12" cy="12" r="3" stroke="#64c8bd" stroke-width="1.7"/><circle cx="4" cy="6" r="2" stroke="#64c8bd" stroke-width="1.4"/><circle cx="20" cy="6" r="2" stroke="#64c8bd" stroke-width="1.4"/><circle cx="4" cy="18" r="2" stroke="#64c8bd" stroke-width="1.4"/><circle cx="20" cy="18" r="2" stroke="#64c8bd" stroke-width="1.4"/><path d="M6 6.8l4.3 4M13.7 13.2l4.3 4M18 6.8l-4.3 4M9.7 13.2l-4.3 4" stroke="#64c8bd" stroke-width="1.3" stroke-linecap="round"/></svg>
+            </div>
+            <h3 style="font-size:clamp(18px,1.75vw,22px);margin:0;color:var(--slate);line-height:1.2;">Why It Exists</h3>
+          </div>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px;">
+            <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.45;display:flex;gap:7px;"><span style="color:#64c8bd;font-weight:700;flex-shrink:0;">→</span>Reading full file trees for every question wastes tokens and is slow</li>
+            <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.45;display:flex;gap:7px;"><span style="color:#64c8bd;font-weight:700;flex-shrink:0;">→</span>Graphify builds the graph once; queries answer with <strong>50%+ fewer tokens</strong></li>
+            <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.45;display:flex;gap:7px;"><span style="color:#64c8bd;font-weight:700;flex-shrink:0;">→</span>31 languages, Salesforce metadata, PDFs, Office docs</li>
+            <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.45;display:flex;gap:7px;"><span style="color:#64c8bd;font-weight:700;flex-shrink:0;">→</span>AST extraction runs locally — no code leaves your machine</li>
+          </ul>
+        </div>
+
+        <div style="background:#f7fffe;border:1px solid rgba(100,200,189,0.25);border-radius:12px;padding:clamp(12px,1.2vw,18px);display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:2px;">
+            <div style="background:#e8f7f6;border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" fill="none" style="width:16px;height:16px;"><rect x="2" y="4" width="20" height="16" rx="3" stroke="#64c8bd" stroke-width="1.6"/><path d="M7 9l3 3-3 3M13 15h4" stroke="#64c8bd" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 style="font-size:clamp(18px,1.75vw,22px);margin:0;color:var(--slate);line-height:1.2;">Key Commands</h3>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="background:rgba(34,51,59,0.06);border-radius:6px;padding:5px 9px;font-family:monospace;font-size:clamp(14px,1.26vw,17px);color:var(--slate);">graphify .</div>
+            <p style="font-size:clamp(14px,1.26vw,17px);color:var(--slate-60);margin:0 0 3px 4px;line-height:1.3;">Build or rebuild the graph for the current directory</p>
+            <div style="background:rgba(34,51,59,0.06);border-radius:6px;padding:5px 9px;font-family:monospace;font-size:clamp(14px,1.26vw,17px);color:var(--slate);">graphify query "how does X work?"</div>
+            <p style="font-size:clamp(14px,1.26vw,17px);color:var(--slate-60);margin:0 0 3px 4px;line-height:1.3;">Ask a natural-language question about the codebase</p>
+            <div style="background:rgba(34,51,59,0.06);border-radius:6px;padding:5px 9px;font-family:monospace;font-size:clamp(14px,1.26vw,17px);color:var(--slate);">graphify path "ClassA" "ClassB"</div>
+            <p style="font-size:clamp(14px,1.26vw,17px);color:var(--slate-60);margin:0 0 3px 4px;line-height:1.3;">Trace the shortest connection between two nodes</p>
+            <div style="background:rgba(34,51,59,0.06);border-radius:6px;padding:5px 9px;font-family:monospace;font-size:clamp(14px,1.26vw,17px);color:var(--slate);">graphify . --update</div>
+            <p style="font-size:clamp(14px,1.26vw,17px);color:var(--slate-60);margin:0 0 0 4px;line-height:1.3;">Re-extract only files changed since last run</p>
+          </div>
+        </div>
+
+        <div style="background:#f7fffe;border:1px solid rgba(100,200,189,0.25);border-radius:12px;padding:clamp(12px,1.2vw,18px);display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:2px;">
+            <div style="background:#e8f7f6;border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" fill="none" style="width:16px;height:16px;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="#64c8bd" stroke-width="1.6"/><polyline points="14,2 14,8 20,8" stroke="#64c8bd" stroke-width="1.6" stroke-linejoin="round"/><line x1="9" y1="13" x2="15" y2="13" stroke="#64c8bd" stroke-width="1.4" stroke-linecap="round"/><line x1="9" y1="17" x2="13" y2="17" stroke="#64c8bd" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </div>
+            <h3 style="font-size:clamp(18px,1.75vw,22px);margin:0;color:var(--slate);line-height:1.2;">What It Produces</h3>
+          </div>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;">
+            <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.4;"><code style="background:rgba(34,51,59,0.08);padding:1px 5px;border-radius:4px;font-size:0.95em;">graph.json</code> — machine-readable graph; what AI queries against</li>
+            <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.4;"><code style="background:rgba(34,51,59,0.08);padding:1px 5px;border-radius:4px;font-size:0.95em;">GRAPH_REPORT.md</code> — architecture overview: god nodes, surprising connections, design rationale</li>
+            <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.4;"><code style="background:rgba(34,51,59,0.08);padding:1px 5px;border-radius:4px;font-size:0.95em;">graph.html</code> — interactive browser visualization with search &amp; filtering</li>
+            <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.4;"><code style="background:rgba(34,51,59,0.08);padding:1px 5px;border-radius:4px;font-size:0.95em;">graphify-out/wiki/</code> — full markdown wiki (<code style="background:rgba(34,51,59,0.08);padding:1px 5px;border-radius:4px;font-size:0.95em;">--wiki</code> flag)</li>
+          </ul>
+          <p style="font-size:clamp(13px,1.19vw,15px);color:var(--slate-50);margin-top:auto;padding-top:4px;">Add <code style="font-size:0.95em;">graphify-out/</code> to <code style="font-size:0.95em;">.gitignore</code> — generated output, never commit.</p>
+        </div>
+
+      </div>
+
+      <div style="background:var(--slate);border-radius:10px;padding:10px 18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <span style="font-size:clamp(14px,1.26vw,17px);font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:0.07em;white-space:nowrap;">INSTALL</span>
+        <code style="font-family:monospace;font-size:clamp(15px,1.4vw,18px);color:#64c8bd;">uv tool install graphifyy &amp;&amp; graphify install</code>
+        <span style="font-size:clamp(14px,1.19vw,15px);color:rgba(255,255,255,0.35);margin-left:auto;white-space:nowrap;">PyPI: <code style="color:rgba(255,255,255,0.5);">graphifyy</code> (double&nbsp;y) · CLI: <code style="color:rgba(255,255,255,0.5);">graphify</code></span>
+        <a href="https://github.com/renan-brasilio/graphify" style="font-size:clamp(14px,1.19vw,15px);color:#64c8bd;text-decoration:none;">github.com/renan-brasilio/graphify ↗</a>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
+      <span class="copyright">© 2026 Sitetracker, Inc.</span>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 11 — MCPs DIVIDER ══ -->
+  <div class="slide slide-divider" data-index="10">
+    <div class="bg-arrow">03</div>
+    <div class="content">
+      <div class="step">Section 03 — Protocol</div>
+      <h2>MCPs</h2>
+    </div>
+    <div class="tagline-div">Manage What's Critical</div>
+  </div>
+
+  <!-- ══ SLIDE 8 — MCPs OVERVIEW ══ -->
+  <div class="slide slide-content" data-index="11">
+    <div class="slide-top-bar">
+      <span class="slide-section-label">03 · Model Context Protocol</span>
+      <span class="slide-page-num">12 / 19</span>
+    </div>
+    <div class="slide-body">
+      <div class="accent-bar"></div>
+      <h2 class="slide-h">Connect the model to your world</h2>
+      <p class="slide-lead">A standard plug that lets any AI model talk to any external tool — no custom glue code. There are 1,000+ community servers; these are the four most common categories.</p>
+      <div class="flow-row">
+        <div class="flow-node teal">AI Assistant<div class="node-sub">LLM Selected</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">MCP<div class="node-sub">The standard bridge</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node light">Your Tools<div class="node-sub">DB · Slack · GitHub · Files</div></div>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">🗄️</div>
+          <h3>Database MCP</h3>
+          <p>Ask questions about your DB in plain English. The model sees your live schema and writes SQL or migrations for you.<br><em style="color:var(--teal-dark);font-size:0.9em;">Like having Google for your own data — search in plain English, get exact answers.</em></p>
+          <span class="card-tag">Data</span>
+        </div>
+        <div class="card">
+          <div class="card-icon">🐙</div>
+          <h3>GitHub MCP</h3>
+          <p>Read issues, PRs, and diffs without copy-pasting. Draft descriptions or triage bugs right from your editor.<br><em style="color:var(--teal-dark);font-size:0.9em;">Like a pair programmer who's read every PR you've ever written.</em></p>
+          <span class="card-tag">DevOps</span>
+        </div>
+        <div class="card">
+          <div class="card-icon">💬</div>
+          <h3>Slack / Jira MCP</h3>
+          <p>The model reads tickets and threads to understand the <em>why</em> behind a feature — not just the code.<br><em style="color:var(--teal-dark);font-size:0.9em;">Like a new hire who actually read all the Slack history.</em></p>
+          <span class="card-tag">Collaboration</span>
+        </div>
+        <div class="card">
+          <div class="card-icon">📁</div>
+          <h3>Filesystem MCP</h3>
+          <p>Scoped read/write access to your directories — create files, parse configs, move assets.<br><em style="color:var(--teal-dark);font-size:0.9em;">Like giving the model a key to specific filing cabinets, not the whole building.</em></p>
+          <span class="card-tag">Files</span>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
+      <span class="copyright">© 2026 Sitetracker, Inc.</span>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 9 — MCP BY THE NUMBERS ══ -->
+  <div class="slide slide-content-dark" data-index="12">
+    <div class="slide-top-bar">
+      <span class="slide-section-label">03 · MCP — By the Numbers</span>
+      <span class="slide-page-num">13 / 19</span>
+    </div>
+    <div class="slide-body">
+      <div class="accent-bar"></div>
+      <h2 class="slide-h">Why MCP matters</h2>
+      <p class="slide-lead">Before MCP, every AI-to-tool connection needed its own custom code. MCP is the universal plug — one standard that lets any AI work with any tool, out of the box.</p>
+      <div class="stats-row" style="grid-template-columns:repeat(3,1fr);">
+        <div class="stat"><div class="stat-n">1,000+</div><div class="stat-l">Pre-built connectors ready to install — Slack, GitHub, Salesforce, databases, and more</div></div>
+        <div class="stat"><div class="stat-n">0 custom<br/>code</div><div class="stat-l">One standard replaces every one-off integration you'd have had to build by hand</div></div>
+        <div class="stat"><div class="stat-n">Any AI,<br/>any tool</div><div class="stat-l">Claude, GPT, Cursor, VS Code — they all speak MCP, so your connectors work everywhere</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:12px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.35);border-radius:10px;padding:12px 16px;margin-top:16px;">
+        <span style="font-size:18px;line-height:1;flex-shrink:0;">⚠️</span>
+        <p style="margin:0;font-size:clamp(16px,1.43vw,20px);color:rgba(255,255,255,0.75);line-height:1.5;"><strong style="color:#f59e0b;">Don't go overboard.</strong> Every active MCP adds tools to the model's context. Too many and the AI starts struggling to pick the right one — or gets confused entirely. Enable only what you actually need for the task at hand.</p>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
+      <span class="copyright">© 2026 Sitetracker, Inc.</span>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 10 — SUBAGENTS DIVIDER ══ -->
+  <div class="slide slide-divider" data-index="13">
+    <div class="bg-arrow">04</div>
+    <div class="content">
+      <div class="step">Section 04 — Orchestration</div>
+      <h2>Subagents</h2>
+    </div>
+    <div class="tagline-div">Manage What's Critical</div>
+  </div>
+
+  <!-- ══ SLIDE 11 — SUBAGENTS OVERVIEW ══ -->
+  <div class="slide slide-content" data-index="14">
+    <div class="slide-top-bar">
+      <span class="slide-section-label">04 · Subagents</span>
+      <span class="slide-page-num">14 / 19</span>
+    </div>
+    <div class="slide-body row">
+      <div class="col" style="flex:1.1;">
+        <div class="accent-bar"></div>
+        <h2 class="slide-h">Parallel work,<br />single result</h2>
+        <p class="slide-lead">Subagents are specialized child agents spawned to work on discrete sub-tasks in parallel — letting complex workflows scale beyond what a single context window can hold.</p>
+        <ul class="bullet-list">
+          <li>Each subagent gets a focused, self-contained prompt</li>
+          <li><strong>Parallel execution</strong> cuts wall-clock time dramatically</li>
+          <li>Subagents can use different tools or models than the orchestrator</li>
+          <li>Context isolation prevents earlier conversation from polluting results</li>
+          <li><strong>Adversarial verify</strong> — multiple agents review the same finding independently</li>
+        </ul>
+      </div>
+      <div class="col" style="flex:0.9;">
+        <div class="code-block">
+<pre><span class="cmt">// Orchestrator: spawn parallel subagents</span>
+
+<span class="kw">const</span> results = <span class="kw">await</span> <span class="fn">parallel</span>([
+  () => <span class="fn">agent</span>(
+    <span class="str">"Review auth module for bugs"</span>,
+    { phase: <span class="str">'Review'</span> }
+  ),
+  () => <span class="fn">agent</span>(
+    <span class="str">"Review payments module for bugs"</span>,
+    { phase: <span class="str">'Review'</span> }
+  ),
+  () => <span class="fn">agent</span>(
+    <span class="str">"Review API layer for bugs"</span>,
+    { phase: <span class="str">'Review'</span> }
+  ),
+]);
+
+<span class="kw">const</span> confirmed = results
+  .<span class="fn">filter</span>(Boolean)
+  .<span class="fn">flatMap</span>(r => r.findings);</pre>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
+      <span class="copyright">© 2026 Sitetracker, Inc.</span>
+    </div>
+  </div>
+
+  <!-- ══ ST DEVELOPER SUBAGENTS ══ -->
+  <div class="slide slide-content-dark" data-index="15">
+    <div class="slide-top-bar">
+      <span class="slide-section-label">04 · Subagents</span>
+      <span class="slide-page-num">15 / 19</span>
+    </div>
+    <div class="slide-body" style="flex-direction:column;gap:clamp(12px,1.4vw,18px);">
+      <div>
+        <div class="accent-bar"></div>
+        <h2 class="slide-h">ST Developer Subagents</h2>
+        <p class="slide-lead">Four specialized agents work in a defined pipeline — you bring the requirement, they handle the rest.</p>
+      </div>
+
+      <!-- Phase pipeline strip -->
+      <div style="display:flex;align-items:center;gap:0;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 20px;justify-content:center;">
+        <span style="font-size:clamp(11px,1vw,13px);color:rgba(255,255,255,0.45);font-weight:600;letter-spacing:0.06em;">PIPELINE</span>
+        <div style="display:flex;align-items:center;gap:4px;margin-left:20px;flex-wrap:wrap;">
+          <span style="font-size:clamp(11px,1vw,13px);background:rgba(100,200,189,0.2);color:#64c8bd;padding:4px 12px;border-radius:20px;font-weight:700;">1 · Route</span>
+          <span style="color:rgba(255,255,255,0.25);font-size:14px;">→</span>
+          <span style="font-size:clamp(11px,1vw,13px);background:rgba(124,111,199,0.2);color:#a89ee0;padding:4px 12px;border-radius:20px;font-weight:700;">2 · Spec</span>
+          <span style="color:rgba(255,255,255,0.25);font-size:14px;">→</span>
+          <span style="font-size:clamp(11px,1vw,13px);background:rgba(217,119,6,0.2);color:#f59e0b;padding:4px 12px;border-radius:20px;font-weight:700;">3 · Build</span>
+          <span style="color:rgba(255,255,255,0.25);font-size:14px;">→</span>
+          <span style="font-size:clamp(11px,1vw,13px);background:rgba(220,38,38,0.15);color:#f87171;padding:4px 12px;border-radius:20px;font-weight:700;">4 · QA</span>
+          <span style="color:rgba(255,255,255,0.25);font-size:14px;">→</span>
+          <span style="font-size:clamp(11px,1vw,13px);background:rgba(217,119,6,0.2);color:#f59e0b;padding:4px 12px;border-radius:20px;font-weight:700;">5 · Fix</span>
+        </div>
+      </div>
+
+      <!-- Agent cards -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:clamp(10px,1.1vw,16px);flex:1;">
+
+        <div class="card" style="gap:10px;justify-content:flex-start;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+            <div style="background:rgba(100,200,189,0.15);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">🧭</div>
+            <h3 style="font-size:clamp(14px,1.4vw,18px);margin:0;line-height:1.2;">Orchestrator</h3>
+          </div>
+          <span style="font-size:clamp(10px,0.9vw,12px);background:rgba(100,200,189,0.2);color:#64c8bd;padding:3px 10px;border-radius:20px;font-weight:700;align-self:flex-start;">Entry Point</span>
+          <p style="font-size:clamp(12px,1.1vw,15px);line-height:1.5;margin:0;color:rgba(255,255,255,0.7);">Routes the session to the right skill. Collects requirements and hands off a structured brief to the pipeline.</p>
+          <code style="font-size:clamp(10px,0.85vw,12px);color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.05);padding:3px 8px;border-radius:6px;align-self:flex-start;">st-dev-orchestrator</code>
+        </div>
+
+        <div class="card" style="gap:10px;justify-content:flex-start;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+            <div style="background:rgba(124,111,199,0.15);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">📐</div>
+            <h3 style="font-size:clamp(14px,1.4vw,18px);margin:0;line-height:1.2;">Tech Lead</h3>
+          </div>
+          <span style="font-size:clamp(10px,0.9vw,12px);background:rgba(124,111,199,0.2);color:#a89ee0;padding:3px 10px;border-radius:20px;font-weight:700;align-self:flex-start;">Phase 2 — Spec</span>
+          <p style="font-size:clamp(12px,1.1vw,15px);line-height:1.5;margin:0;color:rgba(255,255,255,0.7);">Explores the codebase and produces a precise, implementable tech spec before a single line of code is written.</p>
+          <code style="font-size:clamp(10px,0.85vw,12px);color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.05);padding:3px 8px;border-radius:6px;align-self:flex-start;">st-subagent-tech-lead</code>
+        </div>
+
+        <div class="card" style="gap:10px;justify-content:flex-start;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+            <div style="background:rgba(217,119,6,0.15);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">⚙️</div>
+            <h3 style="font-size:clamp(14px,1.4vw,18px);margin:0;line-height:1.2;">Staff Engineer</h3>
+          </div>
+          <span style="font-size:clamp(10px,0.9vw,12px);background:rgba(217,119,6,0.2);color:#f59e0b;padding:3px 10px;border-radius:20px;font-weight:700;align-self:flex-start;">Phase 3 &amp; 5 — Build &amp; Fix</span>
+          <p style="font-size:clamp(12px,1.1vw,15px);line-height:1.5;margin:0;color:rgba(255,255,255,0.7);">Implements the spec chunk-by-chunk with unit tests. Returns for targeted fixes if QA fails — nothing more, nothing less.</p>
+          <code style="font-size:clamp(10px,0.85vw,12px);color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.05);padding:3px 8px;border-radius:6px;align-self:flex-start;">st-subagent-staff-engineer</code>
+        </div>
+
+        <div class="card" style="gap:10px;justify-content:flex-start;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+            <div style="background:rgba(220,38,38,0.15);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">🔍</div>
+            <h3 style="font-size:clamp(14px,1.4vw,18px);margin:0;line-height:1.2;">QA Engineer</h3>
+          </div>
+          <span style="font-size:clamp(10px,0.9vw,12px);background:rgba(220,38,38,0.15);color:#f87171;padding:3px 10px;border-radius:20px;font-weight:700;align-self:flex-start;">Phase 4 — Validate</span>
+          <p style="font-size:clamp(12px,1.1vw,15px);line-height:1.5;margin:0;color:rgba(255,255,255,0.7);">Validates the implementation against the tech spec. Runs tests, checks scope, returns a structured PASS or FAIL report.</p>
+          <code style="font-size:clamp(10px,0.85vw,12px);color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.05);padding:3px 8px;border-radius:6px;align-self:flex-start;">st-subagent-qa-engineer</code>
+        </div>
+
+      </div>
+    </div>
+    <div class="slide-footer">
+      <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
+      <span class="copyright">© 2026 Sitetracker, Inc.</span>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 12 — COMMANDS DIVIDER ══ -->
+  <div class="slide slide-divider" data-index="16">
+    <div class="bg-arrow">05</div>
+    <div class="content">
+      <div class="step">Section 05 — Interface</div>
+      <h2>Commands</h2>
+    </div>
+    <div class="tagline-div">Manage What's Critical</div>
+  </div>
+
+  <!-- ══ SLIDE 13 — COMMANDS TABLE ══ -->
+  <div class="slide slide-content" data-index="17">
+    <div class="slide-top-bar">
+      <span class="slide-section-label">05 · Commands</span>
+      <span class="slide-page-num">17 / 19</span>
+    </div>
+    <div class="slide-body" style="gap: 2%;">
+      <div class="accent-bar"></div>
+      <h2 class="slide-h" style="margin-bottom:2%;">Slash Command Reference</h2>
+      <div class="cmd-table-wrap">
+        <table class="cmd-table">
+          <thead>
+            <tr>
+              <th>Command</th>
+              <th>What it does</th>
+              <th>When to use it</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>/review</td><td>Code Review</td><td>Review the current diff for bugs, simplifications, and security issues.</td></tr>
+            <tr><td>/deep-research</td><td>Multi-source Research</td><td>Fan-out web searches, verify claims, synthesize a cited report.</td></tr>
+            <tr><td>/init</td><td>Initialize CLAUDE.md</td><td>First-time setup — generates codebase documentation for the agent.</td></tr>
+            <tr><td>/run</td><td>Launch App</td><td>Start the dev server and confirm a change works in the real UI.</td></tr>
+            <tr><td>/verify</td><td>Verify a Change</td><td>Run the app and observe real behavior to confirm a fix works.</td></tr>
+            <tr><td>/simplify</td><td>Simplify Code</td><td>Apply reuse, simplification, and efficiency cleanups to changed code.</td></tr>
+            <tr><td>/schedule</td><td>Schedule Task</td><td>Create a recurring remote agent on a cron schedule.</td></tr>
+            <tr><td>/security-review</td><td>Security Audit</td><td>Audit for OWASP-class vulnerabilities and hardening gaps.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
+      <span class="copyright">© 2026 Sitetracker, Inc.</span>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 14 — CLOSING ══ -->
+  <div class="slide slide-cover" data-index="18">
+    <div class="bg-circle c1"></div>
+    <div class="bg-circle c2"></div>
+    <div class="tagline">Sitetracker Engineering</div>
+    <div class="content">
+      <div class="eyebrow">Thank you</div>
+      <h1>Manage<br /><span>What's</span><br /><span>Critical.</span></h1>
+      <p class="subtitle">Questions? Reach out to the Engineering team or visit Brand Central for more resources.</p>
+    </div>
+    <div class="footer-line">© 2026 Sitetracker, Inc. All rights reserved.</div>
+  </div>
+
+</div><!-- /#deck -->
+
+<!-- ── CHROME ── -->
+<div id="progress"></div>
+<button class="nav-btn" id="btn-prev" aria-label="Previous slide">‹</button>
+<button class="nav-btn" id="btn-next" aria-label="Next slide">›</button>
+<div id="counter"></div>
+
+<div id="tray"></div>
+
+<div id="card-img-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.72);align-items:center;justify-content:center;backdrop-filter:blur(6px);cursor:pointer;">
+  <img id="card-img-modal-img" src="" alt="" style="max-width:82vw;max-height:82vh;border-radius:14px;box-shadow:0 24px 72px rgba(0,0,0,0.6);pointer-events:none;">
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total   = slides.length;
+  let current   = 0;
+
+  const progressEl = document.getElementById('progress');
+  const counterEl  = document.getElementById('counter');
+  const btnPrev    = document.getElementById('btn-prev');
+  const btnNext    = document.getElementById('btn-next');
+  const tray       = document.getElementById('tray');
+
+  // Build tray thumbnails
+  const TRAY_COLORS = {
+    'slide-cover':        '#22333B',
+    'slide-divider':      '#00847C',
+    'slide-content':      '#E8EBEB',
+    'slide-content-dark': '#22333B',
+  };
+  const TRAY_TEXT_COLORS = {
+    'slide-cover':        '#64c8bd',
+    'slide-divider':      '#22333B',
+    'slide-content':      '#22333B',
+    'slide-content-dark': '#64c8bd',
+  };
+  slides.forEach((s, i) => {
+    const cls  = ['slide-cover','slide-divider','slide-content','slide-content-dark'].find(c => s.classList.contains(c)) || 'slide-content';
+    const bg   = TRAY_COLORS[cls];
+    const tc   = TRAY_TEXT_COLORS[cls];
+    const label = s.querySelector('h1,h2,.slide-h')?.textContent?.trim().slice(0, 30) || `Slide ${i+1}`;
+    const t = document.createElement('div');
+    t.className = 'tray-thumb';
+    t.style.background = bg;
+    t.innerHTML = `<span style="color:${tc}">${i+1}. ${label}</span>`;
+    t.addEventListener('click', () => { goTo(i); tray.classList.remove('open'); });
+    tray.appendChild(t);
+  });
+
+  function goTo(n, { pushState = true } = {}) {
+    slides[current].classList.remove('active');
+    current = Math.max(0, Math.min(n, total - 1));
+    slides[current].classList.add('active');
+    update(pushState);
+  }
+
+  function update(pushState = true) {
+    const pct = total > 1 ? (current / (total - 1)) * 100 : 100;
+    progressEl.style.width = pct + '%';
+    counterEl.textContent  = `${current + 1} / ${total}`;
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = current === total - 1;
+    // Sync URL hash
+    const hash = `#slide-${current + 1}`;
+    if (pushState && window.location.hash !== hash) {
+      history.pushState(null, '', hash);
+    }
+    // Update tray
+    tray.querySelectorAll('.tray-thumb').forEach((t, i) => {
+      t.classList.toggle('active', i === current);
+    });
+    const active = tray.querySelector('.tray-thumb.active');
+    if (active) active.scrollIntoView({ inline: 'center', behavior: 'smooth', block: 'nearest' });
+  }
+
+  // Navigate to slide from URL hash (e.g. #slide-4)
+  function slideFromHash() {
+    const m = window.location.hash.match(/^#slide-(\d+)$/);
+    if (m) {
+      const n = parseInt(m[1], 10) - 1;
+      if (n >= 0 && n < total) return n;
+    }
+    return 0;
+  }
+
+  // Handle back/forward browser navigation
+  window.addEventListener('popstate', () => {
+    goTo(slideFromHash(), { pushState: false });
+  });
+
+  btnPrev.addEventListener('click', () => goTo(current - 1));
+  btnNext.addEventListener('click', () => goTo(current + 1));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ')  { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                      { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'Home')  goTo(0);
+    if (e.key === 'End')   goTo(total - 1);
+    if (e.key === 't' || e.key === 'T') tray.classList.toggle('open');
+  });
+
+  // Swipe support
+  let tx = 0;
+  document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 50) goTo(current + (dx < 0 ? 1 : -1));
+  });
+
+  // Jump to slide from URL on load, then push the canonical hash
+  const initial = slideFromHash();
+  if (initial !== 0) {
+    slides[0].classList.remove('active');
+    current = initial;
+    slides[current].classList.add('active');
+  }
+  update();
+
+  // Card image preview modal — click to open, click/Escape to close
+  const imgModal = document.getElementById('card-img-modal');
+  const imgModalImg = document.getElementById('card-img-modal-img');
+  document.querySelectorAll('.card-img-trigger').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      imgModalImg.src = btn.dataset.src;
+      imgModal.style.display = 'flex';
+    });
+  });
+  imgModal.addEventListener('click', () => { imgModal.style.display = 'none'; });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') imgModal.style.display = 'none'; });
+</script>
+</body>
+</html>
