@@ -679,6 +679,16 @@
     }
     .tray-thumb:hover, .tray-thumb.active { border-color: var(--teal); }
     .tray-thumb span { padding: 8px; color: var(--white); }
+
+    /* ── SLIDE TIMER ── */
+    #slide-timer {
+      position: fixed;
+      top: 16px; right: 24px;
+      z-index: 200;
+      opacity: 0.6;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
   </style>
 </head>
 <body>
@@ -1989,6 +1999,20 @@
 <button class="nav-btn" id="btn-next" aria-label="Next slide">›</button>
 <div id="counter"></div>
 
+<div id="slide-timer" style="display:none;">
+  <svg viewBox="0 0 36 36" width="48" height="48">
+    <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="2.5"/>
+    <circle id="slide-timer-arc" cx="18" cy="18" r="14" fill="none" stroke="var(--teal)"
+      stroke-width="2.5" stroke-linecap="round"
+      stroke-dasharray="87.96" stroke-dashoffset="0"
+      transform="rotate(-90 18 18)"/>
+    <circle cx="18" cy="18" r="11" fill="rgba(34,51,59,0.65)"/>
+    <text id="slide-timer-text" x="18" y="18" text-anchor="middle" dominant-baseline="central"
+      font-size="7.5" font-weight="700" font-family="'Barlow Condensed', sans-serif"
+      fill="white" letter-spacing="0.2">5:00</text>
+  </svg>
+</div>
+
 <div id="tray"></div>
 
 <div id="card-img-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.72);align-items:center;justify-content:center;backdrop-filter:blur(6px);cursor:pointer;">
@@ -2005,6 +2029,50 @@
   const btnPrev    = document.getElementById('btn-prev');
   const btnNext    = document.getElementById('btn-next');
   const tray       = document.getElementById('tray');
+
+  // ── SLIDE TIMER ──
+  const TIMER_CIRC = 2 * Math.PI * 14;              // stroke circumference ≈ 87.96
+  const TIMER_NO   = new Set([0,1,2,8,15,20,25,29]); // slides 1,2,3,9,16,21,26,30
+  const TIMER_LONG = new Set([7,14,19,24]);           // slides 8,15,20,25 → 7 min
+  const timerEl    = document.getElementById('slide-timer');
+  const timerArc   = document.getElementById('slide-timer-arc');
+  const timerText  = document.getElementById('slide-timer-text');
+  let   timerRAF   = null;
+
+  function stopTimer() {
+    if (timerRAF) { cancelAnimationFrame(timerRAF); timerRAF = null; }
+    timerEl.style.display = 'none';
+  }
+
+  function fmtTime(ms) {
+    const m = Math.floor(ms / 60000);
+    const s = Math.floor((ms % 60000) / 1000);
+    return m + ':' + String(s).padStart(2, '0');
+  }
+
+  function startTimer(ms) {
+    stopTimer();
+    const deadline = performance.now() + ms;
+    timerEl.style.display = 'block';
+    timerArc.style.strokeDashoffset = 0;
+    timerArc.style.stroke = 'var(--teal)';
+    timerText.style.fill = 'white';
+    timerText.textContent = fmtTime(ms);
+    function tick(now) {
+      const left = deadline - now;
+      if (left >= 0) {
+        timerArc.style.strokeDashoffset = ((1 - left / ms) * TIMER_CIRC).toFixed(3);
+        timerText.textContent = fmtTime(left);
+      } else {
+        timerArc.style.strokeDashoffset = TIMER_CIRC.toFixed(3);
+        timerArc.style.stroke = '#ef4444';
+        timerText.style.fill = '#ef4444';
+        timerText.textContent = '-' + fmtTime(-left);
+      }
+      timerRAF = requestAnimationFrame(tick);
+    }
+    timerRAF = requestAnimationFrame(tick);
+  }
 
   // Build tray thumbnails
   const TRAY_COLORS = {
@@ -2058,6 +2126,12 @@
     });
     const active = tray.querySelector('.tray-thumb.active');
     if (active) active.scrollIntoView({ inline: 'center', behavior: 'smooth', block: 'nearest' });
+    // Slide timer
+    if (TIMER_NO.has(current)) {
+      stopTimer();
+    } else {
+      startTimer((TIMER_LONG.has(current) ? 2 : 5) * 60 * 1000);
+    }
   }
 
   // Navigate to slide from URL hash (e.g. #slide-4)
