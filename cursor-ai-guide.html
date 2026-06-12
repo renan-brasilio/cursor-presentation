@@ -305,8 +305,7 @@
     }
     .slide-content-dark .slide-section-label { color: var(--teal); }
     .slide-page-num {
-      font-size: clamp(10px, 0.9vw, 12px);
-      color: var(--slate-40);
+      display: none;
     }
 
     .slide-body {
@@ -566,9 +565,10 @@
 
     /* FOOTER BRAND */
     .slide-footer {
+      position: relative;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       padding: 0 8% 2.5%;
       flex-shrink: 0;
     }
@@ -582,6 +582,8 @@
     }
     .slide-content-dark .slide-footer .brand { color: var(--slate-60); }
     .slide-footer .copyright {
+      position: absolute;
+      right: 8%;
       font-size: clamp(9px, 0.8vw, 11px);
       color: var(--slate-40);
     }
@@ -639,7 +641,11 @@
       font-size: clamp(10px, 0.9vw, 13px);
       font-weight: 600;
       letter-spacing: 1.5px;
-      color: rgba(255,255,255,0.45);
+      color: rgba(255,255,255,0.75);
+      background: rgba(34,51,59,0.55);
+      backdrop-filter: blur(6px);
+      padding: 3px 10px;
+      border-radius: 100px;
       z-index: 200;
     }
 
@@ -688,6 +694,22 @@
       opacity: 0.6;
       pointer-events: none;
       transition: opacity 0.4s;
+    }
+
+    /* ── LIVE CLOCK ── */
+    #clock {
+      position: fixed;
+      bottom: 14px; left: 24px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(10px, 0.9vw, 13px);
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.75);
+      background: rgba(34,51,59,0.55);
+      backdrop-filter: blur(6px);
+      padding: 3px 10px;
+      border-radius: 100px;
+      z-index: 200;
     }
   </style>
 </head>
@@ -888,7 +910,6 @@
     </div>
     <div class="slide-footer">
       <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
-      <span class="copyright">© 2026 Sitetracker, Inc.</span>
     </div>
   </div>
 
@@ -1056,7 +1077,6 @@
     </div>
     <div class="slide-footer">
       <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
-      <span class="copyright">© 2026 Sitetracker, Inc.</span>
     </div>
   </div>
 
@@ -1189,7 +1209,6 @@
     </div>
     <div class="slide-footer">
       <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
-      <span class="copyright">© 2026 Sitetracker, Inc.</span>
     </div>
   </div>
 
@@ -1239,7 +1258,6 @@
     </div>
     <div class="slide-footer">
       <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
-      <span class="copyright">© 2026 Sitetracker, Inc.</span>
     </div>
   </div>
 
@@ -1317,7 +1335,6 @@
     </div>
     <div class="slide-footer">
       <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
-      <span class="copyright">© 2026 Sitetracker, Inc.</span>
     </div>
   </div>
 
@@ -1412,7 +1429,6 @@
     </div>
     <div class="slide-footer">
       <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
-      <span class="copyright">© 2026 Sitetracker, Inc.</span>
     </div>
   </div>
 
@@ -1524,7 +1540,6 @@
     </div>
     <div class="slide-footer">
       <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
-      <span class="copyright">© 2026 Sitetracker, Inc.</span>
     </div>
   </div>
 
@@ -1605,7 +1620,6 @@
     </div>
     <div class="slide-footer">
       <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
-      <span class="copyright">© 2026 Sitetracker, Inc.</span>
     </div>
   </div>
 
@@ -1687,7 +1701,6 @@
     </div>
     <div class="slide-footer">
       <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
-      <span class="copyright">© 2026 Sitetracker, Inc.</span>
     </div>
   </div>
 
@@ -1713,7 +1726,6 @@
     </div>
     <div class="slide-footer">
       <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
-      <span class="copyright">© 2026 Sitetracker, Inc.</span>
     </div>
   </div>
 
@@ -1795,7 +1807,6 @@
     </div>
     <div class="slide-footer">
       <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
-      <span class="copyright">© 2026 Sitetracker, Inc.</span>
     </div>
   </div>
 
@@ -1805,72 +1816,61 @@
       <span class="slide-section-label">04 · Subagents</span>
       <span class="slide-page-num">23 / 30</span>
     </div>
-    <div class="slide-body" style="flex-direction:column;gap:clamp(12px,1.4vw,18px);">
+    <div class="slide-body" style="flex-direction:column;gap:clamp(14px,1.6vw,22px);">
       <div>
         <div class="accent-bar"></div>
         <h2 class="slide-h">ST Developer Subagents</h2>
-        <p class="slide-lead">Four specialized agents work in a defined pipeline — you bring the requirement, they handle the rest.</p>
+        <p class="slide-lead">Three specialized agents implement in sequence — a hook routes the session automatically before they run.</p>
       </div>
 
       <!-- Phase pipeline strip -->
       <div style="display:flex;align-items:center;gap:0;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 20px;justify-content:center;">
         <span style="font-size:clamp(11px,1vw,13px);color:rgba(255,255,255,0.45);font-weight:600;letter-spacing:0.06em;">PIPELINE</span>
         <div style="display:flex;align-items:center;gap:4px;margin-left:20px;flex-wrap:wrap;">
-          <span style="font-size:clamp(11px,1vw,13px);background:rgba(100,200,189,0.2);color:#64c8bd;padding:4px 12px;border-radius:20px;font-weight:700;">1 · Route</span>
+          <span style="font-size:clamp(11px,1vw,13px);background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);padding:4px 12px;border-radius:20px;font-weight:700;display:flex;align-items:center;gap:5px;"><span style="font-size:10px;">⚡</span> Hook</span>
           <span style="color:rgba(255,255,255,0.25);font-size:14px;">→</span>
-          <span style="font-size:clamp(11px,1vw,13px);background:rgba(124,111,199,0.2);color:#a89ee0;padding:4px 12px;border-radius:20px;font-weight:700;">2 · Spec</span>
+          <span style="font-size:clamp(11px,1vw,13px);background:rgba(124,111,199,0.2);color:#a89ee0;padding:4px 12px;border-radius:20px;font-weight:700;">1 · Spec</span>
           <span style="color:rgba(255,255,255,0.25);font-size:14px;">→</span>
-          <span style="font-size:clamp(11px,1vw,13px);background:rgba(217,119,6,0.2);color:#f59e0b;padding:4px 12px;border-radius:20px;font-weight:700;">3 · Build</span>
+          <span style="font-size:clamp(11px,1vw,13px);background:rgba(217,119,6,0.2);color:#f59e0b;padding:4px 12px;border-radius:20px;font-weight:700;">2 · Build</span>
           <span style="color:rgba(255,255,255,0.25);font-size:14px;">→</span>
-          <span style="font-size:clamp(11px,1vw,13px);background:rgba(220,38,38,0.15);color:#f87171;padding:4px 12px;border-radius:20px;font-weight:700;">4 · QA</span>
+          <span style="font-size:clamp(11px,1vw,13px);background:rgba(220,38,38,0.15);color:#f87171;padding:4px 12px;border-radius:20px;font-weight:700;">3 · QA</span>
           <span style="color:rgba(255,255,255,0.25);font-size:14px;">→</span>
-          <span style="font-size:clamp(11px,1vw,13px);background:rgba(217,119,6,0.2);color:#f59e0b;padding:4px 12px;border-radius:20px;font-weight:700;">5 · Fix</span>
+          <span style="font-size:clamp(11px,1vw,13px);background:rgba(217,119,6,0.2);color:#f59e0b;padding:4px 12px;border-radius:20px;font-weight:700;">4 · Fix</span>
         </div>
       </div>
 
-      <!-- Agent cards -->
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:clamp(10px,1.1vw,16px);flex:1;">
+      <!-- Agent cards — 3 columns -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(12px,1.4vw,20px);flex:1;">
 
-        <div class="card" style="gap:10px;justify-content:flex-start;">
+        <div class="card" style="gap:12px;justify-content:flex-start;">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
-            <div style="background:rgba(100,200,189,0.15);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">🧭</div>
-            <h3 style="font-size:clamp(14px,1.4vw,18px);margin:0;line-height:1.2;">Orchestrator</h3>
+            <div style="background:rgba(124,111,199,0.15);border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;">📐</div>
+            <h3 style="font-size:clamp(15px,1.55vw,20px);margin:0;line-height:1.2;">Tech Lead</h3>
           </div>
-          <span style="font-size:clamp(10px,0.9vw,12px);background:rgba(100,200,189,0.2);color:#64c8bd;padding:3px 10px;border-radius:20px;font-weight:700;align-self:flex-start;">Entry Point</span>
-          <p style="font-size:clamp(12px,1.1vw,15px);line-height:1.5;margin:0;color:rgba(255,255,255,0.7);">Routes the session to the right skill. Collects requirements and hands off a structured brief to the pipeline.</p>
-          <p style="font-size:clamp(11px,0.95vw,13px);line-height:1.4;margin:0;color:rgba(100,200,189,0.6);font-style:italic;">Like a project manager — reads the brief and assigns the right expert before the work starts.</p>
-          <code style="font-size:clamp(10px,0.85vw,12px);color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.05);padding:3px 8px;border-radius:6px;align-self:flex-start;">st-dev-orchestrator</code>
-        </div>
-
-        <div class="card" style="gap:10px;justify-content:flex-start;">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
-            <div style="background:rgba(124,111,199,0.15);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">📐</div>
-            <h3 style="font-size:clamp(14px,1.4vw,18px);margin:0;line-height:1.2;">Tech Lead</h3>
-          </div>
-          <span style="font-size:clamp(10px,0.9vw,12px);background:rgba(124,111,199,0.2);color:#a89ee0;padding:3px 10px;border-radius:20px;font-weight:700;align-self:flex-start;">Phase 2 — Spec</span>
-          <p style="font-size:clamp(12px,1.1vw,15px);line-height:1.5;margin:0;color:rgba(255,255,255,0.7);">Explores the codebase and produces a precise, implementable tech spec before a single line of code is written.</p>
+          <span style="font-size:clamp(10px,0.9vw,12px);background:rgba(124,111,199,0.2);color:#a89ee0;padding:3px 10px;border-radius:20px;font-weight:700;align-self:flex-start;">Phase 1 — Spec</span>
+          <p style="font-size:clamp(12px,1.15vw,16px);line-height:1.55;margin:0;color:rgba(255,255,255,0.7);">Explores the codebase and produces a precise, implementable tech spec before a single line of code is written.</p>
           <p style="font-size:clamp(11px,0.95vw,13px);line-height:1.4;margin:0;color:rgba(168,158,224,0.65);font-style:italic;">Like an architect — draws the full blueprints before anyone picks up a hammer.</p>
           <code style="font-size:clamp(10px,0.85vw,12px);color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.05);padding:3px 8px;border-radius:6px;align-self:flex-start;">st-subagent-tech-lead</code>
         </div>
 
-        <div class="card" style="gap:10px;justify-content:flex-start;">
+        <div class="card" style="gap:12px;justify-content:flex-start;">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
-            <div style="background:rgba(217,119,6,0.15);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">⚙️</div>
-            <h3 style="font-size:clamp(14px,1.4vw,18px);margin:0;line-height:1.2;">Staff Engineer</h3>
+            <div style="background:rgba(217,119,6,0.15);border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;">⚙️</div>
+            <h3 style="font-size:clamp(15px,1.55vw,20px);margin:0;line-height:1.2;">Staff Engineer</h3>
           </div>
-          <span style="font-size:clamp(10px,0.9vw,12px);background:rgba(217,119,6,0.2);color:#f59e0b;padding:3px 10px;border-radius:20px;font-weight:700;align-self:flex-start;">Phase 3 &amp; 5 — Build &amp; Fix</span>
-          <p style="font-size:clamp(12px,1.1vw,15px);line-height:1.5;margin:0;color:rgba(255,255,255,0.7);">Implements the spec chunk-by-chunk with unit tests. Returns for targeted fixes if QA fails — nothing more, nothing less.</p>
-          <p style="font-size:clamp(11px,0.95vw,13px);line-height:1.4;margin:0;color:rgba(245,158,11,0.6);font-style:italic;">Like a contractor — builds exactly to the blueprint, no scope creep, no shortcuts.</p>
+          <span style="font-size:clamp(10px,0.9vw,12px);background:rgba(217,119,6,0.2);color:#f59e0b;padding:3px 10px;border-radius:20px;font-weight:700;align-self:flex-start;">Phase 2 &amp; 4 — Build &amp; Fix</span>
+          <p style="font-size:clamp(12px,1.15vw,16px);line-height:1.55;margin:0;color:rgba(255,255,255,0.7);">Implements the spec chunk-by-chunk with unit tests. Returns for targeted fixes if QA fails — nothing more, nothing less.</p>
+          <p style="font-size:clamp(11px,0.95vw,13px);line-height:1.4;margin:0;color:rgba(245,158,11,0.6);font-style:italic;">Like having a personal Ronnie with you at all times — a brilliant developer who just gets it done.</p>
           <code style="font-size:clamp(10px,0.85vw,12px);color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.05);padding:3px 8px;border-radius:6px;align-self:flex-start;">st-subagent-staff-engineer</code>
         </div>
 
-        <div class="card" style="gap:10px;justify-content:flex-start;">
+        <div class="card" style="gap:12px;justify-content:flex-start;">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
-            <div style="background:rgba(220,38,38,0.15);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">🔍</div>
-            <h3 style="font-size:clamp(14px,1.4vw,18px);margin:0;line-height:1.2;">QA Engineer</h3>
+            <div style="background:rgba(220,38,38,0.15);border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;">🔍</div>
+            <h3 style="font-size:clamp(15px,1.55vw,20px);margin:0;line-height:1.2;">QA Engineer</h3>
           </div>
-          <span style="font-size:clamp(10px,0.9vw,12px);background:rgba(220,38,38,0.15);color:#f87171;padding:3px 10px;border-radius:20px;font-weight:700;align-self:flex-start;">Phase 4 — Validate</span>
-          <p style="font-size:clamp(12px,1.1vw,15px);line-height:1.5;margin:0;color:rgba(255,255,255,0.7);">Validates the implementation against the tech spec. Runs tests, checks scope, returns a structured PASS or FAIL report.</p>
+          <span style="font-size:clamp(10px,0.9vw,12px);background:rgba(220,38,38,0.15);color:#f87171;padding:3px 10px;border-radius:20px;font-weight:700;align-self:flex-start;">Phase 3 — Validate</span>
+          <p style="font-size:clamp(12px,1.15vw,16px);line-height:1.55;margin:0;color:rgba(255,255,255,0.7);">Validates the implementation against the tech spec. Runs tests, checks scope, returns a structured PASS or FAIL report.</p>
           <p style="font-size:clamp(11px,0.95vw,13px);line-height:1.4;margin:0;color:rgba(248,113,113,0.6);font-style:italic;">Like a building inspector — signs off the work against the approved plans, no favouritism.</p>
           <code style="font-size:clamp(10px,0.85vw,12px);color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.05);padding:3px 8px;border-radius:6px;align-self:flex-start;">st-subagent-qa-engineer</code>
         </div>
@@ -1879,7 +1879,6 @@
     </div>
     <div class="slide-footer">
       <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
-      <span class="copyright">© 2026 Sitetracker, Inc.</span>
     </div>
   </div>
 
@@ -1952,7 +1951,6 @@
     </div>
     <div class="slide-footer">
       <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
-      <span class="copyright">© 2026 Sitetracker, Inc.</span>
     </div>
   </div>
 
@@ -1998,6 +1996,7 @@
 <button class="nav-btn" id="btn-prev" aria-label="Previous slide">‹</button>
 <button class="nav-btn" id="btn-next" aria-label="Next slide">›</button>
 <div id="counter"></div>
+<div id="clock"></div>
 
 <div id="slide-timer" style="display:none;">
   <svg viewBox="0 0 36 36" width="48" height="48">
@@ -2240,6 +2239,18 @@
   }
 
   fetchSkillsVersion();
+
+  // ── LIVE CLOCK ──
+  const clockEl = document.getElementById('clock');
+  function tickClock() {
+    const now = new Date();
+    const hh  = String(now.getHours()).padStart(2, '0');
+    const mm  = String(now.getMinutes()).padStart(2, '0');
+    const ss  = String(now.getSeconds()).padStart(2, '0');
+    clockEl.textContent = `${hh}:${mm}:${ss}`;
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
 </script>
 </body>
 </html>
