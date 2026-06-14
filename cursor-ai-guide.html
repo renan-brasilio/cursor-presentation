@@ -398,16 +398,16 @@
     }
 
     /* SLIDE 13 — MCP CARDS: 40% larger text */
-    [data-index="12"] .card-icon { font-size: clamp(28px, 3.5vw, 45px); }
-    [data-index="12"] .card h3   { font-size: clamp(21px, 2.52vw, 34px); }
-    [data-index="12"] .card p    { font-size: clamp(15px, 1.54vw, 21px); }
-    [data-index="12"] .card-tag  { font-size: clamp(13px, 1.12vw, 15px); }
+    [data-index="16"] .card-icon { font-size: clamp(28px, 3.5vw, 45px); }
+    [data-index="16"] .card h3   { font-size: clamp(21px, 2.52vw, 34px); }
+    [data-index="16"] .card p    { font-size: clamp(15px, 1.54vw, 21px); }
+    [data-index="16"] .card-tag  { font-size: clamp(13px, 1.12vw, 15px); }
 
     /* SLIDE 14 — MCP BY THE NUMBERS: 30% larger text */
-    [data-index="13"] .slide-h   { font-size: clamp(36px, 5.85vw, 78px); }
-    [data-index="13"] .slide-lead{ font-size: clamp(17px, 1.69vw, 23px); max-width: 900px; }
-    [data-index="13"] .stat-n    { font-size: clamp(36px, 5.2vw, 68px); }
-    [data-index="13"] .stat-l    { font-size: clamp(13px, 1.17vw, 17px); }
+    [data-index="17"] .slide-h   { font-size: clamp(36px, 5.85vw, 78px); }
+    [data-index="17"] .slide-lead{ font-size: clamp(17px, 1.69vw, 23px); max-width: 900px; }
+    [data-index="17"] .stat-n    { font-size: clamp(36px, 5.2vw, 68px); }
+    [data-index="17"] .stat-l    { font-size: clamp(13px, 1.17vw, 17px); }
 
     /* TWO-COLUMN BODY */
     .col { flex: 1; display: flex; flex-direction: column; justify-content: center; }
@@ -736,8 +736,62 @@
     <div class="footer-line">© 2026 Sitetracker, Inc. All rights reserved.</div>
   </div>
 
-  <!-- ══ SLIDE 2 — AGENDA ══ -->
-  <div class="slide slide-content" data-index="1">
+  <!-- ══ HOOK SLIDE A — STRUGGLING? ══ -->
+  <div class="slide slide-content-dark" data-index="1" style="align-items:center;justify-content:center;">
+    <div style="display:flex;align-items:center;gap:6%;padding:0 6%;width:100%;max-width:1300px;">
+      <div style="flex:1;">
+        <p style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(14px,1.2vw,18px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:5%;">Sound familiar?</p>
+        <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,4.2vw,58px);font-weight:800;color:var(--white);line-height:1.1;margin-bottom:4%;">Struggling with a<br>massive implementation?</h2>
+        <p style="font-size:clamp(16px,1.6vw,22px);color:rgba(255,255,255,0.7);line-height:1.6;">Or just... <em>bored out of your mind</em><br>writing documentation again? 😩</p>
+      </div>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;">
+        <!-- REPLACE: swap this iframe src with any giphy embed ID you prefer (e.g. search giphy.com for "this is fine") -->
+        <iframe src="https://giphy.com/embed/QMHoU66sBXqqLqYvGO" width="100%" height="320" style="border:none;border-radius:14px;max-width:480px;" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ HOOK SLIDE B — AI TAKING OVER? ══ -->
+  <div class="slide slide-content-dark" data-index="2" style="align-items:center;justify-content:center;">
+    <div style="display:flex;align-items:center;gap:6%;padding:0 6%;width:100%;max-width:1300px;">
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;">
+        <!-- REPLACE: swap this iframe src with any giphy embed ID you prefer (e.g. search giphy.com for "robots taking over") -->
+        <iframe src="https://giphy.com/embed/d7lermf8Tv1qvs0ZeJ" width="100%" height="320" style="border:none;border-radius:14px;max-width:480px;" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div style="flex:1;">
+        <p style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(14px,1.2vw,18px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:5%;">The big questions</p>
+        <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(26px,3.8vw,54px);font-weight:800;color:var(--white);line-height:1.1;margin-bottom:4%;">Suffering to understand<br>this new "vibe coding"?</h2>
+        <p style="font-size:clamp(16px,1.6vw,22px);color:rgba(255,255,255,0.7);line-height:1.6;">Are the robots taking over?<br>Should we even write code anymore? 🤖</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ HOOK SLIDE C — DON'T WORRY ══ -->
+  <div class="slide slide-content-dark" data-index="3" style="align-items:center;justify-content:center;background:var(--teal-dark);">
+    <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4%;text-align:center;padding:0 8%;">
+      <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(48px,8.5vw,128px);font-weight:800;color:var(--white);line-height:1;letter-spacing:-0.01em;text-transform:uppercase;">DON'T WORRY,<br>I GOT YOU COVERED!</h1>
+      <!-- REPLACE: put your image file in the resources/ folder and update the src below -->
+      <img src="resources/dont-worry.gif" alt="" style="max-height:38vh;max-width:55%;border-radius:14px;object-fit:contain;" onerror="this.style.display='none'">
+    </div>
+  </div>
+
+  <!-- ══ HOOK SLIDE D — BEAR WITH ME ══ -->
+  <div class="slide slide-content-dark" data-index="4" style="align-items:center;justify-content:center;">
+    <div style="display:flex;align-items:center;gap:6%;padding:0 6%;width:100%;max-width:1300px;">
+      <div style="flex:1;">
+        <p style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(14px,1.2vw,18px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:5%;">But first —</p>
+        <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,4.5vw,62px);font-weight:800;color:var(--white);line-height:1.1;margin-bottom:4%;">Bear with me.</h2>
+        <p style="font-size:clamp(15px,1.55vw,21px);color:rgba(255,255,255,0.75);line-height:1.7;">We'll try to cover <strong style="color:var(--teal);">months of research</strong> in about 1 hour.<br>This is mostly a summary — so grab a coffee ☕,<br>get a snack 🍪, and let's make the most of it.</p>
+      </div>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;">
+        <!-- REPLACE: swap this iframe src with any giphy embed ID you prefer (e.g. search giphy.com for "coffee drinking funny") -->
+        <iframe src="https://giphy.com/embed/XG19K0gc3CrRPuBL6X" width="100%" height="320" style="border:none;border-radius:14px;max-width:480px;" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 6 — AGENDA ══ -->
+  <div class="slide slide-content" data-index="5">
     <div class="slide-top-bar">
       <span class="slide-section-label" style="display:inline-flex;align-items:center;gap:7px;">
         <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;flex-shrink:0;">
@@ -751,7 +805,7 @@
         </svg>
         Agenda
       </span>
-      <span class="slide-page-num">2 / 30</span>
+      <span class="slide-page-num">6 / 34</span>
     </div>
     <div class="slide-body" style="padding:2% 5% 3%; justify-content:center; gap:2%;">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
@@ -914,7 +968,7 @@
   </div>
 
   <!-- ══ SLIDE 3 — CURSOR DIVIDER ══ -->
-  <div class="slide slide-divider" data-index="2">
+  <div class="slide slide-divider" data-index="6">
     <div class="bg-arrow">01</div>
     <div class="content">
       <div class="step">Section 01 — Editor</div>
@@ -935,10 +989,10 @@
   </div>
 
   <!-- ══ CURSOR LIVE EXAMPLE ══ -->
-  <div class="slide slide-content-dark" data-index="3">
+  <div class="slide slide-content-dark" data-index="7">
     <div class="slide-top-bar">
       <span class="slide-section-label">01 · Cursor — Under the Hood</span>
-      <span class="slide-page-num">4 / 30</span>
+      <span class="slide-page-num">8 / 34</span>
     </div>
     <div class="slide-body" style="gap:3%;">
       <div class="accent-bar"></div>
@@ -1081,10 +1135,10 @@
   </div>
 
   <!-- ══ SLIDE 6 — CONTEXT WINDOW ══ -->
-  <div class="slide slide-content" data-index="4">
+  <div class="slide slide-content" data-index="8">
     <div class="slide-top-bar">
       <span class="slide-section-label">01 · Cursor — Context</span>
-      <span class="slide-page-num">5 / 30</span>
+      <span class="slide-page-num">9 / 34</span>
     </div>
     <div class="slide-body row" style="gap:4%;padding:1.5% 8% 4%;">
 
@@ -1213,10 +1267,10 @@
   </div>
 
   <!-- ══ SLIDE 7 — SKILLS DIVIDER ══ -->
-  <div class="slide slide-content" data-index="5">
+  <div class="slide slide-content" data-index="9">
     <div class="slide-top-bar">
       <span class="slide-section-label">01 · Cursor</span>
-      <span class="slide-page-num">6 / 30</span>
+      <span class="slide-page-num">10 / 34</span>
     </div>
     <div class="slide-body row">
       <div class="col" style="flex:1.1;">
@@ -1262,7 +1316,7 @@
   </div>
 
   <!-- ══ SLIDE 5 — CURSOR TECHNICAL DEEP DIVE ══ -->
-  <div class="slide slide-live" data-index="6">
+  <div class="slide slide-live" data-index="10">
     <div class="live-content">
       <div class="live-badge"><span class="dot"></span>Live Demo</div>
       <h2>Cursor in Action</h2>
@@ -1277,7 +1331,7 @@
 
   <!-- ══ SLIDE 4 — CURSOR OVERVIEW ══ -->
   <!-- ══ QUESTIONS ══ -->
-  <div class="slide slide-content-dark" data-index="7" style="align-items:center;justify-content:center;">
+  <div class="slide slide-content-dark" data-index="11" style="align-items:center;justify-content:center;">
     <div style="position:absolute;right:3%;font-size:52vw;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--teal);opacity:0.05;user-select:none;line-height:1;">?</div>
     <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 10%;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.1vw,15px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:3%;">Open floor</div>
@@ -1285,7 +1339,7 @@
     </div>
   </div>
 
-  <div class="slide slide-divider" data-index="8">
+  <div class="slide slide-divider" data-index="12">
     <div class="bg-arrow">02</div>
     <div class="content">
       <div class="step">Section 02 — Automation</div>
@@ -1295,10 +1349,10 @@
   </div>
 
   <!-- ══ SKILLS LIVE EXAMPLE ══ -->
-  <div class="slide slide-content-dark" data-index="9">
+  <div class="slide slide-content-dark" data-index="13">
     <div class="slide-top-bar">
       <span class="slide-section-label">02 · Skills</span>
-      <span class="slide-page-num">10 / 30</span>
+      <span class="slide-page-num">14 / 34</span>
     </div>
     <div class="slide-body row">
       <div class="col" style="flex:0.9;">
@@ -1339,10 +1393,10 @@
   </div>
 
   <!-- ══ SLIDE 7 — ST SKILLS PACK ══ -->
-  <div class="slide slide-content" data-index="10">
+  <div class="slide slide-content" data-index="14">
     <div class="slide-top-bar">
       <span class="slide-section-label">02 · Skills</span>
-      <span class="slide-page-num">11 / 30</span>
+      <span class="slide-page-num">15 / 34</span>
     </div>
     <div class="slide-body" style="flex-direction:column;gap:clamp(14px,1.6vw,22px);">
       <div>
@@ -1433,10 +1487,10 @@
   </div>
 
   <!-- ══ SLIDE 9 — ST-DEV-CORE ══ -->
-  <div class="slide slide-content-dark" data-index="11">
+  <div class="slide slide-content-dark" data-index="15">
     <div class="slide-top-bar">
       <span class="slide-section-label">02 · Skills</span>
-      <span class="slide-page-num">12 / 30</span>
+      <span class="slide-page-num">16 / 34</span>
     </div>
     <div class="slide-body" style="flex-direction:column;gap:clamp(14px,1.5vw,20px);overflow-y:auto;">
       <div>
@@ -1544,10 +1598,10 @@
   </div>
 
   <!-- ══ SLIDE 10 — GRAPHIFY ══ -->
-  <div class="slide slide-content" data-index="12">
+  <div class="slide slide-content" data-index="16">
     <div class="slide-top-bar">
       <span class="slide-section-label">02 · Skills</span>
-      <span class="slide-page-num">13 / 30</span>
+      <span class="slide-page-num">17 / 34</span>
     </div>
     <div class="slide-body" style="flex-direction:column;gap:clamp(12px,1.4vw,18px);">
       <div>
@@ -1624,7 +1678,7 @@
   </div>
 
   <!-- ══ SLIDE 11 — MCPs DIVIDER ══ -->
-  <div class="slide slide-live" data-index="13">
+  <div class="slide slide-live" data-index="17">
     <div class="live-content">
       <div class="live-badge"><span class="dot"></span>Live Demo</div>
       <h2>Skills in Action</h2>
@@ -1638,7 +1692,7 @@
 
   <!-- ══ SLIDE 6 — SKILLS OVERVIEW ══ -->
   <!-- ══ QUESTIONS ══ -->
-  <div class="slide slide-content-dark" data-index="14" style="align-items:center;justify-content:center;">
+  <div class="slide slide-content-dark" data-index="18" style="align-items:center;justify-content:center;">
     <div style="position:absolute;right:3%;font-size:52vw;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--teal);opacity:0.05;user-select:none;line-height:1;">?</div>
     <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 10%;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.1vw,15px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:3%;">Open floor</div>
@@ -1646,7 +1700,7 @@
     </div>
   </div>
 
-  <div class="slide slide-divider" data-index="15">
+  <div class="slide slide-divider" data-index="19">
     <div class="bg-arrow">03</div>
     <div class="content">
       <div class="step">Section 03 — Protocol</div>
@@ -1656,10 +1710,10 @@
   </div>
 
   <!-- ══ MCPS LIVE EXAMPLE ══ -->
-  <div class="slide slide-content" data-index="16">
+  <div class="slide slide-content" data-index="20">
     <div class="slide-top-bar">
       <span class="slide-section-label">03 · Model Context Protocol</span>
-      <span class="slide-page-num">17 / 30</span>
+      <span class="slide-page-num">21 / 34</span>
     </div>
     <div class="slide-body">
       <div class="accent-bar"></div>
@@ -1705,10 +1759,10 @@
   </div>
 
   <!-- ══ SLIDE 9 — MCP BY THE NUMBERS ══ -->
-  <div class="slide slide-content-dark" data-index="17">
+  <div class="slide slide-content-dark" data-index="21">
     <div class="slide-top-bar">
       <span class="slide-section-label">03 · MCP — By the Numbers</span>
-      <span class="slide-page-num">18 / 30</span>
+      <span class="slide-page-num">22 / 34</span>
     </div>
     <div class="slide-body">
       <div class="accent-bar"></div>
@@ -1730,7 +1784,7 @@
   </div>
 
   <!-- ══ SLIDE 10 — SUBAGENTS DIVIDER ══ -->
-  <div class="slide slide-live" data-index="18">
+  <div class="slide slide-live" data-index="22">
     <div class="live-content">
       <div class="live-badge"><span class="dot"></span>Live Demo</div>
       <h2>MCPs in Action</h2>
@@ -1744,7 +1798,7 @@
 
   <!-- ══ SLIDE 8 — MCPs OVERVIEW ══ -->
   <!-- ══ QUESTIONS ══ -->
-  <div class="slide slide-content-dark" data-index="19" style="align-items:center;justify-content:center;">
+  <div class="slide slide-content-dark" data-index="23" style="align-items:center;justify-content:center;">
     <div style="position:absolute;right:3%;font-size:52vw;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--teal);opacity:0.05;user-select:none;line-height:1;">?</div>
     <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 10%;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.1vw,15px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:3%;">Open floor</div>
@@ -1752,7 +1806,7 @@
     </div>
   </div>
 
-  <div class="slide slide-divider" data-index="20">
+  <div class="slide slide-divider" data-index="24">
     <div class="bg-arrow">04</div>
     <div class="content">
       <div class="step">Section 04 — Orchestration</div>
@@ -1762,10 +1816,10 @@
   </div>
 
   <!-- ══ SUBAGENTS LIVE EXAMPLE ══ -->
-  <div class="slide slide-content" data-index="21">
+  <div class="slide slide-content" data-index="25">
     <div class="slide-top-bar">
       <span class="slide-section-label">04 · Subagents</span>
-      <span class="slide-page-num">22 / 30</span>
+      <span class="slide-page-num">26 / 34</span>
     </div>
     <div class="slide-body row">
       <div class="col" style="flex:1.1;">
@@ -1811,10 +1865,10 @@
   </div>
 
   <!-- ══ ST DEVELOPER SUBAGENTS ══ -->
-  <div class="slide slide-content-dark" data-index="22">
+  <div class="slide slide-content-dark" data-index="26">
     <div class="slide-top-bar">
       <span class="slide-section-label">04 · Subagents</span>
-      <span class="slide-page-num">23 / 30</span>
+      <span class="slide-page-num">27 / 34</span>
     </div>
     <div class="slide-body" style="flex-direction:column;gap:clamp(14px,1.6vw,22px);">
       <div>
@@ -1883,7 +1937,7 @@
   </div>
 
   <!-- ══ SLIDE 12 — COMMANDS DIVIDER ══ -->
-  <div class="slide slide-live" data-index="23">
+  <div class="slide slide-live" data-index="27">
     <div class="live-content">
       <div class="live-badge"><span class="dot"></span>Live Demo</div>
       <h2>Subagents in Action</h2>
@@ -1897,7 +1951,7 @@
 
   <!-- ══ SLIDE 11 — SUBAGENTS OVERVIEW ══ -->
   <!-- ══ QUESTIONS ══ -->
-  <div class="slide slide-content-dark" data-index="24" style="align-items:center;justify-content:center;">
+  <div class="slide slide-content-dark" data-index="28" style="align-items:center;justify-content:center;">
     <div style="position:absolute;right:3%;font-size:52vw;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--teal);opacity:0.05;user-select:none;line-height:1;">?</div>
     <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 10%;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.1vw,15px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:3%;">Open floor</div>
@@ -1905,7 +1959,7 @@
     </div>
   </div>
 
-  <div class="slide slide-divider" data-index="25">
+  <div class="slide slide-divider" data-index="29">
     <div class="bg-arrow">05</div>
     <div class="content">
       <div class="step">Section 05 — Interface</div>
@@ -1915,10 +1969,10 @@
   </div>
 
   <!-- ══ COMMANDS LIVE EXAMPLE ══ -->
-  <div class="slide slide-content" data-index="26">
+  <div class="slide slide-content" data-index="30">
     <div class="slide-top-bar">
       <span class="slide-section-label">05 · Commands</span>
-      <span class="slide-page-num">27 / 30</span>
+      <span class="slide-page-num">31 / 34</span>
     </div>
     <div class="slide-body" style="gap: 2%;">
       <div class="accent-bar"></div>
@@ -1955,7 +2009,7 @@
   </div>
 
   <!-- ══ SLIDE 14 — CLOSING ══ -->
-  <div class="slide slide-live" data-index="27">
+  <div class="slide slide-live" data-index="31">
     <div class="live-content">
       <div class="live-badge"><span class="dot"></span>Live Demo</div>
       <h2>Commands in Action</h2>
@@ -1969,7 +2023,7 @@
 
   <!-- ══ SLIDE 13 — COMMANDS TABLE ══ -->
   <!-- ══ QUESTIONS ══ -->
-  <div class="slide slide-content-dark" data-index="28" style="align-items:center;justify-content:center;">
+  <div class="slide slide-content-dark" data-index="32" style="align-items:center;justify-content:center;">
     <div style="position:absolute;right:3%;font-size:52vw;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--teal);opacity:0.05;user-select:none;line-height:1;">?</div>
     <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 10%;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.1vw,15px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:3%;">Open floor</div>
@@ -1977,7 +2031,7 @@
     </div>
   </div>
 
-  <div class="slide slide-cover" data-index="29">
+  <div class="slide slide-cover" data-index="33">
     <div class="bg-circle c1"></div>
     <div class="bg-circle c2"></div>
     <div class="tagline">Sitetracker Engineering</div>
@@ -2031,8 +2085,8 @@
 
   // ── SLIDE TIMER ──
   const TIMER_CIRC = 2 * Math.PI * 14;              // stroke circumference ≈ 87.96
-  const TIMER_NO   = new Set([0,1,2,8,15,20,25,28,29]); // slides 1,2,3,9,16,21,26,29,30
-  const TIMER_LONG = new Set([7,14,19,24]);           // slides 8,15,20,25 → 7 min
+  const TIMER_NO   = new Set([0,1,2,3,4,5,6,12,19,24,29,32,33]); // slides 1-7,13,20,25,30,33,34 (no timer)
+  const TIMER_LONG = new Set([11,18,23,28]);           // slides 12,19,24,29 → 7 min
   const timerEl    = document.getElementById('slide-timer');
   const timerArc   = document.getElementById('slide-timer-arc');
   const timerText  = document.getElementById('slide-timer-text');
