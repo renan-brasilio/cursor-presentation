@@ -398,16 +398,16 @@
     }
 
     /* SLIDE 13 — MCP CARDS: 40% larger text */
-    [data-index="16"] .card-icon { font-size: clamp(28px, 3.5vw, 45px); }
-    [data-index="16"] .card h3   { font-size: clamp(21px, 2.52vw, 34px); }
-    [data-index="16"] .card p    { font-size: clamp(15px, 1.54vw, 21px); }
-    [data-index="16"] .card-tag  { font-size: clamp(13px, 1.12vw, 15px); }
+    [data-index="17"] .card-icon { font-size: clamp(28px, 3.5vw, 45px); }
+    [data-index="17"] .card h3   { font-size: clamp(21px, 2.52vw, 34px); }
+    [data-index="17"] .card p    { font-size: clamp(15px, 1.54vw, 21px); }
+    [data-index="17"] .card-tag  { font-size: clamp(13px, 1.12vw, 15px); }
 
     /* SLIDE 14 — MCP BY THE NUMBERS: 30% larger text */
-    [data-index="17"] .slide-h   { font-size: clamp(36px, 5.85vw, 78px); }
-    [data-index="17"] .slide-lead{ font-size: clamp(17px, 1.69vw, 23px); max-width: 900px; }
-    [data-index="17"] .stat-n    { font-size: clamp(36px, 5.2vw, 68px); }
-    [data-index="17"] .stat-l    { font-size: clamp(13px, 1.17vw, 17px); }
+    [data-index="18"] .slide-h   { font-size: clamp(36px, 5.85vw, 78px); }
+    [data-index="18"] .slide-lead{ font-size: clamp(17px, 1.69vw, 23px); max-width: 900px; }
+    [data-index="18"] .stat-n    { font-size: clamp(36px, 5.2vw, 68px); }
+    [data-index="18"] .stat-l    { font-size: clamp(13px, 1.17vw, 17px); }
 
     /* TWO-COLUMN BODY */
     .col { flex: 1; display: flex; flex-direction: column; justify-content: center; }
@@ -805,7 +805,7 @@
         </svg>
         Agenda
       </span>
-      <span class="slide-page-num">6 / 34</span>
+      <span class="slide-page-num">6 / 35</span>
     </div>
     <div class="slide-body" style="padding:2% 5% 3%; justify-content:center; gap:2%;">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
@@ -967,8 +967,51 @@
     </div>
   </div>
 
+  <!-- ══ SLIDE — WHERE DID THIS COME FROM ══ -->
+  <div class="slide slide-content" data-index="6">
+    <div class="slide-top-bar">
+      <span class="slide-section-label">Origin</span>
+      <span class="slide-page-num">7 / 35</span>
+    </div>
+    <div class="slide-body" style="flex-direction:column;justify-content:center;gap:clamp(20px,2.5vw,36px);padding:3% 8%;">
+      <div>
+        <div class="accent-bar"></div>
+        <h2 class="slide-h" style="color:var(--slate);">Where did this idea come from?</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2vw,28px);">
+
+        <div style="background:#f7fffe;border:1px solid rgba(100,200,189,0.25);border-radius:12px;padding:clamp(16px,1.6vw,24px);display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:2px;">
+            <div style="background:#e8f7f6;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" fill="none" style="width:17px;height:17px;"><circle cx="12" cy="12" r="9" stroke="#64c8bd" stroke-width="1.7"/><path d="M12 8v4l3 3" stroke="#64c8bd" stroke-width="1.7" stroke-linecap="round"/></svg>
+            </div>
+            <h3 style="font-size:clamp(17px,1.7vw,22px);margin:0;color:var(--slate);line-height:1.2;">AI use today — the wild-west phase</h3>
+          </div>
+          <p style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);margin:0;line-height:1.55;">Right now, most of us are prompting AI cold — from scratch, with no shared context. That wastes tokens and time. <span style="color:#1a7a72;font-style:italic;">But this is normal.</span> We're in an exploration phase, and making mistakes is part of learning how to work with these tools well.</p>
+        </div>
+
+        <div style="background:#f7fffe;border:1px solid rgba(100,200,189,0.25);border-radius:12px;padding:clamp(16px,1.6vw,24px);display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:2px;">
+            <div style="background:#e8f7f6;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" fill="none" style="width:17px;height:17px;"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#64c8bd" stroke-width="1.7" stroke-linejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#64c8bd" stroke-width="1.7" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 style="font-size:clamp(17px,1.7vw,22px);margin:0;color:var(--slate);line-height:1.2;">Our codebase is not a blank canvas</h3>
+          </div>
+          <p style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);margin:0;line-height:1.55;">We have a managed package with deep complexity, established patterns, and strict standards. AI that doesn't know any of that produces output that looks right but doesn't fit — we need it to work <em>with</em> our architecture, not against it.</p>
+        </div>
+
+      </div>
+      <div style="border-left:3px solid rgba(100,200,189,0.45);padding:10px 18px;background:rgba(100,200,189,0.06);border-radius:0 8px 8px 0;">
+        <p style="font-size:clamp(13px,1.26vw,16px);color:var(--slate-50);margin:0;line-height:1.55;font-style:italic;">Disclaimer — I'm not the source of truth of the world. What you're about to see is what resulted in more accurate outputs, less rework, and fewer refinements for me. Your mileage may vary.</p>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
+    </div>
+  </div>
+
   <!-- ══ SLIDE 3 — CURSOR DIVIDER ══ -->
-  <div class="slide slide-divider" data-index="6">
+  <div class="slide slide-divider" data-index="7">
     <div class="bg-arrow">01</div>
     <div class="content">
       <div class="step">Section 01 — Editor</div>
@@ -989,10 +1032,10 @@
   </div>
 
   <!-- ══ CURSOR LIVE EXAMPLE ══ -->
-  <div class="slide slide-content-dark" data-index="7">
+  <div class="slide slide-content-dark" data-index="8">
     <div class="slide-top-bar">
       <span class="slide-section-label">01 · Cursor — Under the Hood</span>
-      <span class="slide-page-num">8 / 34</span>
+      <span class="slide-page-num">9 / 35</span>
     </div>
     <div class="slide-body" style="gap:3%;">
       <div class="accent-bar"></div>
@@ -1135,10 +1178,10 @@
   </div>
 
   <!-- ══ SLIDE 6 — CONTEXT WINDOW ══ -->
-  <div class="slide slide-content" data-index="8">
+  <div class="slide slide-content" data-index="9">
     <div class="slide-top-bar">
       <span class="slide-section-label">01 · Cursor — Context</span>
-      <span class="slide-page-num">9 / 34</span>
+      <span class="slide-page-num">10 / 35</span>
     </div>
     <div class="slide-body row" style="gap:4%;padding:1.5% 8% 4%;">
 
@@ -1267,10 +1310,10 @@
   </div>
 
   <!-- ══ SLIDE 7 — SKILLS DIVIDER ══ -->
-  <div class="slide slide-content" data-index="9">
+  <div class="slide slide-content" data-index="10">
     <div class="slide-top-bar">
       <span class="slide-section-label">01 · Cursor</span>
-      <span class="slide-page-num">10 / 34</span>
+      <span class="slide-page-num">11 / 35</span>
     </div>
     <div class="slide-body row">
       <div class="col" style="flex:1.1;">
@@ -1316,7 +1359,7 @@
   </div>
 
   <!-- ══ SLIDE 5 — CURSOR TECHNICAL DEEP DIVE ══ -->
-  <div class="slide slide-live" data-index="10">
+  <div class="slide slide-live" data-index="11">
     <div class="live-content">
       <div class="live-badge"><span class="dot"></span>Live Demo</div>
       <h2>Cursor in Action</h2>
@@ -1331,7 +1374,7 @@
 
   <!-- ══ SLIDE 4 — CURSOR OVERVIEW ══ -->
   <!-- ══ QUESTIONS ══ -->
-  <div class="slide slide-content-dark" data-index="11" style="align-items:center;justify-content:center;">
+  <div class="slide slide-content-dark" data-index="12" style="align-items:center;justify-content:center;">
     <div style="position:absolute;right:3%;font-size:52vw;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--teal);opacity:0.05;user-select:none;line-height:1;">?</div>
     <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 10%;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.1vw,15px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:3%;">Open floor</div>
@@ -1339,7 +1382,7 @@
     </div>
   </div>
 
-  <div class="slide slide-divider" data-index="12">
+  <div class="slide slide-divider" data-index="13">
     <div class="bg-arrow">02</div>
     <div class="content">
       <div class="step">Section 02 — Automation</div>
@@ -1349,10 +1392,10 @@
   </div>
 
   <!-- ══ SKILLS LIVE EXAMPLE ══ -->
-  <div class="slide slide-content-dark" data-index="13">
+  <div class="slide slide-content-dark" data-index="14">
     <div class="slide-top-bar">
       <span class="slide-section-label">02 · Skills</span>
-      <span class="slide-page-num">14 / 34</span>
+      <span class="slide-page-num">15 / 35</span>
     </div>
     <div class="slide-body row">
       <div class="col" style="flex:0.9;">
@@ -1393,10 +1436,10 @@
   </div>
 
   <!-- ══ SLIDE 7 — ST SKILLS PACK ══ -->
-  <div class="slide slide-content" data-index="14">
+  <div class="slide slide-content" data-index="15">
     <div class="slide-top-bar">
       <span class="slide-section-label">02 · Skills</span>
-      <span class="slide-page-num">15 / 34</span>
+      <span class="slide-page-num">16 / 35</span>
     </div>
     <div class="slide-body" style="flex-direction:column;gap:clamp(14px,1.6vw,22px);">
       <div>
@@ -1487,10 +1530,10 @@
   </div>
 
   <!-- ══ SLIDE 9 — ST-DEV-CORE ══ -->
-  <div class="slide slide-content-dark" data-index="15">
+  <div class="slide slide-content-dark" data-index="16">
     <div class="slide-top-bar">
       <span class="slide-section-label">02 · Skills</span>
-      <span class="slide-page-num">16 / 34</span>
+      <span class="slide-page-num">17 / 35</span>
     </div>
     <div class="slide-body" style="flex-direction:column;gap:clamp(14px,1.5vw,20px);overflow-y:auto;">
       <div>
@@ -1598,15 +1641,15 @@
   </div>
 
   <!-- ══ SLIDE 10 — GRAPHIFY ══ -->
-  <div class="slide slide-content" data-index="16">
+  <div class="slide slide-content" data-index="17">
     <div class="slide-top-bar">
       <span class="slide-section-label">02 · Skills</span>
-      <span class="slide-page-num">17 / 34</span>
+      <span class="slide-page-num">18 / 35</span>
     </div>
     <div class="slide-body" style="flex-direction:column;gap:clamp(12px,1.4vw,18px);">
       <div>
         <div class="accent-bar"></div>
-        <h2 class="slide-h" style="color:var(--slate);">Graphify — Your Codebase as a Knowledge Graph</h2>
+        <h2 class="slide-h" style="color:var(--slate);">Code-Review-Graph — Your Codebase as a Knowledge Graph</h2>
         <p class="slide-lead" style="color:var(--slate-70);">Maps your entire project into a queryable graph so AI skips the file-reading marathon and goes straight to what matters. Built locally — no API calls during extraction.</p>
         <p style="font-size:clamp(15px,1.47vw,20px);color:#1a7a72;font-style:italic;margin:4px 0 0;">Like Google Maps for your repo — you query the map, not every street.</p>
       </div>
@@ -1622,7 +1665,7 @@
           </div>
           <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px;">
             <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.45;display:flex;gap:7px;"><span style="color:#64c8bd;font-weight:700;flex-shrink:0;">→</span>Reading full file trees for every question wastes tokens and is slow</li>
-            <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.45;display:flex;gap:7px;"><span style="color:#64c8bd;font-weight:700;flex-shrink:0;">→</span>Graphify builds the graph once; queries answer with <strong>50%+ fewer tokens</strong></li>
+            <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.45;display:flex;gap:7px;"><span style="color:#64c8bd;font-weight:700;flex-shrink:0;">→</span>Code-Review-Graph builds the graph once; queries answer with <strong>50%+ fewer tokens</strong></li>
             <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.45;display:flex;gap:7px;"><span style="color:#64c8bd;font-weight:700;flex-shrink:0;">→</span>31 languages, Salesforce metadata, PDFs, Office docs</li>
             <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.45;display:flex;gap:7px;"><span style="color:#64c8bd;font-weight:700;flex-shrink:0;">→</span>AST extraction runs locally — no code leaves your machine</li>
           </ul>
@@ -1636,13 +1679,13 @@
             <h3 style="font-size:clamp(18px,1.75vw,22px);margin:0;color:var(--slate);line-height:1.2;">Key Commands</h3>
           </div>
           <div style="display:flex;flex-direction:column;gap:5px;">
-            <div style="background:rgba(34,51,59,0.06);border-radius:6px;padding:5px 9px;font-family:monospace;font-size:clamp(14px,1.26vw,17px);color:var(--slate);">graphify .</div>
+            <div style="background:rgba(34,51,59,0.06);border-radius:6px;padding:5px 9px;font-family:monospace;font-size:clamp(14px,1.26vw,17px);color:var(--slate);">code-review-graph build</div>
             <p style="font-size:clamp(14px,1.26vw,17px);color:var(--slate-60);margin:0 0 3px 4px;line-height:1.3;">Build or rebuild the graph for the current directory</p>
-            <div style="background:rgba(34,51,59,0.06);border-radius:6px;padding:5px 9px;font-family:monospace;font-size:clamp(14px,1.26vw,17px);color:var(--slate);">graphify query "how does X work?"</div>
+            <div style="background:rgba(34,51,59,0.06);border-radius:6px;padding:5px 9px;font-family:monospace;font-size:clamp(14px,1.26vw,17px);color:var(--slate);">code-review-graph query "how does X work?"</div>
             <p style="font-size:clamp(14px,1.26vw,17px);color:var(--slate-60);margin:0 0 3px 4px;line-height:1.3;">Ask a natural-language question about the codebase</p>
-            <div style="background:rgba(34,51,59,0.06);border-radius:6px;padding:5px 9px;font-family:monospace;font-size:clamp(14px,1.26vw,17px);color:var(--slate);">graphify path "ClassA" "ClassB"</div>
+            <div style="background:rgba(34,51,59,0.06);border-radius:6px;padding:5px 9px;font-family:monospace;font-size:clamp(14px,1.26vw,17px);color:var(--slate);">code-review-graph path "ClassA" "ClassB"</div>
             <p style="font-size:clamp(14px,1.26vw,17px);color:var(--slate-60);margin:0 0 3px 4px;line-height:1.3;">Trace the shortest connection between two nodes</p>
-            <div style="background:rgba(34,51,59,0.06);border-radius:6px;padding:5px 9px;font-family:monospace;font-size:clamp(14px,1.26vw,17px);color:var(--slate);">graphify . --update</div>
+            <div style="background:rgba(34,51,59,0.06);border-radius:6px;padding:5px 9px;font-family:monospace;font-size:clamp(14px,1.26vw,17px);color:var(--slate);">code-review-graph update</div>
             <p style="font-size:clamp(14px,1.26vw,17px);color:var(--slate-60);margin:0 0 0 4px;line-height:1.3;">Re-extract only files changed since last run</p>
           </div>
         </div>
@@ -1658,18 +1701,18 @@
             <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.4;"><code style="background:rgba(34,51,59,0.08);padding:1px 5px;border-radius:4px;font-size:0.95em;">graph.json</code> — machine-readable graph; what AI queries against</li>
             <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.4;"><code style="background:rgba(34,51,59,0.08);padding:1px 5px;border-radius:4px;font-size:0.95em;">GRAPH_REPORT.md</code> — architecture overview: god nodes, surprising connections, design rationale</li>
             <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.4;"><code style="background:rgba(34,51,59,0.08);padding:1px 5px;border-radius:4px;font-size:0.95em;">graph.html</code> — interactive browser visualization with search &amp; filtering</li>
-            <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.4;"><code style="background:rgba(34,51,59,0.08);padding:1px 5px;border-radius:4px;font-size:0.95em;">graphify-out/wiki/</code> — full markdown wiki (<code style="background:rgba(34,51,59,0.08);padding:1px 5px;border-radius:4px;font-size:0.95em;">--wiki</code> flag)</li>
+            <li style="font-size:clamp(15px,1.4vw,18px);color:var(--slate-70);line-height:1.4;"><code style="background:rgba(34,51,59,0.08);padding:1px 5px;border-radius:4px;font-size:0.95em;">code-review-graph-out/wiki/</code> — full markdown wiki (<code style="background:rgba(34,51,59,0.08);padding:1px 5px;border-radius:4px;font-size:0.95em;">--wiki</code> flag)</li>
           </ul>
-          <p style="font-size:clamp(13px,1.19vw,15px);color:var(--slate-50);margin-top:auto;padding-top:4px;">Add <code style="font-size:0.95em;">graphify-out/</code> to <code style="font-size:0.95em;">.gitignore</code> — generated output, never commit.</p>
+          <p style="font-size:clamp(13px,1.19vw,15px);color:var(--slate-50);margin-top:auto;padding-top:4px;">Add <code style="font-size:0.95em;">.code-review-graph/</code> to <code style="font-size:0.95em;">.gitignore</code> — generated output, never commit.</p>
         </div>
 
       </div>
 
       <div style="background:var(--slate);border-radius:10px;padding:10px 18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
         <span style="font-size:clamp(14px,1.26vw,17px);font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:0.07em;white-space:nowrap;">INSTALL</span>
-        <code style="font-family:monospace;font-size:clamp(15px,1.4vw,18px);color:#64c8bd;">uv tool install graphifyy &amp;&amp; graphify install</code>
-        <span style="font-size:clamp(14px,1.19vw,15px);color:rgba(255,255,255,0.35);margin-left:auto;white-space:nowrap;">PyPI: <code style="color:rgba(255,255,255,0.5);">graphifyy</code> (double&nbsp;y) · CLI: <code style="color:rgba(255,255,255,0.5);">graphify</code></span>
-        <a href="https://github.com/renan-brasilio/graphify" style="font-size:clamp(14px,1.19vw,15px);color:#64c8bd;text-decoration:none;">github.com/renan-brasilio/graphify ↗</a>
+        <code style="font-family:monospace;font-size:clamp(15px,1.4vw,18px);color:#64c8bd;">uv tool install code-review-graph &amp;&amp; code-review-graph install</code>
+        <span style="font-size:clamp(14px,1.19vw,15px);color:rgba(255,255,255,0.35);margin-left:auto;white-space:nowrap;">PyPI: <code style="color:rgba(255,255,255,0.5);">code-review-graph</code> · CLI: <code style="color:rgba(255,255,255,0.5);">code-review-graph</code></span>
+        <a href="https://github.com/renan-brasilio/code-review-graph" style="font-size:clamp(14px,1.19vw,15px);color:#64c8bd;text-decoration:none;">github.com/renan-brasilio/code-review-graph ↗</a>
       </div>
     </div>
     <div class="slide-footer">
@@ -1678,7 +1721,7 @@
   </div>
 
   <!-- ══ SLIDE 11 — MCPs DIVIDER ══ -->
-  <div class="slide slide-live" data-index="17">
+  <div class="slide slide-live" data-index="18">
     <div class="live-content">
       <div class="live-badge"><span class="dot"></span>Live Demo</div>
       <h2>Skills in Action</h2>
@@ -1692,7 +1735,7 @@
 
   <!-- ══ SLIDE 6 — SKILLS OVERVIEW ══ -->
   <!-- ══ QUESTIONS ══ -->
-  <div class="slide slide-content-dark" data-index="18" style="align-items:center;justify-content:center;">
+  <div class="slide slide-content-dark" data-index="19" style="align-items:center;justify-content:center;">
     <div style="position:absolute;right:3%;font-size:52vw;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--teal);opacity:0.05;user-select:none;line-height:1;">?</div>
     <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 10%;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.1vw,15px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:3%;">Open floor</div>
@@ -1700,7 +1743,7 @@
     </div>
   </div>
 
-  <div class="slide slide-divider" data-index="19">
+  <div class="slide slide-divider" data-index="20">
     <div class="bg-arrow">03</div>
     <div class="content">
       <div class="step">Section 03 — Protocol</div>
@@ -1710,10 +1753,10 @@
   </div>
 
   <!-- ══ MCPS LIVE EXAMPLE ══ -->
-  <div class="slide slide-content" data-index="20">
+  <div class="slide slide-content" data-index="21">
     <div class="slide-top-bar">
       <span class="slide-section-label">03 · Model Context Protocol</span>
-      <span class="slide-page-num">21 / 34</span>
+      <span class="slide-page-num">22 / 35</span>
     </div>
     <div class="slide-body">
       <div class="accent-bar"></div>
@@ -1759,10 +1802,10 @@
   </div>
 
   <!-- ══ SLIDE 9 — MCP BY THE NUMBERS ══ -->
-  <div class="slide slide-content-dark" data-index="21">
+  <div class="slide slide-content-dark" data-index="22">
     <div class="slide-top-bar">
       <span class="slide-section-label">03 · MCP — By the Numbers</span>
-      <span class="slide-page-num">22 / 34</span>
+      <span class="slide-page-num">23 / 35</span>
     </div>
     <div class="slide-body">
       <div class="accent-bar"></div>
@@ -1784,7 +1827,7 @@
   </div>
 
   <!-- ══ SLIDE 10 — SUBAGENTS DIVIDER ══ -->
-  <div class="slide slide-live" data-index="22">
+  <div class="slide slide-live" data-index="23">
     <div class="live-content">
       <div class="live-badge"><span class="dot"></span>Live Demo</div>
       <h2>MCPs in Action</h2>
@@ -1798,7 +1841,7 @@
 
   <!-- ══ SLIDE 8 — MCPs OVERVIEW ══ -->
   <!-- ══ QUESTIONS ══ -->
-  <div class="slide slide-content-dark" data-index="23" style="align-items:center;justify-content:center;">
+  <div class="slide slide-content-dark" data-index="24" style="align-items:center;justify-content:center;">
     <div style="position:absolute;right:3%;font-size:52vw;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--teal);opacity:0.05;user-select:none;line-height:1;">?</div>
     <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 10%;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.1vw,15px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:3%;">Open floor</div>
@@ -1806,7 +1849,7 @@
     </div>
   </div>
 
-  <div class="slide slide-divider" data-index="24">
+  <div class="slide slide-divider" data-index="25">
     <div class="bg-arrow">04</div>
     <div class="content">
       <div class="step">Section 04 — Orchestration</div>
@@ -1816,10 +1859,10 @@
   </div>
 
   <!-- ══ SUBAGENTS LIVE EXAMPLE ══ -->
-  <div class="slide slide-content" data-index="25">
+  <div class="slide slide-content" data-index="26">
     <div class="slide-top-bar">
       <span class="slide-section-label">04 · Subagents</span>
-      <span class="slide-page-num">26 / 34</span>
+      <span class="slide-page-num">27 / 35</span>
     </div>
     <div class="slide-body row">
       <div class="col" style="flex:1.1;">
@@ -1865,10 +1908,10 @@
   </div>
 
   <!-- ══ ST DEVELOPER SUBAGENTS ══ -->
-  <div class="slide slide-content-dark" data-index="26">
+  <div class="slide slide-content-dark" data-index="27">
     <div class="slide-top-bar">
       <span class="slide-section-label">04 · Subagents</span>
-      <span class="slide-page-num">27 / 34</span>
+      <span class="slide-page-num">28 / 35</span>
     </div>
     <div class="slide-body" style="flex-direction:column;gap:clamp(14px,1.6vw,22px);">
       <div>
@@ -1937,7 +1980,7 @@
   </div>
 
   <!-- ══ SLIDE 12 — COMMANDS DIVIDER ══ -->
-  <div class="slide slide-live" data-index="27">
+  <div class="slide slide-live" data-index="28">
     <div class="live-content">
       <div class="live-badge"><span class="dot"></span>Live Demo</div>
       <h2>Subagents in Action</h2>
@@ -1951,7 +1994,7 @@
 
   <!-- ══ SLIDE 11 — SUBAGENTS OVERVIEW ══ -->
   <!-- ══ QUESTIONS ══ -->
-  <div class="slide slide-content-dark" data-index="28" style="align-items:center;justify-content:center;">
+  <div class="slide slide-content-dark" data-index="29" style="align-items:center;justify-content:center;">
     <div style="position:absolute;right:3%;font-size:52vw;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--teal);opacity:0.05;user-select:none;line-height:1;">?</div>
     <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 10%;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.1vw,15px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:3%;">Open floor</div>
@@ -1959,7 +2002,7 @@
     </div>
   </div>
 
-  <div class="slide slide-divider" data-index="29">
+  <div class="slide slide-divider" data-index="30">
     <div class="bg-arrow">05</div>
     <div class="content">
       <div class="step">Section 05 — Interface</div>
@@ -1969,10 +2012,10 @@
   </div>
 
   <!-- ══ COMMANDS LIVE EXAMPLE ══ -->
-  <div class="slide slide-content" data-index="30">
+  <div class="slide slide-content" data-index="31">
     <div class="slide-top-bar">
       <span class="slide-section-label">05 · Commands</span>
-      <span class="slide-page-num">31 / 34</span>
+      <span class="slide-page-num">32 / 35</span>
     </div>
     <div class="slide-body" style="gap: 2%;">
       <div class="accent-bar"></div>
@@ -2009,7 +2052,7 @@
   </div>
 
   <!-- ══ SLIDE 14 — CLOSING ══ -->
-  <div class="slide slide-live" data-index="31">
+  <div class="slide slide-live" data-index="32">
     <div class="live-content">
       <div class="live-badge"><span class="dot"></span>Live Demo</div>
       <h2>Commands in Action</h2>
@@ -2023,7 +2066,7 @@
 
   <!-- ══ SLIDE 13 — COMMANDS TABLE ══ -->
   <!-- ══ QUESTIONS ══ -->
-  <div class="slide slide-content-dark" data-index="32" style="align-items:center;justify-content:center;">
+  <div class="slide slide-content-dark" data-index="33" style="align-items:center;justify-content:center;">
     <div style="position:absolute;right:3%;font-size:52vw;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--teal);opacity:0.05;user-select:none;line-height:1;">?</div>
     <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 10%;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.1vw,15px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:3%;">Open floor</div>
@@ -2031,7 +2074,7 @@
     </div>
   </div>
 
-  <div class="slide slide-cover" data-index="33">
+  <div class="slide slide-cover" data-index="34">
     <div class="bg-circle c1"></div>
     <div class="bg-circle c2"></div>
     <div class="tagline">Sitetracker Engineering</div>
@@ -2085,7 +2128,7 @@
 
   // ── SLIDE TIMER ──
   const TIMER_CIRC = 2 * Math.PI * 14;              // stroke circumference ≈ 87.96
-  const TIMER_NO   = new Set([0,1,2,3,4,5,6,12,19,24,29,32,33]); // slides 1-7,13,20,25,30,33,34 (no timer)
+  const TIMER_NO   = new Set([0,1,2,3,4,5,6,12,19,24,29,32,33,34]); // slides 1-7,13,20,25,30,33,34,35 (no timer)
   const TIMER_LONG = new Set([11,18,23,28]);           // slides 12,19,24,29 → 7 min
   const timerEl    = document.getElementById('slide-timer');
   const timerArc   = document.getElementById('slide-timer-arc');
