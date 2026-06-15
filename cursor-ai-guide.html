@@ -728,6 +728,11 @@
   <div class="slide slide-cover active" data-index="0">
     <div class="bg-circle c1"></div>
     <div class="bg-circle c2"></div>
+    <button id="btn-fullscreen" onclick="toggleFullscreen()" title="Toggle fullscreen" style="position:absolute;top:5%;left:5%;z-index:10;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);border-radius:8px;padding:7px 9px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;" onmouseenter="this.style.background='rgba(255,255,255,0.18)'" onmouseleave="this.style.background='rgba(255,255,255,0.08)'">
+      <svg id="fs-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;">
+        <path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M16 21h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+      </svg>
+    </button>
     <div class="tagline">Sitetracker FDE</div>
     <div class="content">
       <div class="eyebrow">AI-Powered Development · 2026</div>
@@ -1562,7 +1567,7 @@
           <p style="font-size:clamp(17px,1.54vw,20px);line-height:1.5;margin:0;flex:0;">Before any repo work, every skill runs the same two steps in order:</p>
           <table style="width:100%;border-collapse:collapse;font-size:clamp(17px,1.68vw,21px);">
             <tr style="border-bottom:1px solid rgba(100,200,189,0.2);">
-              <td style="padding:8px 10px 8px 0;white-space:nowrap;color:#64c8bd;font-weight:700;vertical-align:top;width:1%;">1. Graphify</td>
+              <td style="padding:8px 10px 8px 0;white-space:nowrap;color:#64c8bd;font-weight:700;vertical-align:top;width:1%;">1. Code-Review-Graph</td>
               <td style="padding:8px 0 8px 12px;color:rgba(255,255,255,0.8);line-height:1.45;">Build or refresh the knowledge graph, then query it before reading files</td>
             </tr>
             <tr>
@@ -1647,7 +1652,7 @@
     </div>
   </div>
 
-  <!-- ══ SLIDE 10 — GRAPHIFY ══ -->
+  <!-- ══ SLIDE 10 — CODE-REVIEW-GRAPH ══ -->
   <div class="slide slide-content" data-index="17">
     <div class="slide-top-bar">
       <span class="slide-section-label">02 · Skills</span>
@@ -2411,6 +2416,23 @@
   }
   tickClock();
   setInterval(tickClock, 1000);
+
+  // ── FULLSCREEN ──
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }
+  document.addEventListener('fullscreenchange', () => {
+    const icon = document.getElementById('fs-icon');
+    if (document.fullscreenElement) {
+      icon.innerHTML = '<path d="M8 3v3a2 2 0 0 1-2 2H3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3M16 21v-3a2 2 0 0 1 2-2h3"/>';
+    } else {
+      icon.innerHTML = '<path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M16 21h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>';
+    }
+  });
 </script>
 </body>
 </html>
