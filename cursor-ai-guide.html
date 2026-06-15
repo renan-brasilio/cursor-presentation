@@ -397,6 +397,13 @@
       background: var(--teal);
     }
 
+    /* SLIDE 12 — ST-DEV-CORE: shrink card content to fit */
+    [data-index="16"] .slide-lead { font-size: clamp(14px, 1.3vw, 17px); }
+    [data-index="16"] .card h3    { font-size: clamp(14px, 1.45vw, 18px); }
+    [data-index="16"] .card p,
+    [data-index="16"] .card td,
+    [data-index="16"] .card table { font-size: clamp(12px, 1.15vw, 15px); }
+
     /* SLIDE 13 — MCP CARDS: 40% larger text */
     [data-index="17"] .card-icon { font-size: clamp(28px, 3.5vw, 45px); }
     [data-index="17"] .card h3   { font-size: clamp(21px, 2.52vw, 34px); }
@@ -805,7 +812,7 @@
         </svg>
         Agenda
       </span>
-      <span class="slide-page-num">6 / 35</span>
+      <span class="slide-page-num">6 / 36</span>
     </div>
     <div class="slide-body" style="padding:2% 5% 3%; justify-content:center; gap:2%;">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
@@ -971,7 +978,7 @@
   <div class="slide slide-content" data-index="6">
     <div class="slide-top-bar">
       <span class="slide-section-label">Origin</span>
-      <span class="slide-page-num">7 / 35</span>
+      <span class="slide-page-num">7 / 36</span>
     </div>
     <div class="slide-body" style="flex-direction:column;justify-content:center;gap:clamp(20px,2.5vw,36px);padding:3% 8%;">
       <div>
@@ -1035,7 +1042,7 @@
   <div class="slide slide-content-dark" data-index="8">
     <div class="slide-top-bar">
       <span class="slide-section-label">01 · Cursor — Under the Hood</span>
-      <span class="slide-page-num">9 / 35</span>
+      <span class="slide-page-num">9 / 36</span>
     </div>
     <div class="slide-body" style="gap:3%;">
       <div class="accent-bar"></div>
@@ -1181,7 +1188,7 @@
   <div class="slide slide-content" data-index="9">
     <div class="slide-top-bar">
       <span class="slide-section-label">01 · Cursor — Context</span>
-      <span class="slide-page-num">10 / 35</span>
+      <span class="slide-page-num">10 / 36</span>
     </div>
     <div class="slide-body row" style="gap:4%;padding:1.5% 8% 4%;">
 
@@ -1313,7 +1320,7 @@
   <div class="slide slide-content" data-index="10">
     <div class="slide-top-bar">
       <span class="slide-section-label">01 · Cursor</span>
-      <span class="slide-page-num">11 / 35</span>
+      <span class="slide-page-num">11 / 36</span>
     </div>
     <div class="slide-body row">
       <div class="col" style="flex:1.1;">
@@ -1395,7 +1402,7 @@
   <div class="slide slide-content-dark" data-index="14">
     <div class="slide-top-bar">
       <span class="slide-section-label">02 · Skills</span>
-      <span class="slide-page-num">15 / 35</span>
+      <span class="slide-page-num">15 / 36</span>
     </div>
     <div class="slide-body row">
       <div class="col" style="flex:0.9;">
@@ -1439,12 +1446,12 @@
   <div class="slide slide-content" data-index="15">
     <div class="slide-top-bar">
       <span class="slide-section-label">02 · Skills</span>
-      <span class="slide-page-num">16 / 35</span>
+      <span class="slide-page-num">16 / 36</span>
     </div>
     <div class="slide-body" style="flex-direction:column;gap:clamp(14px,1.6vw,22px);">
       <div>
         <div class="accent-bar"></div>
-        <h2 class="slide-h" style="color:var(--slate);">The ST Skills Pack <span id="skills-version" style="font-size:0.5em;font-weight:400;opacity:0.45;font-family:'Barlow',sans-serif;letter-spacing:0.02em;">v1.4.1</span></h2>
+        <h2 class="slide-h" style="color:var(--slate);">The ST Skills Pack <span id="skills-version" style="font-size:0.5em;font-weight:400;opacity:0.45;font-family:'Barlow',sans-serif;letter-spacing:0.02em;">v1.5.3</span></h2>
         <p class="slide-lead" style="color:var(--slate-70);">Four skills covering the full dev lifecycle — each mapped to a specific Cursor mode. Clone once, every engineer works the same way.</p>
       </div>
 
@@ -1533,16 +1540,16 @@
   <div class="slide slide-content-dark" data-index="16">
     <div class="slide-top-bar">
       <span class="slide-section-label">02 · Skills</span>
-      <span class="slide-page-num">17 / 35</span>
+      <span class="slide-page-num">17 / 36</span>
     </div>
-    <div class="slide-body" style="flex-direction:column;gap:clamp(14px,1.5vw,20px);overflow-y:auto;">
+    <div class="slide-body" style="flex-direction:column;gap:clamp(8px,0.9vw,12px);overflow-y:auto;">
       <div>
         <div class="accent-bar"></div>
         <h2 class="slide-h">st-dev-core — The Shared Backbone</h2>
         <p class="slide-lead">A single file loaded by every skill. It keeps all four behaviours consistent — same rules, same tools, same standards — regardless of which skill is active.</p>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(10px,1.1vw,16px);flex:1;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(8px,0.9vw,12px);flex:1;">
 
         <!-- Preflight chain -->
         <div class="card" style="gap:10px;justify-content:flex-start;">
@@ -1632,7 +1639,7 @@
           <span style="font-size:clamp(14px,1.26vw,17px);background:rgba(217,119,6,0.2);color:#f59e0b;padding:3px 10px;border-radius:20px;font-family:'Barlow Condensed',sans-serif;font-weight:700;">st-skill-dev-act</span>
           <span style="font-size:clamp(14px,1.26vw,17px);background:rgba(220,38,38,0.15);color:#f87171;padding:3px 10px;border-radius:20px;font-family:'Barlow Condensed',sans-serif;font-weight:700;">st-skill-dev-debug</span>
         </div>
-        <span id="skills-version-2" style="font-size:clamp(14px,1.26vw,17px);color:rgba(255,255,255,0.35);margin-left:auto;white-space:nowrap;">v1.4.1</span>
+        <span id="skills-version-2" style="font-size:clamp(14px,1.26vw,17px);color:rgba(255,255,255,0.35);margin-left:auto;white-space:nowrap;">v1.5.3</span>
       </div>
     </div>
     <div class="slide-footer">
@@ -1644,7 +1651,7 @@
   <div class="slide slide-content" data-index="17">
     <div class="slide-top-bar">
       <span class="slide-section-label">02 · Skills</span>
-      <span class="slide-page-num">18 / 35</span>
+      <span class="slide-page-num">18 / 36</span>
     </div>
     <div class="slide-body" style="flex-direction:column;gap:clamp(12px,1.4vw,18px);">
       <div>
@@ -1721,7 +1728,58 @@
   </div>
 
   <!-- ══ SLIDE 11 — MCPs DIVIDER ══ -->
-  <div class="slide slide-live" data-index="18">
+  <!-- ══ SLIDE — CODE-REVIEW-GRAPH HONEST NOTE ══ -->
+  <div class="slide slide-content" data-index="18">
+    <div class="slide-top-bar">
+      <span class="slide-section-label">02 · Skills — Code-Review-Graph</span>
+      <span class="slide-page-num">19 / 36</span>
+    </div>
+    <div class="slide-body" style="flex-direction:column;justify-content:center;gap:clamp(18px,2.2vw,32px);padding:3% 8%;">
+      <div>
+        <div class="accent-bar"></div>
+        <h2 class="slide-h" style="color:var(--slate);">A few honest things to set expectations</h2>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:clamp(12px,1.4vw,18px);">
+
+        <div style="background:#f7fffe;border:1px solid rgba(100,200,189,0.25);border-radius:12px;padding:clamp(14px,1.4vw,20px) clamp(16px,1.6vw,24px);display:flex;gap:14px;align-items:flex-start;">
+          <div style="background:#e8f7f6;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+            <svg viewBox="0 0 24 24" fill="none" style="width:17px;height:17px;"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z" stroke="#64c8bd" stroke-width="1.7"/><path d="M12 8v4M12 16h.01" stroke="#64c8bd" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <h3 style="font-size:clamp(16px,1.6vw,20px);margin:0 0 5px;color:var(--slate);">It won't be 100% perfect at the start</h3>
+            <p style="font-size:clamp(14px,1.35vw,17px);color:var(--slate-70);margin:0;line-height:1.55;">This is a fork of the original tool, built specifically for Salesforce by me. It's still evolving — there are improvements along the way, so you probably won't notice a huge token reduction right now. Think of it as a work in progress, not a finished product.</p>
+          </div>
+        </div>
+
+        <div style="background:#f7fffe;border:1px solid rgba(100,200,189,0.25);border-radius:12px;padding:clamp(14px,1.4vw,20px) clamp(16px,1.6vw,24px);display:flex;gap:14px;align-items:flex-start;">
+          <div style="background:#e8f7f6;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+            <svg viewBox="0 0 24 24" fill="none" style="width:17px;height:17px;"><path d="M3 7h18M3 12h18M3 17h12" stroke="#64c8bd" stroke-width="1.7" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <h3 style="font-size:clamp(16px,1.6vw,20px);margin:0 0 5px;color:var(--slate);">Cursor already indexes your files</h3>
+            <p style="font-size:clamp(14px,1.35vw,17px);color:var(--slate-70);margin:0;line-height:1.55;">Cursor's built-in codebase indexing already covers a lot of ground. Code-Review-Graph isn't trying to replace that. The main idea for our usage is something different.</p>
+          </div>
+        </div>
+
+        <div style="background:#f7fffe;border:1px solid rgba(100,200,189,0.25);border-radius:12px;padding:clamp(14px,1.4vw,20px) clamp(16px,1.6vw,24px);display:flex;gap:14px;align-items:flex-start;">
+          <div style="background:#e8f7f6;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+            <svg viewBox="0 0 24 24" fill="none" style="width:17px;height:17px;"><circle cx="11" cy="11" r="7" stroke="#64c8bd" stroke-width="1.7"/><path d="M16.5 16.5L21 21" stroke="#64c8bd" stroke-width="1.7" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <h3 style="font-size:clamp(16px,1.6vw,20px);margin:0 0 5px;color:var(--slate);">The real goal: go straight to the point</h3>
+            <p style="font-size:clamp(14px,1.35vw,17px);color:var(--slate-70);margin:0;line-height:1.55;">The goal for us is <strong>accuracy</strong> — giving AI a map of the codebase so it goes straight to the point instead of reading entire huge classes from top to bottom. Less noise, more relevant output.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="slide-footer">
+      <img src="resources/sitetracker-logo-white.svg" class="brand-logo" alt="Sitetracker">
+    </div>
+  </div>
+
+  <div class="slide slide-live" data-index="19">
     <div class="live-content">
       <div class="live-badge"><span class="dot"></span>Live Demo</div>
       <h2>Skills in Action</h2>
@@ -1735,7 +1793,7 @@
 
   <!-- ══ SLIDE 6 — SKILLS OVERVIEW ══ -->
   <!-- ══ QUESTIONS ══ -->
-  <div class="slide slide-content-dark" data-index="19" style="align-items:center;justify-content:center;">
+  <div class="slide slide-content-dark" data-index="20" style="align-items:center;justify-content:center;">
     <div style="position:absolute;right:3%;font-size:52vw;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--teal);opacity:0.05;user-select:none;line-height:1;">?</div>
     <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 10%;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.1vw,15px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:3%;">Open floor</div>
@@ -1743,7 +1801,7 @@
     </div>
   </div>
 
-  <div class="slide slide-divider" data-index="20">
+  <div class="slide slide-divider" data-index="21">
     <div class="bg-arrow">03</div>
     <div class="content">
       <div class="step">Section 03 — Protocol</div>
@@ -1753,10 +1811,10 @@
   </div>
 
   <!-- ══ MCPS LIVE EXAMPLE ══ -->
-  <div class="slide slide-content" data-index="21">
+  <div class="slide slide-content" data-index="22">
     <div class="slide-top-bar">
       <span class="slide-section-label">03 · Model Context Protocol</span>
-      <span class="slide-page-num">22 / 35</span>
+      <span class="slide-page-num">23 / 36</span>
     </div>
     <div class="slide-body">
       <div class="accent-bar"></div>
@@ -1802,10 +1860,10 @@
   </div>
 
   <!-- ══ SLIDE 9 — MCP BY THE NUMBERS ══ -->
-  <div class="slide slide-content-dark" data-index="22">
+  <div class="slide slide-content-dark" data-index="23">
     <div class="slide-top-bar">
       <span class="slide-section-label">03 · MCP — By the Numbers</span>
-      <span class="slide-page-num">23 / 35</span>
+      <span class="slide-page-num">24 / 36</span>
     </div>
     <div class="slide-body">
       <div class="accent-bar"></div>
@@ -1827,7 +1885,7 @@
   </div>
 
   <!-- ══ SLIDE 10 — SUBAGENTS DIVIDER ══ -->
-  <div class="slide slide-live" data-index="23">
+  <div class="slide slide-live" data-index="24">
     <div class="live-content">
       <div class="live-badge"><span class="dot"></span>Live Demo</div>
       <h2>MCPs in Action</h2>
@@ -1841,7 +1899,7 @@
 
   <!-- ══ SLIDE 8 — MCPs OVERVIEW ══ -->
   <!-- ══ QUESTIONS ══ -->
-  <div class="slide slide-content-dark" data-index="24" style="align-items:center;justify-content:center;">
+  <div class="slide slide-content-dark" data-index="25" style="align-items:center;justify-content:center;">
     <div style="position:absolute;right:3%;font-size:52vw;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--teal);opacity:0.05;user-select:none;line-height:1;">?</div>
     <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 10%;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.1vw,15px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:3%;">Open floor</div>
@@ -1849,7 +1907,7 @@
     </div>
   </div>
 
-  <div class="slide slide-divider" data-index="25">
+  <div class="slide slide-divider" data-index="26">
     <div class="bg-arrow">04</div>
     <div class="content">
       <div class="step">Section 04 — Orchestration</div>
@@ -1859,10 +1917,10 @@
   </div>
 
   <!-- ══ SUBAGENTS LIVE EXAMPLE ══ -->
-  <div class="slide slide-content" data-index="26">
+  <div class="slide slide-content" data-index="27">
     <div class="slide-top-bar">
       <span class="slide-section-label">04 · Subagents</span>
-      <span class="slide-page-num">27 / 35</span>
+      <span class="slide-page-num">28 / 36</span>
     </div>
     <div class="slide-body row">
       <div class="col" style="flex:1.1;">
@@ -1908,10 +1966,10 @@
   </div>
 
   <!-- ══ ST DEVELOPER SUBAGENTS ══ -->
-  <div class="slide slide-content-dark" data-index="27">
+  <div class="slide slide-content-dark" data-index="28">
     <div class="slide-top-bar">
       <span class="slide-section-label">04 · Subagents</span>
-      <span class="slide-page-num">28 / 35</span>
+      <span class="slide-page-num">29 / 36</span>
     </div>
     <div class="slide-body" style="flex-direction:column;gap:clamp(14px,1.6vw,22px);">
       <div>
@@ -1980,7 +2038,7 @@
   </div>
 
   <!-- ══ SLIDE 12 — COMMANDS DIVIDER ══ -->
-  <div class="slide slide-live" data-index="28">
+  <div class="slide slide-live" data-index="29">
     <div class="live-content">
       <div class="live-badge"><span class="dot"></span>Live Demo</div>
       <h2>Subagents in Action</h2>
@@ -1994,7 +2052,7 @@
 
   <!-- ══ SLIDE 11 — SUBAGENTS OVERVIEW ══ -->
   <!-- ══ QUESTIONS ══ -->
-  <div class="slide slide-content-dark" data-index="29" style="align-items:center;justify-content:center;">
+  <div class="slide slide-content-dark" data-index="30" style="align-items:center;justify-content:center;">
     <div style="position:absolute;right:3%;font-size:52vw;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--teal);opacity:0.05;user-select:none;line-height:1;">?</div>
     <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 10%;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.1vw,15px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:3%;">Open floor</div>
@@ -2002,7 +2060,7 @@
     </div>
   </div>
 
-  <div class="slide slide-divider" data-index="30">
+  <div class="slide slide-divider" data-index="31">
     <div class="bg-arrow">05</div>
     <div class="content">
       <div class="step">Section 05 — Interface</div>
@@ -2012,10 +2070,10 @@
   </div>
 
   <!-- ══ COMMANDS LIVE EXAMPLE ══ -->
-  <div class="slide slide-content" data-index="31">
+  <div class="slide slide-content" data-index="32">
     <div class="slide-top-bar">
       <span class="slide-section-label">05 · Commands</span>
-      <span class="slide-page-num">32 / 35</span>
+      <span class="slide-page-num">33 / 36</span>
     </div>
     <div class="slide-body" style="gap: 2%;">
       <div class="accent-bar"></div>
@@ -2052,7 +2110,7 @@
   </div>
 
   <!-- ══ SLIDE 14 — CLOSING ══ -->
-  <div class="slide slide-live" data-index="32">
+  <div class="slide slide-live" data-index="33">
     <div class="live-content">
       <div class="live-badge"><span class="dot"></span>Live Demo</div>
       <h2>Commands in Action</h2>
@@ -2066,7 +2124,7 @@
 
   <!-- ══ SLIDE 13 — COMMANDS TABLE ══ -->
   <!-- ══ QUESTIONS ══ -->
-  <div class="slide slide-content-dark" data-index="33" style="align-items:center;justify-content:center;">
+  <div class="slide slide-content-dark" data-index="34" style="align-items:center;justify-content:center;">
     <div style="position:absolute;right:3%;font-size:52vw;font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--teal);opacity:0.05;user-select:none;line-height:1;">?</div>
     <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 10%;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.1vw,15px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:3%;">Open floor</div>
@@ -2074,7 +2132,7 @@
     </div>
   </div>
 
-  <div class="slide slide-cover" data-index="34">
+  <div class="slide slide-cover" data-index="35">
     <div class="bg-circle c1"></div>
     <div class="bg-circle c2"></div>
     <div class="tagline">Sitetracker Engineering</div>
@@ -2128,8 +2186,8 @@
 
   // ── SLIDE TIMER ──
   const TIMER_CIRC = 2 * Math.PI * 14;              // stroke circumference ≈ 87.96
-  const TIMER_NO   = new Set([0,1,2,3,4,5,6,12,19,24,29,32,33,34]); // slides 1-7,13,20,25,30,33,34,35 (no timer)
-  const TIMER_LONG = new Set([11,18,23,28]);           // slides 12,19,24,29 → 7 min
+  const TIMER_NO   = new Set([0,1,2,3,4,5,7,11,13,19,21,24,26,29,31,33,34,35]); // slides 1-6,8,12,14,20,22,25,27,30,32,34,35,36 (no timer)
+  const TIMER_LONG = new Set([6,12,18,20,25,30]);           // slides 7,13,19,21,26,31 → 2 min
   const timerEl    = document.getElementById('slide-timer');
   const timerArc   = document.getElementById('slide-timer-arc');
   const timerText  = document.getElementById('slide-timer-text');
