@@ -471,7 +471,8 @@
     /* COMMAND TABLE */
     .cmd-table-wrap {
       flex: 1;
-      overflow: hidden;
+      overflow-y: auto;
+      overflow-x: hidden;
       border-radius: clamp(8px, 1vw, 14px);
       border: 1px solid var(--slate-20);
     }
@@ -1203,11 +1204,10 @@
         <h2 class="slide-h" style="margin-bottom:3%;">Making the most of<br>the context window</h2>
         <p class="slide-lead" style="margin-bottom:4%;">The AI can only see what fits in its context. Too much clutter and it loses focus — too little and it lacks the information to help you well.</p>
         <ul class="bullet-list">
-          <li><strong>Keep rules &amp; CLAUDE.md concise</strong> — they load on every single turn and eat into the budget before your question is even asked</li>
+          <li><strong>Keep rules concise</strong> — they load on every single turn and eat into the budget before your question is even asked</li>
           <li><strong>Attach only what's needed with @</strong> — referencing the whole repo costs far more than referencing the one file that matters</li>
           <li><strong>Start a fresh session for unrelated tasks</strong> — prior conversation history is expensive context that the model must re-read each turn</li>
           <li><strong>Use subagents for large tasks</strong> — each spawned agent gets its own isolated context window, keeping the main session clean</li>
-          <li><strong>Run /compact when sessions grow long</strong> — summarises history in place so you keep the key facts without the full transcript</li>
         </ul>
       </div>
 

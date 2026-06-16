@@ -43,10 +43,14 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(100, 200, 189, 0.15);
+      padding: 14px 48px;
+    }
+    .top-bar-inner {
+      max-width: 880px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 48px;
     }
 
     .top-bar .brand {
@@ -97,6 +101,7 @@
     .hero {
       padding: 72px 48px 56px;
       max-width: 880px;
+      margin: 0 auto;
       position: relative;
     }
     .hero::before {
@@ -143,6 +148,7 @@
       flex-direction: column;
       gap: 20px;
       max-width: 880px;
+      margin: 0 auto;
     }
 
     .step-card {
@@ -341,6 +347,10 @@
     footer {
       border-top: 1px solid rgba(255,255,255,0.06);
       padding: 24px 48px;
+    }
+    .footer-inner {
+      max-width: 880px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -363,14 +373,16 @@
 
   <!-- ── TOP BAR ── -->
   <header class="top-bar">
-    <div class="brand">
-      <img src="resources/sitetracker-logo-white.svg" alt="Sitetracker" />
-      <div class="brand-sep"></div>
-      <span class="brand-label">AI Dev Setup Guide</span>
+    <div class="top-bar-inner">
+      <div class="brand">
+        <img src="resources/sitetracker-logo-white.svg" alt="Sitetracker" />
+        <div class="brand-sep"></div>
+        <span class="brand-label">AI Dev Setup Guide</span>
+      </div>
+      <a href="cursor-ai-guide.html" class="back-btn">
+        ← Back to Presentation
+      </a>
     </div>
-    <a href="cursor-ai-guide.html" class="back-btn">
-      ← Back to Presentation
-    </a>
   </header>
 
   <!-- ── HERO ── -->
@@ -567,8 +579,10 @@ code-review-graph build</div>
 
   <!-- ── FOOTER ── -->
   <footer>
-    <p>© 2026 Sitetracker, Inc. — For internal use only.</p>
-    <p>Questions? Reach out to <a href="mailto:rrocha@sitetracker.com" style="color:var(--teal);text-decoration:none;">rrocha@sitetracker.com</a></p>
+    <div class="footer-inner">
+      <p>© 2026 Sitetracker, Inc. — For internal use only.</p>
+      <p>Questions? Reach out to <a href="mailto:rrocha@sitetracker.com" style="color:var(--teal);text-decoration:none;">rrocha@sitetracker.com</a></p>
+    </div>
   </footer>
 
   <script>
