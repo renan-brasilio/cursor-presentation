@@ -312,8 +312,8 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding: 2% 8% 5%;
+      justify-content: flex-start;
+      padding: 4% 8% 5%;
     }
     .slide-body.row { flex-direction: row; align-items: center; gap: 6%; }
 
@@ -568,7 +568,7 @@
       height: clamp(3px, 0.35vw, 5px);
       background: var(--teal);
       border-radius: 100px;
-      margin-bottom: 4%;
+      margin-bottom: clamp(6px, 0.8vw, 12px);
     }
 
     /* FOOTER BRAND */
@@ -820,7 +820,7 @@
       </span>
       <span class="slide-page-num">6 / 38</span>
     </div>
-    <div class="slide-body" style="padding:2% 5% 3%; justify-content:center; gap:2%;">
+    <div class="slide-body" style="padding:2% 5% 3%; gap:2%;">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
         <div>
           <div class="accent-bar" style="margin-bottom:1%;"></div>
@@ -986,7 +986,7 @@
       <span class="slide-section-label">Origin</span>
       <span class="slide-page-num">7 / 38</span>
     </div>
-    <div class="slide-body" style="flex-direction:column;justify-content:center;gap:clamp(20px,2.5vw,36px);padding:3% 8%;">
+    <div class="slide-body" style="flex-direction:column;gap:clamp(20px,2.5vw,36px);padding:3% 8%;">
       <div>
         <div class="accent-bar"></div>
         <h2 class="slide-h" style="color:var(--slate);">Where did this idea come from?</h2>
@@ -1051,8 +1051,10 @@
       <span class="slide-page-num">9 / 38</span>
     </div>
     <div class="slide-body" style="gap:3%;">
-      <div class="accent-bar"></div>
-      <h2 class="slide-h" style="margin-bottom:2.5%;">How Cursor works technically</h2>
+      <div>
+        <div class="accent-bar"></div>
+        <h2 class="slide-h" style="margin-bottom:2.5%;">How Cursor works technically</h2>
+      </div>
       <div class="cards" style="grid-template-columns:repeat(3,1fr); gap:2%;">
 
         <!-- VS Code extensions -->
@@ -1721,11 +1723,8 @@
 
       </div>
 
-      <div style="background:var(--slate);border-radius:10px;padding:10px 18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-        <span style="font-size:clamp(14px,1.26vw,17px);font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:0.07em;white-space:nowrap;">INSTALL</span>
-        <code style="font-family:monospace;font-size:clamp(15px,1.4vw,18px);color:#64c8bd;">uv tool install code-review-graph &amp;&amp; code-review-graph install</code>
-        <span style="font-size:clamp(14px,1.19vw,15px);color:rgba(255,255,255,0.35);margin-left:auto;white-space:nowrap;">PyPI: <code style="color:rgba(255,255,255,0.5);">code-review-graph</code> · CLI: <code style="color:rgba(255,255,255,0.5);">code-review-graph</code></span>
-        <a href="https://github.com/renan-brasilio/code-review-graph" style="font-size:clamp(14px,1.19vw,15px);color:#64c8bd;text-decoration:none;">github.com/renan-brasilio/code-review-graph ↗</a>
+      <div style="background:var(--slate);border-radius:10px;padding:10px 18px;display:flex;align-items:center;justify-content:flex-end;">
+        <a href="https://github.com/renan-brasilio/code-review-graph" style="font-size:clamp(14px,1.26vw,17px);color:#64c8bd;text-decoration:none;">github.com/renan-brasilio/code-review-graph ↗</a>
       </div>
     </div>
     <div class="slide-footer">
@@ -1740,7 +1739,7 @@
       <span class="slide-section-label">02 · Skills — Code-Review-Graph</span>
       <span class="slide-page-num">19 / 38</span>
     </div>
-    <div class="slide-body" style="flex-direction:column;justify-content:center;gap:clamp(18px,2.2vw,32px);padding:3% 8%;">
+    <div class="slide-body" style="flex-direction:column;gap:clamp(18px,2.2vw,32px);padding:3% 8%;">
       <div>
         <div class="accent-bar"></div>
         <h2 class="slide-h" style="color:var(--slate);">A few honest things to set expectations</h2>
@@ -1825,9 +1824,11 @@
       <span class="slide-page-num">23 / 38</span>
     </div>
     <div class="slide-body">
-      <div class="accent-bar"></div>
-      <h2 class="slide-h">Connect the model to your world</h2>
-      <p class="slide-lead">A standard plug that lets any AI model talk to any external tool — no custom glue code. There are 1,000+ community servers; these are the four most common categories.</p>
+      <div>
+        <div class="accent-bar"></div>
+        <h2 class="slide-h">Connect the model to your world</h2>
+        <p class="slide-lead">A standard plug that lets any AI model talk to any external tool — no custom glue code. There are 1,000+ community servers; these are the four most common categories.</p>
+      </div>
       <div class="flow-row">
         <div class="flow-node teal">AI Assistant<div class="node-sub">LLM Selected</div></div>
         <div class="flow-arrow">→</div>
@@ -1874,9 +1875,11 @@
       <span class="slide-page-num">24 / 38</span>
     </div>
     <div class="slide-body">
-      <div class="accent-bar"></div>
-      <h2 class="slide-h">Why MCP matters</h2>
-      <p class="slide-lead">Before MCP, every AI-to-tool connection needed its own custom code. MCP is the universal plug — one standard that lets any AI work with any tool, out of the box.</p>
+      <div>
+        <div class="accent-bar"></div>
+        <h2 class="slide-h">Why MCP matters</h2>
+        <p class="slide-lead">Before MCP, every AI-to-tool connection needed its own custom code. MCP is the universal plug — one standard that lets any AI work with any tool, out of the box.</p>
+      </div>
       <div class="stats-row" style="grid-template-columns:repeat(3,1fr);">
         <div class="stat"><div class="stat-n">1,000+</div><div class="stat-l">Pre-built connectors ready to install — Slack, GitHub, Salesforce, databases, and more</div></div>
         <div class="stat"><div class="stat-n">0 custom<br/>code</div><div class="stat-l">One standard replaces every one-off integration you'd have had to build by hand</div></div>
@@ -2084,8 +2087,10 @@
       <span class="slide-page-num">33 / 38</span>
     </div>
     <div class="slide-body" style="gap: 2%;">
-      <div class="accent-bar"></div>
-      <h2 class="slide-h" style="margin-bottom:2%;">Slash Command Reference - Examples</h2>
+      <div>
+        <div class="accent-bar"></div>
+        <h2 class="slide-h" style="margin-bottom:2%;">Slash Command Reference - Examples</h2>
+      </div>
       <div class="cmd-table-wrap">
         <table class="cmd-table">
           <thead>
@@ -2137,9 +2142,11 @@
       <span class="slide-page-num">35 / 38</span>
     </div>
     <div class="slide-body" style="gap:3%;">
-      <div class="accent-bar"></div>
-      <h2 class="slide-h">Roadmap</h2>
-      <p class="slide-lead" style="margin-bottom:4%;">Here's where we are and where we're heading.</p>
+      <div>
+        <div class="accent-bar"></div>
+        <h2 class="slide-h">Roadmap</h2>
+        <p class="slide-lead" style="margin-bottom:0;">Here's where we are and where we're heading.</p>
+      </div>
       <!-- Timeline -->
       <div style="display:flex;align-items:flex-start;gap:0;width:100%;position:relative;">
         <!-- connecting line -->
