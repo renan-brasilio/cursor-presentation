@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started — AI Dev Setup</title>
+  <link rel="icon" type="image/x-icon" href="resources/cursor-favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --slate-100: #22333B;
+      --slate-80:  #4f5c63;
+      --slate-60:  #7A858A;
+      --slate-40:  #A6ADB0;
+      --slate-20:  #D4D6D9;
+      --slate-10:  #E8EBEB;
+      --teal:      #64c8bd;
+      --teal-dark: #00847C;
+      --teal-80:   #83D3CA;
+      --teal-60:   #A2DED7;
+      --teal-40:   #C1E9E5;
+      --teal-20:   #E0F4F2;
+      --white:     #FFFFFF;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--slate-100);
+      color: var(--white);
+      min-height: 100vh;
+    }
+
+    /* ── TOP BAR ── */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(34, 51, 59, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(100, 200, 189, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 48px;
+    }
+
+    .top-bar .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .top-bar .brand img {
+      height: 22px;
+      opacity: 0.7;
+    }
+    .top-bar .brand-sep {
+      width: 1px;
+      height: 16px;
+      background: rgba(255,255,255,0.18);
+    }
+    .top-bar .brand-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--slate-40);
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--teal);
+      text-decoration: none;
+      padding: 7px 16px;
+      border: 1px solid rgba(100, 200, 189, 0.3);
+      border-radius: 6px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .back-btn:hover {
+      background: rgba(100, 200, 189, 0.1);
+      border-color: rgba(100, 200, 189, 0.55);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 72px 48px 56px;
+      max-width: 880px;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -120px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--teal-dark) 0%, transparent 70%);
+      opacity: 0.18;
+      pointer-events: none;
+    }
+
+    .hero .eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(42px, 6vw, 72px);
+      font-weight: 800;
+      line-height: 0.95;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--teal); }
+    .hero p {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--slate-40);
+      line-height: 1.7;
+      max-width: 600px;
+    }
+
+    /* ── STEPS ── */
+    .steps {
+      padding: 0 48px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 880px;
+    }
+
+    .step-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 28px 32px;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+    .step-card:hover {
+      border-color: rgba(100,200,189,0.25);
+    }
+    .step-card.optional {
+      background: rgba(100,200,189,0.03);
+      border-color: rgba(100,200,189,0.12);
+    }
+
+    .step-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+
+    .step-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--teal);
+      background: rgba(100,200,189,0.12);
+      border: 1px solid rgba(100,200,189,0.25);
+      border-radius: 8px;
+      padding: 4px 10px;
+      min-width: 36px;
+      text-align: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .step-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(20px, 2.2vw, 26px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    .badge-optional {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--teal);
+      background: rgba(100,200,189,0.1);
+      border: 1px solid rgba(100,200,189,0.25);
+      border-radius: 4px;
+      padding: 2px 8px;
+    }
+
+    .step-body {
+      margin-left: 54px;
+    }
+
+    .step-body p {
+      font-size: 15px;
+      color: var(--slate-40);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .step-body p:last-child { margin-bottom: 0; }
+    .step-body strong { color: var(--white); }
+    .step-body a {
+      color: var(--teal);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(100,200,189,0.3);
+      transition: border-color 0.2s;
+    }
+    .step-body a:hover { border-color: var(--teal); }
+
+    .code-block {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 14px 18px;
+      padding-right: 52px;
+      font-family: 'SFMono-Regular', 'Consolas', 'Liberation Mono', monospace;
+      font-size: 13px;
+      color: var(--teal-60);
+      line-height: 1.7;
+      overflow-x: auto;
+      margin: 10px 0;
+      position: relative;
+    }
+    .code-block .comment { color: var(--slate-60); }
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(100,200,189,0.1);
+      border: 1px solid rgba(100,200,189,0.2);
+      border-radius: 6px;
+      padding: 4px 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--teal);
+      transition: background 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .copy-btn:hover {
+      background: rgba(100,200,189,0.2);
+      border-color: rgba(100,200,189,0.45);
+    }
+    .copy-btn.copied {
+      color: #4ade80;
+      border-color: rgba(74,222,128,0.35);
+      background: rgba(74,222,128,0.1);
+    }
+
+    .note-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: rgba(100,200,189,0.07);
+      border: 1px solid rgba(100,200,189,0.2);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 12px;
+    }
+    .note-box .note-icon {
+      font-size: 15px;
+      line-height: 1.5;
+      flex-shrink: 0;
+    }
+    .note-box p {
+      font-size: 14px !important;
+      color: rgba(255,255,255,0.6) !important;
+      margin-bottom: 0 !important;
+    }
+
+    /* ── VIBE CODE ── */
+    .vibe-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(100,200,189,0.2);
+      border-radius: 14px;
+      padding: 36px 32px;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .vibe-text {
+      flex: 1;
+    }
+    .vibe-text .step-header { margin-bottom: 12px; }
+    .vibe-text p {
+      font-size: 15px;
+      color: var(--slate-40);
+      line-height: 1.7;
+      margin-left: 54px;
+    }
+    .vibe-text strong { color: var(--white); }
+
+    .vibe-gif {
+      width: 260px;
+      height: 180px;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: rgba(0,0,0,0.3);
+    }
+    .vibe-gif iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      pointer-events: none;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    footer p {
+      font-size: 12px;
+      color: var(--slate-60);
+    }
+
+    @media (max-width: 640px) {
+      .top-bar, .hero, .steps, footer { padding-left: 20px; padding-right: 20px; }
+      .step-body { margin-left: 0; margin-top: 12px; }
+      .vibe-card { flex-direction: column; }
+      .vibe-gif { width: 100%; }
+      .vibe-text p { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── TOP BAR ── -->
+  <header class="top-bar">
+    <div class="brand">
+      <img src="resources/sitetracker-logo-white.svg" alt="Sitetracker" />
+      <div class="brand-sep"></div>
+      <span class="brand-label">AI Dev Setup Guide</span>
+    </div>
+    <a href="cursor-ai-guide.html" class="back-btn">
+      ← Back to Presentation
+    </a>
+  </header>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="eyebrow">Setup Guide · ST Skills Pack v1.5.3</div>
+    <h1>How do I<br /><span>get started?</span></h1>
+    <p>Follow these steps to install Cursor, configure the ST Skills Pack, and set up all required MCP servers and extensions. Estimated setup time: ~20 minutes.</p>
+  </section>
+
+  <!-- ── STEPS ── -->
+  <section class="steps">
+
+    <!-- STEP 1 -->
+    <div class="step-card">
+      <div class="step-header">
+        <span class="step-num">01</span>
+        <div class="step-title-wrap">
+          <h2 class="step-title">Install Cursor &amp; sign in</h2>
+        </div>
+      </div>
+      <div class="step-body">
+        <p>Download and install Cursor from <a href="https://cursor.com" target="_blank">cursor.com</a>. On first launch, sign in using your <strong>Sitetracker Google account</strong> (<code style="font-family:monospace;font-size:0.9em;color:var(--teal-60);">@sitetracker.com</code>).</p>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-card">
+      <div class="step-header">
+        <span class="step-num">02</span>
+        <div class="step-title-wrap">
+          <h2 class="step-title">Clone st-cursor-skills from Bitbucket</h2>
+        </div>
+      </div>
+      <div class="step-body">
+        <p>This repo contains the ST Skills Pack — rules, hooks, commands, and skills tailored for Sitetracker development.</p>
+        <div class="code-block">git clone git@bitbucket.org:sitetraker/st-cursor-skills.git</div>
+        <div class="note-box">
+          <span class="note-icon">💡</span>
+          <p><strong>Optional:</strong> Before copying files, open <code style="font-family:monospace;font-size:0.9em;">mcp.json</code> inside the repo and review the MCP server configuration. Decide which servers you want to bring into your <code style="font-family:monospace;font-size:0.9em;">~/.cursor</code> folder — you can always add or remove them later.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-card">
+      <div class="step-header">
+        <span class="step-num">03</span>
+        <div class="step-title-wrap">
+          <h2 class="step-title">Clone strk-mcp from Bitbucket</h2>
+        </div>
+      </div>
+      <div class="step-body">
+        <p>This MCP server lets Claude browse Sitetracker package source code directly — enabling context-aware answers about the managed package without leaving your IDE.</p>
+        <div class="code-block">git clone git@bitbucket.org:sitetraker/strk-mcp.git</div>
+        <p>After cloning, note the full path to the repo — you'll reference it in the MCP config during step 10.</p>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step-card">
+      <div class="step-header">
+        <span class="step-num">04</span>
+        <div class="step-title-wrap">
+          <h2 class="step-title">Clone the Sitetracker repo from Bitbucket</h2>
+        </div>
+      </div>
+      <div class="step-body">
+        <p>This is the main Sitetracker managed package source repo. strk-mcp needs a local clone to index and serve package metadata to Claude.</p>
+        <div class="code-block">git clone git@bitbucket.org:sitetraker/sitetracker.git</div>
+        <p>After cloning, note the full path — you'll set it as <code style="font-family:monospace;font-size:0.9em;">STRK_REPO_ROOT</code> when configuring the MCP server in step 10.</p>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step-card">
+      <div class="step-header">
+        <span class="step-num">05</span>
+        <div class="step-title-wrap">
+          <h2 class="step-title">Clone the code-review-graph fork from GitHub</h2>
+        </div>
+      </div>
+      <div class="step-body">
+        <p>This is the Cursor/VS Code extension that adds graph-aware code review capabilities — it understands your Salesforce org's dependency graph when reviewing changes.</p>
+        <div class="code-block">git clone https://github.com/renan-brasilio/code-review-graph.git</div>
+        <p>You'll build and install this extension locally in step 8.</p>
+      </div>
+    </div>
+
+    <!-- STEP 6 (optional) -->
+    <div class="step-card optional">
+      <div class="step-header">
+        <span class="step-num">06</span>
+        <div class="step-title-wrap">
+          <h2 class="step-title">Back up your existing Cursor config</h2>
+          <span class="badge-optional">Optional</span>
+        </div>
+      </div>
+      <div class="step-body">
+        <p>If you have existing rules, hooks, commands, or skills in your <code style="font-family:monospace;font-size:0.9em;">~/.cursor</code> folder that you want to keep, back them up before the next step overwrites anything.</p>
+        <div class="code-block"><span class="comment"># Back up your entire .cursor config</span>
+cp -r ~/.cursor ~/.cursor-backup</div>
+      </div>
+    </div>
+
+    <!-- STEP 7 -->
+    <div class="step-card">
+      <div class="step-header">
+        <span class="step-num">07</span>
+        <div class="step-title-wrap">
+          <h2 class="step-title">Copy files from st-cursor-skills to your .cursor folder</h2>
+        </div>
+      </div>
+      <div class="step-body">
+        <p>Copy the contents of the repo's <code style="font-family:monospace;font-size:0.9em;">.cursor</code> folder into your local <code style="font-family:monospace;font-size:0.9em;">~/.cursor</code> directory.</p>
+        <div class="code-block"><span class="comment"># Replace the path with where you cloned the repo</span>
+cp -r ~/path/to/st-cursor-skills/.cursor/* ~/.cursor/</div>
+        <p>This installs the ST rules, hooks, commands, and skills that were shown during the presentation.</p>
+      </div>
+    </div>
+
+    <!-- STEP 8 -->
+    <div class="step-card">
+      <div class="step-header">
+        <span class="step-num">08</span>
+        <div class="step-title-wrap">
+          <h2 class="step-title">Install code-review-graph from your local repo</h2>
+        </div>
+      </div>
+      <div class="step-body">
+        <p>code-review-graph is a <strong>CLI tool</strong> — install it directly from your local clone using <code style="font-family:monospace;font-size:0.9em;">uv</code>.</p>
+        <div class="code-block"><span class="comment"># Go into the cloned repo and install with uv</span>
+cd code-review-graph
+uv tool install .</div>
+        <p>Once installed, the <code style="font-family:monospace;font-size:0.9em;">code-review-graph</code> command will be available in your terminal.</p>
+        <div class="note-box" style="background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.3);">
+          <span class="note-icon">⚠️</span>
+          <p><strong style="color:#f59e0b;">Beta warning:</strong> avoid running <code style="font-family:monospace;font-size:0.9em;">pipx upgrade-all</code> or <code style="font-family:monospace;font-size:0.9em;">uv tool upgrade --all</code> during this beta period — these commands may replace your local fork install with the original upstream version.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 9 -->
+    <div class="step-card">
+      <div class="step-header">
+        <span class="step-num">09</span>
+        <div class="step-title-wrap">
+          <h2 class="step-title">Open Cursor and verify all MCPs are configured</h2>
+        </div>
+      </div>
+      <div class="step-body">
+        <p>Open Cursor, then go to <strong>Settings → MCP Servers</strong>. All configured servers should show a <strong>green connected status</strong>.</p>
+        <p>If any server shows red or disconnected, check:</p>
+        <p>
+          · The repo path in <code style="font-family:monospace;font-size:0.9em;">mcp.json</code> points to where you actually cloned it<br />
+          · Any required environment variables (e.g. <code style="font-family:monospace;font-size:0.9em;">STRK_REPO_ROOT</code>) are set<br />
+          · Node.js / the server's runtime is installed and accessible
+        </p>
+      </div>
+    </div>
+
+    <!-- STEP 10 -->
+    <div class="step-card">
+      <div class="step-header">
+        <span class="step-num">10</span>
+        <div class="step-title-wrap">
+          <h2 class="step-title">Build the graph in your target repo</h2>
+        </div>
+      </div>
+      <div class="step-body">
+        <p>Navigate to the Salesforce repo you want to work in and run the build command to generate the dependency graph.</p>
+        <div class="code-block"><span class="comment"># Run from the root of your target Salesforce repo</span>
+cd /path/to/your/salesforce-repo
+code-review-graph build</div>
+        <p>This indexes the repo's metadata and builds the graph that powers context-aware code review. Run it again whenever you pull significant changes.</p>
+      </div>
+    </div>
+
+    <!-- STEP 11: VIBE CODE -->
+    <div class="step-card" style="display:flex;align-items:center;gap:32px;padding:28px 32px;">
+      <div style="flex:1;">
+        <div class="step-header">
+          <span class="step-num">11</span>
+          <div class="step-title-wrap">
+            <h2 class="step-title">Vibe code 🎉</h2>
+          </div>
+        </div>
+        <p style="margin-left:54px;font-size:15px;color:var(--slate-40);line-height:1.7;">You're all set. Open any Salesforce repo in Cursor and start building with your new AI superpowers — <strong style="color:var(--white);">context-aware code review</strong>, <strong style="color:var(--white);">graph-aware impact analysis</strong>, and a full suite of <strong style="color:var(--white);">ST slash commands</strong> at your fingertips.</p>
+      </div>
+      <div style="width:260px;height:180px;border-radius:10px;overflow:hidden;flex-shrink:0;background:rgba(0,0,0,0.3);">
+        <!-- REPLACE: swap the giphy embed ID for your preferred coding gif -->
+        <iframe src="https://giphy.com/embed/NSzHiAwAcazs7dcDr9" allowfullscreen style="width:100%;height:100%;border:none;display:block;pointer-events:none;"></iframe>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <p>© 2026 Sitetracker, Inc. — For internal use only.</p>
+    <p>Questions? Reach out to <a href="mailto:rrocha@sitetracker.com" style="color:var(--teal);text-decoration:none;">rrocha@sitetracker.com</a></p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.code-block').forEach(function(block) {
+      var btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="2"/></svg>Copy';
+      btn.addEventListener('click', function() {
+        var text = block.innerText.replace(/^Copy$/m, '').trim();
+        navigator.clipboard.writeText(text).then(function() {
+          btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Copied!';
+          btn.classList.add('copied');
+          setTimeout(function() {
+            btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="2"/></svg>Copy';
+            btn.classList.remove('copied');
+          }, 2000);
+        });
+      });
+      block.appendChild(btn);
+    });
+  </script>
+</body>
+</html>
