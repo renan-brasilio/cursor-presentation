@@ -641,6 +641,22 @@
     #btn-prev { left: 1.5%; }
     #btn-next { right: 1.5%; }
 
+    /* ── FULLSCREEN BUTTON ── */
+    #btn-fullscreen {
+      position: fixed;
+      top: 18px; left: 18px;
+      z-index: 200;
+      background: rgba(34,51,59,0.55);
+      border: 1px solid rgba(34,51,59,0.35);
+      border-radius: 8px;
+      padding: 7px 9px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(6px);
+      transition: background 0.2s;
+    }
+    #btn-fullscreen:hover { background: var(--teal-dark); }
+
     /* ── SLIDE COUNTER ── */
     #counter {
       position: fixed;
@@ -729,11 +745,6 @@
   <div class="slide slide-cover active" data-index="0">
     <div class="bg-circle c1"></div>
     <div class="bg-circle c2"></div>
-    <button id="btn-fullscreen" onclick="toggleFullscreen()" title="Toggle fullscreen" style="position:absolute;top:5%;left:5%;z-index:10;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);border-radius:8px;padding:7px 9px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;" onmouseenter="this.style.background='rgba(255,255,255,0.18)'" onmouseleave="this.style.background='rgba(255,255,255,0.08)'">
-      <svg id="fs-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;">
-        <path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M16 21h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
-      </svg>
-    </button>
     <div class="tagline">Sitetracker FDE</div>
     <div class="content">
       <div class="eyebrow">AI-Powered Development · 2026</div>
@@ -1458,7 +1469,7 @@
     <div class="slide-body" style="flex-direction:column;gap:clamp(14px,1.6vw,22px);">
       <div>
         <div class="accent-bar"></div>
-        <h2 class="slide-h" style="color:var(--slate);">The ST Skills Pack <span id="skills-version" style="font-size:0.5em;font-weight:400;opacity:0.45;font-family:'Barlow',sans-serif;letter-spacing:0.02em;">v1.5.3</span></h2>
+        <h2 class="slide-h" style="color:var(--slate);">The ST Skills Pack <span id="skills-version" style="font-size:0.5em;font-weight:400;opacity:0.45;font-family:'Barlow',sans-serif;letter-spacing:0.02em;">v1.5.4</span></h2>
         <p class="slide-lead" style="color:var(--slate-70);">Four skills covering the full dev lifecycle — each mapped to a specific Cursor mode. Clone once, every engineer works the same way.</p>
       </div>
 
@@ -1647,7 +1658,7 @@
           <span style="font-size:clamp(14px,1.26vw,17px);background:rgba(217,119,6,0.2);color:#f59e0b;padding:3px 10px;border-radius:20px;font-family:'Barlow Condensed',sans-serif;font-weight:700;">st-skill-dev-act</span>
           <span style="font-size:clamp(14px,1.26vw,17px);background:rgba(220,38,38,0.15);color:#f87171;padding:3px 10px;border-radius:20px;font-family:'Barlow Condensed',sans-serif;font-weight:700;">st-skill-dev-debug</span>
         </div>
-        <span id="skills-version-2" style="font-size:clamp(14px,1.26vw,17px);color:rgba(255,255,255,0.35);margin-left:auto;white-space:nowrap;">v1.5.3</span>
+        <span id="skills-version-2" style="font-size:clamp(14px,1.26vw,17px);color:rgba(255,255,255,0.35);margin-left:auto;white-space:nowrap;">v1.5.4</span>
       </div>
     </div>
     <div class="slide-footer">
@@ -2158,7 +2169,7 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 13l4 4L19 7" stroke="#22333B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(9px,0.85vw,12px);font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);margin-bottom:6px;">Today · June 2026</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,1.9vw,25px);font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.15;">ST Skills Pack v1.5.3<br/>+ code-review-graph <span style="font-size:0.65em;font-weight:600;background:rgba(100,200,189,0.18);color:var(--teal);border-radius:4px;padding:1px 6px;vertical-align:middle;">beta</span> (Salesforce)</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,1.9vw,25px);font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.15;">ST Skills Pack v1.5.4<br/>+ code-review-graph <span style="font-size:0.65em;font-weight:600;background:rgba(100,200,189,0.18);color:var(--teal);border-radius:4px;padding:1px 6px;vertical-align:middle;">beta</span> (Salesforce)</div>
           <div style="font-size:clamp(12px,1.05vw,14px);color:var(--slate-40);line-height:1.55;max-width:220px;">Initial release to the <strong style="color:var(--white);">FDE team</strong> today</div>
         </div>
 
@@ -2196,7 +2207,7 @@
     </div>
     <div class="slide-body" style="align-items:center;justify-content:center;flex:1;gap:0;">
       <div style="display:flex;flex-direction:column;align-items:center;text-align:center;max-width:660px;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(10px,0.9vw,13px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:3%;">ST Skills Pack v1.5.3</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(10px,0.9vw,13px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:3%;">ST Skills Pack v1.5.4</div>
         <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(44px,7.5vw,100px);font-weight:800;color:var(--white);line-height:0.92;margin-bottom:4%;">How do I<br/><span style="color:var(--teal);">get started?</span></h2>
         <p style="font-size:clamp(14px,1.35vw,19px);color:var(--slate-40);line-height:1.65;margin-bottom:6%;max-width:500px;">Install Cursor, clone the required repos, copy your skills, and you're good to go. Full step-by-step guide below.</p>
         <a href="getting-started.html" target="_blank"
@@ -2240,6 +2251,11 @@
 </div><!-- /#deck -->
 
 <!-- ── CHROME ── -->
+<button id="btn-fullscreen" onclick="toggleFullscreen()" title="Toggle fullscreen" aria-label="Toggle fullscreen">
+  <svg id="fs-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;">
+    <path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M16 21h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+  </svg>
+</button>
 <div id="progress"></div>
 <button class="nav-btn" id="btn-prev" aria-label="Previous slide">‹</button>
 <button class="nav-btn" id="btn-next" aria-label="Next slide">›</button>
